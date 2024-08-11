@@ -103,12 +103,22 @@ cd ./frontend
 npm run dev
 ```
 
-## 3. Run backend node
+## 3. Spin up database through docker compose.
 
 ```bash
 cd ./backend
-npm start
-# (starts node server at `localhost:3000`)
+npm run start:dep
+# (starts database docker containers)
+```
+
+## 4. Run backend node
+
+Prerequisite: please do step 3 before running backend node.
+
+```bash
+cd ./backend
+npm run start:dev
+# (starts node server in development mode at `localhost:3000`)
 ```
 
 ## MongoDB
