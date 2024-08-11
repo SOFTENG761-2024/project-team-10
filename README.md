@@ -1,3 +1,5 @@
+# Give it a good name app
+
 # Code Structure
 
 ```bash
@@ -15,7 +17,7 @@
 > infrastructure AWS CDK TypeScript
     | package.json - AWS CDK dependencies
 > scripts - useful scripts for local dev, CI and CD
-> wiremock - A framework to mock api responses. 
+> wiremock - A framework to mock api responses.
 .env - MONGODB local config/creds
 docker-compose-ci.yml - docker-compose for CI environment
 docker-compose-prod.yml - docker-compose for PROD environment
@@ -123,16 +125,6 @@ http://localhost:8080/db/admin/
 
 Username: `dev`, Password:`dev`
 
----
-
-### Verify the instance of the image is up and running
-
-1. Visit the backend: http://localhost:8001/api/users
-2. Visit the frontend: http://localhost:8000/
-3. Visit mongodb admin portal: http://localhost:8080 with username: dev, password: dev
-
----
-
 # How to test the code
 
 ## Frontend unit tests
@@ -145,16 +137,6 @@ Username: `dev`, Password:`dev`
 1. `cd ./backend`
 2. `npm test`
 
-## Backend api integration tests
-
-1. spin up backend node.
-2. spin up mongodb database through docker-compose
-
-```
-cd ./backend
-npm run test:e2e
-```
-
 You can also manually test APIs with swagger UI
 
 1. go to http://localhost:3000/api/api-docs
@@ -162,7 +144,6 @@ You can also manually test APIs with swagger UI
 
 ## Testing AWS CDK infrastructure as code
 
-We currently put dev and prod stacks all in one account but you can test deploying the stack with your own suffix.
 You need to reachout to Mark(mzhu929) for giving you permission to access AWS console and deploying stacks as this is his personal AWS account.
 
 ```bash
@@ -172,9 +153,11 @@ npm run deploy-dev
 
 ## Wiremock
 
+Wiremock is a framework used to mock api responses. This is helpful when working with external APIs that have call limits or are slow to respond.
+
 Put your mock files under `deployment/wiremock/__files` and `deployment/wiremock/mappings`
 
-Refere the `json` example here: https://wiremock.org/docs/stubbing/
+Refere to the `json` example here: https://wiremock.org/docs/stubbing/
 
 ## Browser end-to-end tests
 
@@ -188,7 +171,7 @@ install playwright and chromium
 npx playwright install --with-deps chromium
 ```
 
-Ensure you have spinned up react, node servers & mongodb docker containers locally. If you have not, follow the `How to run frontend react, backend node, mongodb in dev mode or as docker containers` guide above.
+Ensure you have spinned up react, node servers & mongodb docker containers locally. If you have not, follow the `Important: How to set up local development environment` guide above.
 
 under project root folder:
 
@@ -196,7 +179,6 @@ under project root folder:
 2. `npm run test:e2e`
 
 If you raise a pr, Github Actions will trigger the `./github/workflow/ci.yml` workflow which runs all automated tests
-
 
 # Q & A
 
@@ -206,7 +188,7 @@ If you raise a pr, Github Actions will trigger the `./github/workflow/ci.yml` wo
 
 ### 2. docker or docker-compose command not found
 
-##### A: Please review `How to set up local development environment` section and install docker desktop.
+##### A: Please review `Important: How to set up local development environment` section and install docker desktop.
 
 ##### A: Please make sure you use Git Bash to run the command if you are on Windows
 
@@ -216,4 +198,4 @@ If you raise a pr, Github Actions will trigger the `./github/workflow/ci.yml` wo
 
 ### 4. How do I access latest deployed website
 
-##### A: We provision new EC2 instances if we have infrastructure change. Need to go to github actions to grab the latest working public DNS. Get it from the latest successful `CD` build from Github Actions
+##### A: We provision new EC2 instances if we have infrastructure change. Need to go to github actions to grab the latest working frontend url. Get it from the latest successful `CD` build from Github Actions
