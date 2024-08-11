@@ -15,7 +15,7 @@
 > infrastructure AWS CDK TypeScript
     | package.json - AWS CDK dependencies
 > scripts - useful scripts for local dev, CI and CD
-> wiremock - mock gemini ai response for local dev
+> wiremock - A framework to mock api responses. 
 .env - MONGODB local config/creds
 docker-compose-ci.yml - docker-compose for CI environment
 docker-compose-prod.yml - docker-compose for PROD environment
@@ -115,7 +115,7 @@ npm start
 
 1. default username: devroot
 1. default password: devroot
-1. default database: cs732
+1. default database: test
 
 ## Login to MongoDB Admin Portal
 
