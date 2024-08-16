@@ -1,5 +1,8 @@
 # Give it a good name app
 
+# Solution Architecture
+![SOLUTION-DIAGRAM](https://github.com/user-attachments/assets/3fd86ea3-6f87-4174-8391-a50ae3529819)
+
 # Code Structure
 
 ```bash
