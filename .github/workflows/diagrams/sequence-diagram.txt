@@ -1,3 +1,4 @@
+title: tuakiri
 User->React SPA: Click "Sign Up" button
 React SPA->User: Display Sign Up form (email/password or LinkedIn OAuth)
 User->React SPA: Enter email, password
