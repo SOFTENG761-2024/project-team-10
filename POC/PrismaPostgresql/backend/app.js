@@ -15,7 +15,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.get('/test-connection', async (req, res) => {
       try {
          await prisma.$connect();
-         res.send('Connection successful');
+         res.status(204).send('Connection successful');
        } catch (error) {
          console.error('Error connecting to the database:', error);
          res.status(500).send('Error connecting to the database');
@@ -23,18 +23,19 @@ app.get('/test-connection', async (req, res) => {
     });
 
 app.get('/users', async (req, res) => {
-
-   const users = await prisma.user.findMany();
-  if (users === null)
-  {
-    console.log("Database error");
-  }
-  
-  if (users.length === 0) {
-    res.send('No users found in database');
-  } else {
-    res.json(users);
-  } 
+  try{
+        const users = await prisma.user.findMany();
+        if (users.length === 0) {
+           res.status(404).send('No users found in database');
+        } else {
+          res.status(200).json(users);
+          }
+    } 
+    catch(error)
+    {
+      console.log(error);
+      res.status(500).json({ error});
+    }
 });
 
 app.post('/users', async (req, res) => {
@@ -64,6 +65,7 @@ app.post('/users', async (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
+  console.log(`Swagger UI available at http://localhost:${port}/api-docs`);
 });
 
 //module.exports = app;
