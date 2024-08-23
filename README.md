@@ -1,6 +1,7 @@
 # Give it a good name app
 
 # Solution Architecture
+
 ![SOLUTION-DIAGRAM](https://github.com/user-attachments/assets/3fd86ea3-6f87-4174-8391-a50ae3529819)
 
 # Code Structure
@@ -85,9 +86,11 @@ brew install docker
 
 # 4. How to run frontend react, backend node, database in dev mode or as docker containers
 
+`NOTE that you have to get database spun up before backend and frontend.`
+
 ## 1. Spin up database (docker-compose)
 
-Run this from Git Bash if you use Windows
+Run this from Git Bash if you use Windows.
 
 ```bash
 # In a new shell, and keep this shell opened
