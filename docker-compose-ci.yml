@@ -10,7 +10,7 @@ services:
       - 3000:3000
       - 5000:5000
     depends_on:
-      - postgres-db
+      - postgres
     networks:
       - DATABASE
   mongo:
