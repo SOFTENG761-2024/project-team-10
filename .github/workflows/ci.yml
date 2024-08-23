@@ -84,6 +84,9 @@ jobs:
           echo "MONGO_USERNAME=$MONGO_USERNAME" >> .env
           echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> .env
           echo "API_URL=$API_URL" >> .env
+          npm install -g prisma
+          npx prisma generate
+# RUN npx prisma db push
         env:
           # node creds
           MONGO_SERVER: mongo

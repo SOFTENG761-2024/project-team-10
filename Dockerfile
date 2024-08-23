@@ -4,9 +4,7 @@ WORKDIR /usr/src/app/backend
 COPY backend/package*.json ./
 RUN npm ci --omit=dev
 COPY backend/ .
-RUN npm install -g prisma
-RUN npx prisma generate
-# RUN npx prisma db push
+
 RUN ls
 # RUN npm run build
 
