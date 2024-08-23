@@ -30,5 +30,9 @@ RUN npm install -g serve
 EXPOSE 3000
 EXPOSE 5000
 
+RUN npm install -g prisma
+RUN npx prisma generate
+RUN npx prisma db push
+
 # Run the backend and frontend
 CMD ["sh", "-c", "node --env-file=./backend/.env ./backend/bin/www & serve -s frontend -l 5000"]

@@ -75,43 +75,9 @@ router.get("/:userId", async function getUserById(req, res) {
 
     return res.json(user);
   } catch (error) {
+    console.log(error);
     return res.status(500).json(error);
   }
 });
-
-/**
- * @swagger
- * /api/users/{userId}/votes:
- *   get:
- *     tags:
- *       - User Controller
- *     summary: Get all votes for userId
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: Unique identifier of the vote.
- *     responses:
- *       200:
- *         description: Votes found successfully.
- *       404:
- *         description: Votes not found.
- *       500:
- *         description: Internal server error, unable to retrieve vote.
- */
-router.get("/:userId/votes", async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const votes = await userService.getAllVotes(userId);
-
-    return res.json(votes);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-});
-
-// Add other routes as needed
 
 module.exports = router;

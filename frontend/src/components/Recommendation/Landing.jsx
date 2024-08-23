@@ -27,10 +27,6 @@ export const Landing = () => {
   }
   console.log(isMobile, cardLayout);
 
-  const handleRestaurantClick = () => {
-    navigate("/authenticated/recommend/restaurant-options");
-  };
-
   const { pageTitle, setPageTitle } = useRoute();
   useEffect(() => {
     setPageTitle("Recommendation");
@@ -44,12 +40,7 @@ export const Landing = () => {
         <br />
         <br />
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-          <Card
-            mt={4}
-            sx={cardLayout}
-            onClick={handleRestaurantClick}
-            id="restaurant-recommendation-button"
-          >
+          <Card mt={4} sx={cardLayout} id="restaurant-recommendation-button">
             <CardActionArea>
               <CardMedia
                 sx={{ height: 180 }}
