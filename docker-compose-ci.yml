@@ -68,6 +68,21 @@ services:
       target: /data/postgresdb
     networks:
       - DATABASE
+
+  pgadmin:
+    image: dpage/pgadmin4
+    env_file:
+      - ./.env
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}  
+    depends_on:
+      - postgres
+    ports:
+      - "8888:80"
+    networks:
+      - DATABASE
+
 networks:
   DATABASE:
     name: DATABASE
