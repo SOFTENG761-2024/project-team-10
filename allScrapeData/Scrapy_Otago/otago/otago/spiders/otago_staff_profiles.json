@@ -1,0 +1,261 @@
+{
+    "title": "Associate Professor",
+    "name": "Kirsten Robertson",
+    "email": "kirsten.robertson@otago.ac.nz",
+    "phone": "+64 3 479 8451",
+    "office": "N/A",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "BA, MSc, PhD (Otago)",
+    "teaching_responsibilities": [
+        "MART 305",
+        "MART 355",
+        "MART 464"
+    ],
+    "supervision_details": []
+},
+{
+    "title": "Dr",
+    "name": "Mathew Parackal",
+    "email": "mathew.parackal@otago.ac.nz",
+    "phone": "+64 3 479 7696",
+    "office": "Room: Otago Business School 4.35",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "N/A",
+    "teaching_responsibilities": [
+        "MART 304",
+        "MART 466"
+    ],
+    "supervision_details": []
+},
+{
+    "title": "N/A",
+    "name": "Ismail Shaheer",
+    "email": " ismail.shaheer@otago.ac.nz",
+    "phone": "N/A",
+    "office": "N/A",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "N/A",
+    "teaching_responsibilities": [],
+    "supervision_details": []
+},
+{
+    "title": "N/A",
+    "name": "Administrators",
+    "email": "marketing@otago.ac.nz",
+    "phone": "+64 3 479 7697",
+    "office": "Otago Business School Room 4.01A",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "N/A",
+    "teaching_responsibilities": [],
+    "supervision_details": []
+},
+{
+    "title": "Dr",
+    "name": "Rob Thomson, Teaching Fellow",
+    "email": "rob.thomson@otago.ac.nz",
+    "phone": "N/A",
+    "office": "N/A",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "N/A",
+    "teaching_responsibilities": [],
+    "supervision_details": []
+},
+{
+    "title": "N/A",
+    "name": "Troy Mihaka, Teaching Fellow",
+    "email": "troy.mihaka@otago.ac.nz",
+    "phone": "N/A",
+    "office": "N/A",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "N/A",
+    "teaching_responsibilities": [
+        "ENTR 101"
+    ],
+    "supervision_details": []
+},
+{
+    "title": "N/A",
+    "name": "Cathie Child, Teaching Fellow",
+    "email": "cathie.child@otago.ac.nz",
+    "phone": "N/A",
+    "office": "N/A",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "N/A",
+    "teaching_responsibilities": [],
+    "supervision_details": []
+},
+{
+    "title": "Dr",
+    "name": "Masoud Karami",
+    "email": "m.karami@otago.ac.nz",
+    "phone": "+64 3 479 8159",
+    "office": "Room 4.34 Otago Business School",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "N/A",
+    "teaching_responsibilities": [
+        "MART 301",
+        "MART 461"
+    ],
+    "supervision_details": []
+},
+{
+    "title": "Dr",
+    "name": "John Williams",
+    "email": "john.williams@otago.ac.nz",
+    "phone": "+64 3 479 5040",
+    "office": "Room 4.07 Otago Business School",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "BCom, PGDipCom, MCom, DipGrad (Statistics), PhD",
+    "teaching_responsibilities": [
+        "BSNS 111",
+        "MART 210",
+        "MART 308",
+        "MART 462"
+    ],
+    "supervision_details": []
+},
+{
+    "title": "Dr",
+    "name": "Damien Mather",
+    "email": "damien.mather@otago.ac.nz",
+    "phone": "+64 3 479 7694",
+    "office": "Room 4.38 Otago Business School",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "N/A",
+    "teaching_responsibilities": [
+        "MART 212",
+        "MART 448",
+        "MART 466"
+    ],
+    "supervision_details": []
+},
+{
+    "title": "Dr",
+    "name": "Wiebke Finkler",
+    "email": "wiebke.finkler@otago.ac.nz",
+    "phone": "+64 3 479 8167",
+    "office": "Room 4.19, Otago Business School",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "N/A",
+    "teaching_responsibilities": [
+        "MART 333",
+        "MART 449",
+        "MART 469"
+    ],
+    "supervision_details": []
+},
+{
+    "title": "Professor",
+    "name": "Lisa McNeill",
+    "email": "N/A",
+    "phone": "+64 3 479 5758",
+    "office": "Room Otago Business School 4.37",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "BA, BCom(Hons), PhD (Otago)",
+    "teaching_responsibilities": [
+        "MART 306",
+        "MART 460"
+    ],
+    "supervision_details": []
+},
+{
+    "title": "Associate Professor",
+    "name": "Sergio Biggemann",
+    "email": "sergio.biggemann@otago.ac.nz",
+    "phone": "+64 3 479 8467",
+    "office": "Room Otago Business School 4.10",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "BSc (Mining), MMPP, MBA (Catholic University of Bolivia), DBA (Macquarie Graduate School of Management, Australia)",
+    "teaching_responsibilities": [],
+    "supervision_details": []
+},
+{
+    "title": "Professor",
+    "name": "Robert Aitken",
+    "email": "rob.aitken@otago.ac.nz",
+    "phone": "+64 3 479 5497",
+    "office": "Room 4.06 Otago Business School",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "BA(Open Univ Britain) BEd(Hons)(Southampton) MPhil(Exeter) PhD(Otago)",
+    "teaching_responsibilities": [
+        "BSNS 111",
+        "MART 329",
+        "MART 333",
+        "MART 468",
+        "MART 469"
+    ],
+    "supervision_details": [
+        "Robert has supervised 11 PhD students",
+        "19 Master students",
+        "Been an External PhD Examiner 11 times",
+        "Internal PhD Examiner 8 times",
+        "Convened 10 PhD Examinations"
+    ]
+},
+{
+    "title": "Professor",
+    "name": "Maree Thyne",
+    "email": "maree.thyne@otago.ac.nz",
+    "phone": "+64 3 479 8162",
+    "office": "Room 4.08 Otago Business School",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "BA, BTour, DipGrad, PhD (Otago)",
+    "teaching_responsibilities": [
+        "MART 207",
+        "MART 210",
+        "MART 355"
+    ],
+    "supervision_details": []
+},
+{
+    "title": "Associate Professor",
+    "name": "Leah Watkins",
+    "email": "leah.watkins@otago.ac.nz",
+    "phone": "+64 3 479 8168",
+    "office": "Room 4.40 Otago Business School",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "BA, PGDip (Japanese), DipGrad (Marketing), PhD",
+    "teaching_responsibilities": [
+        "MART 201",
+        "MART 464",
+        "MART 212",
+        "MART 501",
+        "MART 580"
+    ],
+    "supervision_details": []
+},
+{
+    "title": "Associate Professor",
+    "name": "Andrea Insch",
+    "email": "andrea.insch@otago.ac.nz",
+    "phone": "+64 3 479 4005",
+    "office": "Room 4.24 Otago Business School",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "N/A",
+    "teaching_responsibilities": [
+        "MART 301",
+        "MART 326",
+        "MART 330",
+        "MART 501",
+        "MART 580"
+    ],
+    "supervision_details": []
+},
+{
+    "title": "Dr",
+    "name": "Robert Hamlin",
+    "email": "rob.hamlin@otago.ac.nz",
+    "phone": "+64 3 479 8161",
+    "office": "Room 4.20 Otago Business School",
+    "image_url": "https://www.otago.ac.nz/__data/assets/file/0034/568366/UoO_Logo_RGB_Horz_Gold-REV.svg",
+    "degrees": "N/A",
+    "teaching_responsibilities": [
+        "AGRI 101",
+        "ENTR 412",
+        "FOSC 112",
+        "HUNT 244",
+        "MART 211",
+        "MART 463"
+    ],
+    "supervision_details": []
+},
