@@ -43,7 +43,6 @@ export const Profile = () => {
   useEffect(() => {
     setPageTitle("Profile");
   });
-  const [votes, setVotes] = useState([]);
   const [expanded, setExpanded] = useState([]);
   const handleExpandClick = (index) => {
     setExpanded((prevExpanded) => {
@@ -52,26 +51,8 @@ export const Profile = () => {
       return newExpanded;
     });
   };
-  const [isLoadingVotes, setIsLoadingVotes] = useState(false);
   const limit = 5;
 
-  const fetchAllVotes = async () => {
-    try {
-      setIsLoadingVotes(true);
-
-      const response = await get(
-        `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/users/${user.userId}/votes`,
-      );
-      setVotes(response.data);
-      setExpanded(new Array(response.data.length).fill(false));
-    } finally {
-      setIsLoadingVotes(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAllVotes();
-  }, []);
   const [openComments, setOpenComments] = useState(false);
   const [currVoteId, setCurrVoteId] = useState("");
 
@@ -80,21 +61,52 @@ export const Profile = () => {
     setCurrVoteId(voteId);
   };
 
-  if (!user) {
-    return (
-      <Typography variant="h4" component="h1" gutterBottom>
-        You need to login to see this page.
-      </Typography>
-    );
-  }
+
+  const votes = [
+    {
+      title: "one",
+      recommend: [
+        {
+          detailIntroduction: "blabla",
+          location: "auckland",
+          name: "name 1",
+          priceRange: "bla bla",
+          openHours: "9-6pm",
+          mapUrl: "asdf",
+          imageUrl: undefined,
+          count: 0,
+          websiteUrl: undefined,
+        },
+      ],
+      _id: "1",
+      userId: { type: String, require: true },
+    },
+    {
+      title: "two",
+      recommend: [
+        {
+          detailIntroduction: "blabla",
+          location: "auckland",
+          name: "name 2",
+          priceRange: "bla bla",
+          openHours: "9-6pm",
+          mapUrl: "asdf",
+          imageUrl: undefined,
+          count: 0,
+          websiteUrl: undefined,
+        },
+      ],
+      _id: "2",
+      userId: { type: String, require: true },
+    }
+  ]
+  console.log(votes)
   return (
     <Box mt={10} textAlign="center">
       <Container maxWidth="md">
         <Typography variant="h4" component="h1" gutterBottom>
           Voting history for {user.userName}
         </Typography>
-        {!votes ||
-          (votes.length == 0 && <Typography>No voting history</Typography>)}
         {votes.map((vote, index) => {
           // Sort the recommend array in descending order based on the count property
           const sortedRecommend = vote.recommend.sort(
@@ -103,10 +115,7 @@ export const Profile = () => {
           const highestCount =
             sortedRecommend.length > 0 ? sortedRecommend[0].count : 0;
           return (
-            <List key={vote._id + v4()}>
-              <Typography variant="h4" component="h1" gutterBottom>
-                Vote title: {vote.title}
-              </Typography>
+            <List key={1 + v4()}>
               {sortedRecommend.map((restaurant, idx) => (
                 <ListItem
                   sx={{ paddingLeft: 0, paddingRight: 0, width: "100%" }}

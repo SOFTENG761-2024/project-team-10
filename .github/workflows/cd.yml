@@ -3,11 +3,13 @@ permissions:
   id-token: write
   contents: read
 # triggers on pull_request for ease of testing
+# on:
+#   push:
+#     branches:
+#       - main
 on:
-  push:
-    branches:
-      - main
-
+  pull_request:
+  
 jobs:
   archive-src-code:
     runs-on: ubuntu-latest
@@ -33,6 +35,11 @@ jobs:
           echo "ME_CONFIG_MONGODB_AUTH_PASSWORD=$ME_CONFIG_MONGODB_AUTH_PASSWORD" >> .env
           echo "ME_CONFIG_BASICAUTH_USERNAME=$ME_CONFIG_BASICAUTH_USERNAME" >> .env
           echo "ME_CONFIG_BASICAUTH_PASSWORD=$ME_CONFIG_BASICAUTH_PASSWORD" >> .env
+          echo "POSTGRES_USER=$POSTGRES_USER" >> .env
+          echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
+          echo "POSTGRES_DB=$POSTGRES_DB" >> .env
+          echo "PGADMIN_DEFAULT_EMAIL=$PGADMIN_DEFAULT_EMAIL" >> .env
+          echo "PGADMIN_DEFAULT_PASSWORD=$PGADMIN_DEFAULT_PASSWORD" >> .env
         env:
           # mongo creds
           MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
@@ -47,6 +54,12 @@ jobs:
           ME_CONFIG_MONGODB_AUTH_PASSWORD: ${{ secrets.ME_CONFIG_MONGODB_AUTH_PASSWORD }}
           ME_CONFIG_BASICAUTH_USERNAME: ${{ secrets.ME_CONFIG_BASICAUTH_USERNAME }}
           ME_CONFIG_BASICAUTH_PASSWORD: ${{ secrets.ME_CONFIG_BASICAUTH_PASSWORD }}
+          #postgres
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          PGADMIN_DEFAULT_EMAIL: ${{secrets.PGADMIN_DEFAULT_EMAIL}}
+          PGADMIN_DEFAULT_PASSWORD: ${{secrets.PGADMIN_DEFAULT_PASSWORD}}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@b8c74de753fbcb4868bf2011fb2e15826ce973af
         with:
@@ -77,15 +90,13 @@ jobs:
           echo "MONGO_SERVER=$MONGO_SERVER" >> .env
           echo "MONGO_USERNAME=$MONGO_USERNAME" >> .env
           echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> .env
-          echo "API_KEY=$API_KEY" >> .env
-          echo "API_URL=$API_URL" >> .env
+          npm install -g prisma
+          npx prisma generate
         env:
           # node creds
           MONGO_SERVER: mongo
           MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
           MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-          API_KEY: ${{ secrets.API_KEY }}
-          API_URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=
       - name: Archive src code
         run: |
           cat ".env"

@@ -1,37 +1,37 @@
 const userDao = require("../daos/userDao.js");
-const voteService = require("../services/voteService.js");
 const logger = require("../utils/logger.js");
 
 async function createUser({ userName, email, userId, imageUrl }) {
-  logger.info(
-    `Creating user with userName=${userName} email=${email} userId=${userId} imageUrl=${imageUrl}`
-  );
   const user = await userDao.createUser({ userName, email, userId, imageUrl });
 
   logger.info(`Created user: ${JSON.stringify(user)}`);
   return user;
 }
 
-async function getAllVotes(userId) {
-  logger.info(`Getting all votes for userId=${userId}`);
-  return voteService.getAllVotes(userId);
-}
-async function getUserById(userId) {
-  logger.info(`Getting user by userId=${userId}`);
-  const user = await userDao.getUserById(userId);
-
-  if (user == null) {
-    return null;
-  }
+async function createUserV2(userDto) {
+  logger.info(`V2 Creating user: ${JSON.stringify(userDto)}`);
+  const user = await userDao.createUserV2(userDto);
+  logger.info(`V2 Created user: ${JSON.stringify(user)}`);
 
   return user;
 }
 
-// Add other service functions as needed
+async function getUserById(userId) {
+  logger.info(`Getting user by userId=${userId}`);
+  const user = await userDao.getUserById(userId);
 
+  return user;
+}
+
+async function getUserByIdV2(userId) {
+  logger.info(`V2 Getting user by userId=${userId}`);
+  const user = await userDao.getUserByIdV2(userId);
+
+  return user;
+}
 module.exports = {
   createUser,
   getUserById,
-  getAllVotes,
-  // Export other functions
+  getUserByIdV2,
+  createUserV2,
 };

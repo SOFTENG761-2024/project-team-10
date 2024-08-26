@@ -4,6 +4,8 @@ WORKDIR /usr/src/app/backend
 COPY backend/package*.json ./
 RUN npm ci --omit=dev
 COPY backend/ .
+
+RUN ls
 # RUN npm run build
 
 # Build stage for Frontend
