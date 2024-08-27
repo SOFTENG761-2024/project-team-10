@@ -49,7 +49,7 @@ const RouteProvider = () => {
     <RouteContext.Provider value={{ pageTitle, setPageTitle }}>
       <BrowserRouter>
         <Routes>
-          <Route
+          {/* <Route
             path="/"
             element={
               isAuthenticated ? (
@@ -108,7 +108,21 @@ const RouteProvider = () => {
                 <Navigate to="/auth" />
               )
             }
+          /> */}
+          <Route
+            path="/"
+            element={
+                <Landing />
+              
+              
+            }
           />
+          
+          {/* Optionally, you can keep the /auth route if needed */}
+          {/* <Route
+            path="/auth"
+            element={<AuthPageProvider />}
+          /> */}
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>
