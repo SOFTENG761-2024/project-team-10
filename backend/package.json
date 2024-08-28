@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start:dev": "nodemon --exec node --env-file=.env ./bin/www",
-    "start:dep": "npx prisma generate && cd ../ && sh scripts/start.sh",
+    "start:dep": "npx prisma generate && cd ../ && sh scripts/start.sh && npx prisma db push",
     "prisma-db-push": "npx prisma db push",
     "deploy": "npx prisma migrate deploy",
     "lint": "eslint . --fix --ext js",
@@ -22,6 +22,7 @@
     "morgan": "~1.9.1",
     "node-fetch": "^2.7.0",
     "nodemon": "^3.1.0",
+    "sh": "^0.0.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "uuid": "^10.0.0",

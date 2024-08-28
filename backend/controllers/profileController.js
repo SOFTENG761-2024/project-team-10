@@ -43,7 +43,7 @@ router.post("/", async function createProfile(req, res) {
 
 /**
  * @swagger
- * /api/profiles/{userId}:
+ * /api/profiles/userid{userId}:
  *   get:
  *     tags:
  *     - Profile Controller
@@ -63,13 +63,48 @@ router.post("/", async function createProfile(req, res) {
  *       '500':
  *         description: Internal server error
  */
-router.get("/:userId", async function getProfileByUserId(req, res) {
+router.get("/userId:userId", async function getProfileByUserId(req, res) {
   try {
     const userId = req.params.userId;
     const profile = await profileService.getProfileByUserId(userId);
 
     return res.json(profile);
   } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
+
+/**
+ * @swagger
+ * /api/profiles/bio{bio}:
+ *   get:
+ *     tags:
+ *     - Profile Controller
+ *     summary: Get profile by bio
+ *     parameters:
+ *       - in: path
+ *         name: bio
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: bio
+ *     responses:
+ *       '200':
+ *         description: Profile found
+ *       '404':
+ *         description: Profile not found
+ *       '500':
+ *         description: Internal server error
+ */
+router.get("/Bio:bio", async function getProfileByBio(req, res) {
+  try {
+    const bio = req.params.bio;
+    console.log(bio);
+    const profile = await profileService.getProfileByBio(bio);
+    return res.json(profile);
+  } 
+  catch (error) {
     console.log(error);
     return res.status(500).json(error);
   }
