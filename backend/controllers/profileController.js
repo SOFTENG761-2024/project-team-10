@@ -2,30 +2,8 @@ const express = require("express");
 const router = express.Router();
 const profileService = require("../services/profileService.js");
 
-/**
- * @swagger
- * /api/profiles:
- *   post:
- *     tags:
- *     - Profile Controller
- *     consumes: application/json
- *     summary: Create a new profile
- *     parameters:
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           properties:
- *             userId:
- *                 type: string
- *             bio:
- *                 type: string
- *     responses:
- *       '200':
- *         description: Profile created successfully
- *       '500':
- *         description: Internal server error
- */
+//swagger documentation in swaggerDoc.yaml with path: /api/profiles 
+
 router.post("/", async function createProfile(req, res) {
   try {
     const { userId, bio } = req.body;
@@ -41,28 +19,7 @@ router.post("/", async function createProfile(req, res) {
   }
 });
 
-/**
- * @swagger
- * /api/profiles/userid{userId}:
- *   get:
- *     tags:
- *     - Profile Controller
- *     summary: Get profile by userId
- *     parameters:
- *       - in: path
- *         name: userId
- *         schema:
- *           type: string
- *         required: true
- *         description: User ID
- *     responses:
- *       '200':
- *         description: Profile found
- *       '404':
- *         description: Profile not found
- *       '500':
- *         description: Internal server error
- */
+
 router.get("/userId:userId", async function getProfileByUserId(req, res) {
   try {
     const userId = req.params.userId;
@@ -75,28 +32,7 @@ router.get("/userId:userId", async function getProfileByUserId(req, res) {
   }
 });
 
-/**
- * @swagger
- * /api/profiles/bio{bio}:
- *   get:
- *     tags:
- *     - Profile Controller
- *     summary: Get profile by bio
- *     parameters:
- *       - in: path
- *         name: bio
- *         schema:
- *           type: string
- *         required: true
- *         description: bio
- *     responses:
- *       '200':
- *         description: Profile found
- *       '404':
- *         description: Profile not found
- *       '500':
- *         description: Internal server error
- */
+
 router.get("/Bio:bio", async function getProfileByBio(req, res) {
   try {
     const bio = req.params.bio;

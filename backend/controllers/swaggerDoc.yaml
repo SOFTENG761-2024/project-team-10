@@ -1,0 +1,232 @@
+openapi: "3.1.0"
+info:
+  title: "fellows-project761-team10"
+  version: "1.0.0"
+  description: "fellows-project761-team10-API-for-user-profile-management"
+servers:
+  - url: "http://localhost:3000"
+paths:
+ #Swagger Definition for the user controller
+  /api/users:
+    post:              #Create a new user
+      tags:
+        - User Controller
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                userName:
+                  type: string
+                email:
+                  type: string
+                imageUrl:
+                  type: string
+      responses:
+        '200':
+          description: User created successfully
+        '500':
+          description: Internal server error
+
+  /api/users/{userId}:
+    get:                #get user by user ID
+      tags:
+        - User Controller
+      summary: Get user by userId
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: User ID
+      responses:
+        '200':
+          description: User found
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+#swagger definition for the Profile Controller
+  /api/profiles:  
+    post:             #Create new profile - takes userId and bio
+      tags:
+        - Profile Controller
+      summary: Create a new profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                bio:
+                  type: string
+      responses:
+        '200':
+          description: Profile created successfully
+        '500':
+          description: Internal server error
+
+  /api/profiles/userid{userId}:
+    get:                           #Get Profiles by userId
+      tags:
+        - Profile Controller
+      summary: Get profile by userId
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: User ID
+      responses:
+        '200':
+          description: Profile found
+        '404':
+          description: Profile not found
+        '500':
+          description: Internal server error
+
+  /api/profiles/bio{bio}:        
+    get:                                      #Get Profiles by bio
+      tags:
+        - Profile Controller
+      summary: Get profile by bio
+      parameters:
+        - name: bio
+          in: path
+          required: true
+          schema:
+            type: string
+          description: bio
+      responses:
+        '200':
+          description: Profile found
+        '404':
+          description: Profile not found
+        '500':
+          description: Internal server error
+
+#swagger definition for the Comment Controller
+  /api/comments/{voteId}: 
+    get:                           #Get comments by vote ID
+      tags:
+        - "Comment Controller"
+      summary: "Get total num records"
+      parameters:
+        - name: "voteId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "isTotalCount"
+          in: "query"
+          schema:
+            type: "boolean"
+          description: "Are we getting the count of comments for the voteId."
+      responses:
+        '200':
+          description: "Comments retrieved successfully"
+        '401':
+          description: "Unauthorized - Authentication required"
+        '403':
+          description: "Forbidden - Comment does not have permission to access this resource"
+        '500':
+          description: "Internal server error - Something went wrong on the server side"
+
+  /api/comments/{userId}/{voteId}: 
+    get:                          #Get comments by user ID and vote ID
+      tags:
+        - "Comment Controller"
+      summary: "Get paginated comments for userId and voteId"
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "voteId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "page"
+          in: "query"
+          schema:
+            type: "integer"
+          description: "Page number"
+        - name: "limit"
+          in: "query"
+          schema:
+            type: "integer"
+          description: "Number of items per page"
+      responses:
+        '200':
+          description: "Comments retrieved successfully"
+        '401':
+          description: "Unauthorized - Authentication required"
+        '403':
+          description: "Forbidden - Comment does not have permission to access this resource"
+        '500':
+          description: "Internal server error - Something went wrong on the server side"
+
+    post:             #Create new comment
+      tags:
+        - "Comment Controller"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                userId:
+                  type: "string"
+                isAI:
+                  type: "boolean"
+                voteId:
+                  type: "string"
+                comment:
+                  type: "string"
+      responses:
+        '201':
+          description: "Comment created successfully"
+        '401':
+          description: "Unauthenticated"
+        '403':
+          description: "Unauthorized"
+        '500':
+          description: "Internal server error"
+
+  /api/comments/{commentId}:
+    delete:                  #Delete a comment by ID
+      tags:
+        - "Comment Controller"
+      summary: "Delete a comment by ID"
+      parameters:
+        - name: "commentId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the comment to delete"
+      responses:
+        '204':
+          description: "Comment deleted successfully"
+        '401':
+          description: "Unauthenticated"
+        '403':
+          description: "Unauthorized"
+        '404':
+          description: "Comment not found"
+        '500':
+          description: "Internal server error"
