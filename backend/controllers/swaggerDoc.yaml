@@ -92,7 +92,7 @@ paths:
         - User Profile Controller
       summary: Get user profile by primary email
       parameters:
-        - name: primary-email
+        - name: primaryemail
           in: path
           required: true
           schema:

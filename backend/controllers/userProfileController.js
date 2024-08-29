@@ -22,10 +22,12 @@ router.post("/", async function createUserProfile(req, res)
 router.get("/primaryEmail:primaryEmail", async function getUserProfileByPrimaryEmail(req, res) {
   try 
   {
-    const primaryEmail = req.params.primaryEmail.toString();
+    const primaryEmail = req.params.primaryEmail;
     const userProfile = await userProfileService.getUserProfileByPrimaryEmail(primaryEmail);
-
-    return res.json(userProfile);
+    if(userProfile === null )
+      return res.status(404).json("No user profile found");
+    else
+      return res.json(userProfile);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
