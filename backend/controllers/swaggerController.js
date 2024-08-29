@@ -2,7 +2,7 @@
 const swaggerUi = require("swagger-ui-express");
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./controllers/swaggerDoc.yaml');
-console.log(swaggerDocument);
+//console.log(swaggerDocument);
 
 // const options = {
 //   swaggerDefinition: {

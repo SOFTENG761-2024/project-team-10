@@ -6,6 +6,104 @@ info:
 servers:
   - url: "http://localhost:3000"
 paths:
+  /api/userprofile:
+   get:
+      tags:
+        - User Profile Controller
+      summary: Get all user profiles
+      responses:
+        '200':
+          description: User profiles found
+        '404':
+          description: No user profiles found
+        '500':
+          description: Internal server error
+   post:
+      tags:
+        - User Profile Controller
+      summary: Create a new user profile
+      description: This endpoint creates a new user profile with the given details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                usertypeid:
+                  type: integer
+                institution_id:
+                  type: integer
+                faculty_id:
+                  type: integer
+                organization_id:
+                  type: integer
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                preferred_name:
+                  type: string
+                title:
+                  type: string
+                primary_email:
+                  type: string
+                orcid_identifier:
+                  type: string
+                linkedin_url:
+                  type: string
+                secondary_email:
+                  type: string
+                mobile_phone:
+                  type: string
+                bio:
+                  type: string
+                research_area:
+                  type: string
+                skills:
+                  type: string
+                research_tags:
+                  type: string
+                expertise:
+                  type: string
+                tools:
+                  type: string
+                profile_picture:
+                  type: string
+                isscrapped:
+                  type: boolean
+                signup_datetime:
+                  type: string
+                  format: date-time
+      responses:
+        '201':
+          description: User profile created successfully
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /api/userprofile/primaryemail{primaryemail}:
+    get:
+      tags:
+        - User Profile Controller
+      summary: Get user profile by primary email
+      parameters:
+        - name: primary-email
+          in: path
+          required: true
+          schema:
+            type: string
+            format: email
+          description: Primary email address
+      responses:
+        '200':
+          description: Profile found
+        '404':
+          description: Profile not found
+        '500':
+          description: Internal server error
+    
  #Swagger Definition for the user controller
   /api/users:
     post:              #Create a new user

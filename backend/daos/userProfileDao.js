@@ -5,22 +5,20 @@ const { prismaClient, disconnect } = require("../daos/prismaClient");
 async function createUserProfile(userProfileData) {
   try {
     console.log(userProfileData);
-    const institution = await getInstitutionByName(userProfileData.institutionName)
+    const institution = await getInstitutionByName(userProfileData.institutionName);
     if(!institution)
       {
-        institution = await addInstitution(userProfileData.institutionName)
-      }
-
+        institution = await addInstitution(userProfileData.institutionName);
+        userProfile.institution_id=institution.institution_id;
+      } 
+    console.log(JSON.stringify(institution));
     const userProfile = await prismaClient.user_profile.create({
-      data: userProfileData,
-      institution_id: institution.institution_id
+      data: userProfileData
     });
 
     return userProfile;
   }
-  catch (error) {
-    console.log(error);
-  } 
+
   finally {
     disconnect();
   }
@@ -37,9 +35,7 @@ async function addInstitution(institutionName)
       },
     });
   }
-  catch (error) {
-    console.log(error);
-  } 
+
   finally {
     disconnect();
   }
@@ -47,7 +43,7 @@ async function addInstitution(institutionName)
 
 async function getInstitutionByName(institutionName) {
   try {
-    const institution = await prismaClient.institution.findUnique({
+    const institution = await prismaClient.institution.findFirst({
       where: {
         name: {
           contains: institutionName,
@@ -57,9 +53,6 @@ async function getInstitutionByName(institutionName) {
     });
     return institution;
   }
-  catch (error) {
-    console.log(error);
-  } 
   finally {
     await disconnect();
   }
@@ -75,9 +68,6 @@ async function getUserProfileById(userId) {
     });
     return profile;
   }
-  catch (error) {
-    console.log(error);
-  } 
   finally {
     await disconnect();
   }
@@ -85,16 +75,16 @@ async function getUserProfileById(userId) {
 
 async function getUserProfileByPrimaryEmail(primaryEmail) {
   try {
+    console.log(primaryEmail);
+    //const email= String(primaryEmail);
     const profile = await prismaClient.user_profile.findUnique({
       where: {
-        primary_email: {primaryEmail, mode: 'insensitive'}
+        primary_email: primaryEmail,
       },
     });
     return profile;
   }
-  catch (error) {
-    console.log(error);
-  } 
+
   finally {
     await disconnect();
   }
@@ -105,9 +95,6 @@ async function getAllUserProfiles()
     try{
         const userProfiles = await prismaClient.user_profile.findMany();
         return userProfiles;
-    }
-    catch (error) {
-        console.log(error);
     }
         finally {
             await disconnect();
