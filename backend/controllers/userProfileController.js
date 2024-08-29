@@ -8,7 +8,6 @@ router.post("/", async function createUserProfile(req, res)
 {
   const userData=req.body;
   try{
-     console.log(userData); 
     const userProfile = await userProfileService.createUserProfile(userData);
     res.status(201).json(userProfile);
   }
@@ -21,7 +20,8 @@ router.post("/", async function createUserProfile(req, res)
 
 
 router.get("/primaryEmail:primaryEmail", async function getUserProfileByPrimaryEmail(req, res) {
-  try {
+  try 
+  {
     const primaryEmail = req.params.primaryEmail.toString();
     const userProfile = await userProfileService.getUserProfileByPrimaryEmail(primaryEmail);
 

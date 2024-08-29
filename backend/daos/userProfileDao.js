@@ -1,17 +1,20 @@
 const { prismaClient, disconnect } = require("../daos/prismaClient");
 
-//Create user profile - add university if it doesn't exist 
+//Create user profile - add university if it doesn't exist - would not work for now though
 //TODO: move to separate objects, add logic for faculty/organization -HI
 async function createUserProfile(userProfileData) {
   try {
-    console.log(userProfileData);
-    const institution = await getInstitutionByName(userProfileData.institutionName);
+    /*
+    let institution = await getInstitutionByName(userProfileData.institution_name);
     if(!institution)
       {
-        institution = await addInstitution(userProfileData.institutionName);
-        userProfile.institution_id=institution.institution_id;
+        console.log("Creating institute");
+        institution = await addInstitution(userProfileData.institution_name);
       } 
-    console.log(JSON.stringify(institution));
+      
+    userProfileData.institution_id=institution.institution_id;
+    delete userProfileData.institution_name;  */
+
     const userProfile = await prismaClient.user_profile.create({
       data: userProfileData
     });
@@ -26,7 +29,6 @@ async function createUserProfile(userProfileData) {
 
 async function addInstitution(institutionName)
 {
-  console.log(institutionName); //remove later
   try
   {
     const institute= await prismaClient.institution.create({
@@ -34,6 +36,7 @@ async function addInstitution(institutionName)
         name: institutionName,
       },
     });
+    return institute;
   }
 
   finally {
@@ -43,14 +46,16 @@ async function addInstitution(institutionName)
 
 async function getInstitutionByName(institutionName) {
   try {
+
     const institution = await prismaClient.institution.findFirst({
       where: {
         name: {
-          contains: institutionName,
+          equals: institutionName,
           mode: 'insensitive'
         }
       },
     });
+
     return institution;
   }
   finally {
@@ -75,8 +80,7 @@ async function getUserProfileById(userId) {
 
 async function getUserProfileByPrimaryEmail(primaryEmail) {
   try {
-    console.log(primaryEmail);
-    //const email= String(primaryEmail);
+  
     const profile = await prismaClient.user_profile.findUnique({
       where: {
         primary_email: primaryEmail,

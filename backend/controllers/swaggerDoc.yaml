@@ -34,6 +34,8 @@ paths:
                   type: integer
                 institution_id:
                   type: integer
+                #institution_name:
+                 # type:strimg
                 faculty_id:
                   type: integer
                 organization_id:
@@ -48,6 +50,7 @@ paths:
                   type: string
                 primary_email:
                   type: string
+                  format: email
                 orcid_identifier:
                   type: string
                 linkedin_url:
