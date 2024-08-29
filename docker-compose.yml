@@ -71,20 +71,6 @@ services:
     networks:
       - DATABASE
 
-  project-fellows:
-    image: hafsatest/761project:latest
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    ports:
-      - 3000:3000
-      - 5000:5000
-    depends_on:
-      - postgres
-    networks:
-      - DATABASE
-
-
 networks:
   DATABASE:
     name: DATABASE
