@@ -9,6 +9,8 @@ import {
 } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
 import AuthPageProvider from "@frontend-ui/components/AuthPage/AuthPageProvider";
+import SignupPageProvider from "@frontend-ui/components/AuthPage/SignupPageProvider";
+import SigninPageProvider from "@frontend-ui/components/AuthPage/SigninPageProvider";
 import {
   RestaurantRecommendations,
   Landing,
@@ -74,7 +76,26 @@ const RouteProvider = () => {
               )
             }
           />
-
+          <Route
+            path="/signup"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/authenticated" />
+              ) : (
+                <SignupPageProvider />
+              )
+            }
+          />
+          <Route
+            path="/signin"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/authenticated" />
+              ) : (
+                <SigninPageProvider />
+              )
+            }
+          />
           <Route
             path="/authenticated"
             element={
