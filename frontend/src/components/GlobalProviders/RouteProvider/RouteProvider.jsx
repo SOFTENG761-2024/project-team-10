@@ -49,65 +49,23 @@ const RouteProvider = () => {
     <RouteContext.Provider value={{ pageTitle, setPageTitle }}>
       <BrowserRouter>
         <Routes>
+          {/* <Route
+            path="/"
+            element={
+              <Landing />
+            }
+          /> */}
           <Route
             path="/"
             element={
-              isAuthenticated ? (
-                <Navigate to="/authenticated" />
-              ) : (
-                <Navigate to="/auth" />
-              )
+              <Landing />
             }
           />
+          
+          {/* Optionally, you can keep the /auth route if needed */}
           <Route
             path="/auth"
-            element={
-              isAuthenticated ? (
-                <Navigate to="/authenticated" />
-              ) : (
-                <AuthPageProvider />
-              )
-            }
-          />
-
-          <Route
-            path="/authenticated"
-            element={
-              isAuthenticated ? (
-                <>
-                  <HeaderProvider />
-
-                  <Landing />
-                </>
-              ) : (
-                <Navigate to="/auth" />
-              )
-            }
-          />
-
-          <Route
-            path="/authenticated/profile"
-            element={
-              isAuthenticated ? (
-                <>
-                  <HeaderProvider />
-                  <Profile />
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    minHeight="10vh"
-                  >
-                    <Stack direction="row" spacing={2}>
-                      <GoBackButton />
-                      <GoForwardButton />
-                    </Stack>
-                  </Box>
-                </>
-              ) : (
-                <Navigate to="/auth" />
-              )
-            }
+            element={<AuthPageProvider />}
           />
         </Routes>
       </BrowserRouter>
