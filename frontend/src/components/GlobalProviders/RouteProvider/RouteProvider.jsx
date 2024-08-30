@@ -52,77 +52,21 @@ const RouteProvider = () => {
           {/* <Route
             path="/"
             element={
-              isAuthenticated ? (
-                <Navigate to="/authenticated" />
-              ) : (
-                <Navigate to="/auth" />
-              )
-            }
-          />
-          <Route
-            path="/auth"
-            element={
-              isAuthenticated ? (
-                <Navigate to="/authenticated" />
-              ) : (
-                <AuthPageProvider />
-              )
-            }
-          />
-
-          <Route
-            path="/authenticated"
-            element={
-              isAuthenticated ? (
-                <>
-                  <HeaderProvider />
-
-                  <Landing />
-                </>
-              ) : (
-                <Navigate to="/auth" />
-              )
-            }
-          />
-
-          <Route
-            path="/authenticated/profile"
-            element={
-              isAuthenticated ? (
-                <>
-                  <HeaderProvider />
-                  <Profile />
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    minHeight="10vh"
-                  >
-                    <Stack direction="row" spacing={2}>
-                      <GoBackButton />
-                      <GoForwardButton />
-                    </Stack>
-                  </Box>
-                </>
-              ) : (
-                <Navigate to="/auth" />
-              )
+              <Landing />
             }
           /> */}
           <Route
             path="/"
             element={
-                <Landing />
-              
-              
+              <Landing />
             }
           />
           
           {/* Optionally, you can keep the /auth route if needed */}
-          {/* <Route
+          <Route
             path="/auth"
             element={<AuthPageProvider />}
-          /> */}
+          />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>

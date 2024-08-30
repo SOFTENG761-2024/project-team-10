@@ -8,6 +8,7 @@ import {
 } from "./components/GlobalProviders";
 import { SnackbarProvider } from "./components/Snackbar";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import './style.css'; 
 
 const App = () => (
   <LocalStorageProvider>
