@@ -17,5 +17,7 @@ describe('Landing', () => {
     render(<Landing />);
     // const linkElement = screen.getByText(/Find me .../i);
     // expect(linkElement).toBeInTheDocument();
+    const searchInput = screen.getByPlaceholderText(/search/i); // Example: if you have an input with a placeholder "search"
+    expect(searchInput).toBeInTheDocument();
   });
 });
