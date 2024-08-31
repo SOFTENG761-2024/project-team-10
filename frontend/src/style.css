@@ -92,12 +92,12 @@ h3 {
     font-style: normal; 
 }
 
-p,span,a, ul,li {
+p,a, ul,li,button {
     font-family: 'Nunito', sans-serif;
     font-weight: 400; /* Regular */
 }
 
-.light-text {
+span .light-text {
     font-family: 'Nunito', sans-serif;
     font-weight: 300; /* Light */
 }

@@ -84,7 +84,7 @@ export const Landing = () => {
         </div>
       </nav>
       <section id="search">
-        <Container>
+        <div className="flex-container">
           <div className="top-icons">
             <div className="menuIcon">
               <img src='./landing/theme.png' className="themeStyle" alt="themeicon" />
@@ -106,12 +106,10 @@ export const Landing = () => {
               <SearchIcon />
             </button>
           </div>
-
-        </Container>
-
+        </div>
       </section>
       <section id="network">
-        <Container>
+        <div className="flex-container">
           {/* Circle Divs */}
           <div className="circle-container">
             <div className="circle circle1"><span>AUT(3)</span></div>
@@ -125,11 +123,10 @@ export const Landing = () => {
             <div className="circle circle9"><span>UOA(2)</span></div>
             <div className="circle circle11"><span>UOA(2)</span></div>
           </div>
-
-        </Container>
+        </div>
       </section>
       <section id="member">
-        <Container>
+        <div className="flex-container">
           {/* Content Sections */}
           <div className="content-sections">
             <div className="sect-id search">
@@ -139,53 +136,58 @@ export const Landing = () => {
                 can connect,collaborate, and grow together.Find experts based on
                 subject, skill or expertise and promot interdisciplinary collaboration.
               </p>
-              <div className="buttons">
+              <div className="member-buttons">
                 <button className="learn-more-button">Learn More</button>
-                <button className="sign-up-button">Sign Up</button>
+                <button className="sign-up">Sign Up <span className="arrow-button">{'>'}</span></button>
               </div>
             </div>
             <div className="right-section-div">
-              <div className="sect-id section">
-                <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
-                <h2>
-                  Unlock the Power of Collaboration and Networking</h2>
-                <p>Connect with a diverse community of researchers and experts.</p>
+              <div className="right-member-div">
+                <div className="section sec-member-width">
+                  <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
+                  <h2>
+                    Unlock the Power of Collaboration and Networking</h2>
+                  <p>Connect with a diverse community of researchers and experts.</p>
+                </div>
+                <div className="section sec-member-width ">
+                  <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
+                  <h2>Promote Interdisciplinary Collaboration</h2>
+                  <p>Break down barriers and foster collaboration across disciplines.</p>
+                </div>
               </div>
-              <div className="sect-id section">
-                <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
-                <h2>Promote Interdisciplinary Collaboration</h2>
-                <p>Break down barriers and foster collaboration across disciplines.</p>
-              </div>
-              <div className="sect-id section">
-                <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
-                <h2>Discover Expertise Across Disciplines</h2>
-                <p>Find experts based on subject, skill, or expertise.</p>
-              </div>
-              <div className="sect-id section">
-                <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
-                <h2>Discover Expertise Across Disciplines</h2>
-                <p>Find experts based on subject, skill, or expertise.</p>
+              <div className="right-member-div">
+                <div className="section sec-member-width ">
+                  <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
+                  <h2>Discover Expertise Across Disciplines</h2>
+                  <p>Find experts based on subject, skill, or expertise.</p>
+                </div>
+                <div className="section sec-member-width ">
+                  <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
+                  <h2>Discover Expertise Across Disciplines</h2>
+                  <p>Find experts based on subject, skill, or expertise.</p>
+                </div>
               </div>
             </div>
           </div>
-        </Container>
+        </div>
       </section>
       <section id="join-today">
-        <Container>
+        <div className="flex-container">
           <div className="join-div">
             <div className="left-join left">
               <h1>Join Today!----------</h1>
               <span>Discover the power of collaboration and innovation</span>
             </div>
-            <div className="buttons">
-              <button className="sign-up-button">Join</button>
+            <div className="join-buttons">
+              <button className="join-button">Join</button>
               <button className="learn-more-button">Learn More</button>
             </div>
           </div>
-        </Container>
+        </div>
       </section>
       <section id="about-us">
-        <Container className="footer-container">
+        <div className="footer-container">
+          {/* <Container className="footer-container"> */}
           <div className="left-logo">
             <h2>Logo</h2></div>
           <div className="about">
@@ -196,11 +198,10 @@ export const Landing = () => {
               <li>Contact</li>
             </ul>
           </div>
-        </Container>
-        
-      </section>
-      <section>
+        </div>
         <div className="border-line"></div>
+      </section>
+      <section id="about-us">
         <footer className="foot">
           <div className="footer-icon-div">
             <LinkedInIcon className="icon-margin"></LinkedInIcon>
@@ -220,7 +221,7 @@ export const Landing = () => {
               <a href="">Terms of Service</a>
             </div>
             <div className="padd">
-              <a href="">Cokkies Settings</a>
+              <a href="">Cookies Settings</a>
             </div>
           </div>
         </footer>
