@@ -1,23 +1,148 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"> -->
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet"> -->
     <title>Fellow</title>
-  </head>
+</head>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-  
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: white;
-    }
-  </style>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  @font-face {
+    font-family: 'Nunito';
+    src: url('./src/assets/fonts/Nunito-Black.woff') format('woff2'),
+      url('./src/assets/fonts/Nunito-Black.woff') format('woff');
+    font-weight: 900;
+    /* Black */
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Nunito';
+    src: url('./src/assets/fonts/Nunito-ExtraBold.woff2') format('woff2'),
+      url('./src/assets/fonts/Nunito-ExtraBold.woff') format('woff');
+    font-weight: 800;
+    /* Extra Bold */
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Nunito';
+    src: url('./src/assets/fonts/Nunito-Bold.woff2') format('woff2'),
+      url('./src/assets/fonts/Nunito-Bold.woff') format('woff');
+    font-weight: 700;
+    /* Bold */
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Nunito';
+    src: url('./src/assets/fonts/Nunito-SemiBold.woff2') format('woff2'),
+      url('./src/assets/fonts/Nunito-SemiBold.woff') format('woff');
+    font-weight: 600;
+    /* SemiBold */
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Nunito';
+    src: url('./src/assets/fonts/Nunito-Medium.woff2') format('woff2'),
+      url('./src/assets/fonts/Nunito-Medium.woff') format('woff');
+    font-weight: 500;
+    /* Medium */
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Nunito';
+    src: url('./src/assets/fonts/Nunito-Regular.woff2') format('woff2'),
+      url('./src/assets/fonts/Nunito-Regular.woff') format('woff');
+    font-weight: 400;
+    /* Regular */
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Nunito';
+    src: url('./src/assets/fonts/Nunito-Light.woff2') format('woff2'),
+      url('./src/assets/fonts/Nunito-Light.woff') format('woff');
+    font-weight: 300;
+    /* Light */
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Nunito';
+    src: url('./src/assets/fonts/Nunito-ExtraLight.woff2') format('woff2'),
+      url('./src/assets/fonts/Nunito-ExtraLight.woff') format('woff');
+    font-weight: 200;
+    /* Extra Light */
+    font-style: normal;
+  }
+
+  /* Variable font: This could cover a range of weights */
+  @font-face {
+    font-family: 'Nunito';
+    src: url('./src/assets/fonts/Nunito-Variable.woff2') format('woff2'),
+      url('./src/assets/fonts/Nunito-Variable.woff') format('woff');
+    font-weight: 200 900;
+    /* Variable font covering a range from Extra Light to Black */
+    font-style: normal;
+  }
+
+  h1 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+
+  h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    /* Extra Bold: Slightly less bold than h1 */
+    font-style: normal;
+  }
+
+  h3 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    /* SemiBold: Less bold than h2 */
+    font-style: normal;
+  }
+
+  p,
+  a,
+  ul,
+  li,
+  button {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    /* Regular */
+  }
+
+  span .light-text {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 300;
+    /* Light */
+  }
+
+  .medium-text {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 500;
+    /* Medium */
+  }
+</style>
 </html>
