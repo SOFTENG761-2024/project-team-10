@@ -1,4 +1,4 @@
-.search-bar {
+.searchBar {
   position: relative;
   display: flex;
   justify-content: center;
@@ -8,7 +8,7 @@
   max-width: 950px;
 }
 
-.flex-container {
+.flexContainer {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -17,7 +17,7 @@
   align-items: center;
 }
 
-.search-input {
+.searchInput {
   width: 90%;
   padding: 10px 0px 5px 25px;
   font-size: 16px;
@@ -27,7 +27,7 @@
   height: 62px;
 }
 
-.search-icon-button {
+.searchIconButton {
   position: absolute;
   right: 90px;
   border: none;
@@ -35,7 +35,7 @@
   cursor: pointer;
 }
 
-.circle-container {
+.circleContainer {
   position: relative;
   width: 820px;
   height: 600px;
@@ -139,13 +139,13 @@
   padding: 2%;
 }
 
-.content-sections {
+.contentSections {
   display: flex;
   justify-content: center;
   margin: 5% 2% 7% 5%;
 }
 
-.sect-id {
+.sectId {
   width: 33%;
   height: auto;
 }
@@ -169,36 +169,36 @@
   margin-bottom: 20px;
 }
 
-.member-buttons {
+.memberButtons {
   display: flex;
   gap: 10px;
   padding-top: 9%;
 }
 
-.join-buttons {
+.joinButtons {
   display: flex;
   gap: 10px;
   padding-top: 2%;
 }
 
-.learn-more-button,
-.join-button {
+.learnMoreButton,
+.joinButton {
   padding: 16px 23px;
   border: solid 2px;
   cursor: pointer;
   font-size: medium;
 }
 
-.learn-more-button {
+.learnMoreButton {
   background-color: white;
 }
 
-.join-button {
+.joinButton {
   background-color: #000;
   color: #fff;
 }
 
-.sign-up {
+.signUp {
   padding: 16px 23px;
   cursor: pointer;
   font-size: medium;
@@ -206,12 +206,12 @@
   border: none;
 }
 
-.arrow-button {
+.arrowButton {
   margin-left: 8px;
   font-size: 18px;
 }
 
-.border-line {
+.borderLine {
   border: solid 1px;
   margin: 0% 7% 2% 5%;
 
@@ -225,7 +225,7 @@
   float: right;
 }
 
-.footer-container {
+.footerContainer {
   display: flex;
   margin: 0 auto;
   flex-direction: row;
@@ -234,7 +234,7 @@
   max-width: 800px;
 }
 
-.top-icons {
+.topIcons {
   position: fixed;
   top: 1%;
   display: -webkit-box;
@@ -261,13 +261,13 @@
   margin: 8px;
 }
 
-.right-section-div {
+.rightSectionDiv {
   display: grid;
   flex-flow: row wrap;
   width: 62%;
 }
 
-.right-member-div {
+.rightMemberDiv {
   display: flex;
   flex-wrap: wrap;
 
@@ -275,19 +275,19 @@
   margin: 2% 0% 5% 0%;
 }
 
-.sec-member-width {
+.secMemberWidth {
   width: 50%;
 }
 
-.menu-icon-style {
+.menuIconStyle {
   height: 20px;
 }
 
-.left-join {
+.leftJoin {
   margin: 0% 10% 0% 7%;
 }
 
-.left-logo {
+.leftLogo {
   width: 50%;
   float: left;
   margin-top: 20%;
@@ -299,14 +299,14 @@
   margin-top: 20%;
 }
 
-.about-list {
+.aboutList {
   list-style: none;
   display: flex;
   justify-content: space-evenly;
   align-items: flex-end;
 }
 
-.join-div {
+.joinDiv {
   margin: 0% 1% 0% 1%;
   width: 90vw;
   max-width: 800px;
@@ -316,7 +316,7 @@
   padding: 0% 1% 2% 1%;
 }
 
-.footer-services {
+.footerServices {
   float: right;
   width: 50%;
   display: flex;
@@ -327,16 +327,16 @@
   margin: 1% 4% 0% 15%;
 }
 
-.footer-icon-div {
+.footerIconDiv {
   float: left;
   width: 50%;
 }
 
-.icon-margin {
+.iconMargin {
   margin: 0% 2% 0% 0%;
 }
 
-.top-image {
+.topImage {
   height: 50vh;
   object-fit: none;
   width: 90vw;

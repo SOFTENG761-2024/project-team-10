@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Container, useMediaQuery } from "@mui/material";
-import './Landing.css';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import XIcon from '@mui/icons-material/X';
 import CopyrightIcon from '@mui/icons-material/Copyright';
+import style from './Landing.module.css';
 
 export const Landing = () => {
   const navigate = useNavigate();
@@ -84,85 +84,85 @@ export const Landing = () => {
         </div>
       </nav>
       <section id="search">
-        <div className="flex-container">
-          <div className="top-icons">
-            <div className="menuIcon">
-              <img src='./landing/theme.png' className="themeStyle" alt="themeicon" />
+        <div className={style.flexContainer}>
+          <div className={style.topIcons}>
+            <div className={style.menuIcon}>
+              <img src='./landing/theme.png' className={style.themeStyle} alt="themeicon" />
             </div>
-            <div className="menuIcon">
-              <img src='./landing/outline-1.png' className="menu-icon-style" alt="menuicon" />
+            <div className={style.menuIcon}>
+              <img src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
             </div>
           </div>
           <div>
-            <img src="./landing/top-image.png" className="top-image"></img>
+            <img src="./landing/top-image.png" className={style.topImage}></img>
           </div>
-          <div className="search-bar">
+          <div className={style.searchBar}>
             <input
               type="text"
               placeholder="Search"
-              className="search-input"
+              className={style.searchInput}
             />
-            <button className="search-icon-button">
+            <button className={style.searchIconButton}>
               <SearchIcon />
             </button>
           </div>
         </div>
       </section>
       <section id="network">
-        <div className="flex-container">
+        <div className={style.flexContainer}>
           {/* Circle Divs */}
-          <div className="circle-container">
-            <div className="circle circle1"><span>AUT(3)</span></div>
-            <div className="circle circle2"><span>UOA(2)</span></div>
-            <div className="circle circle3"><span>UOA(2)</span></div>
-            <div className="circle circle4"><span>UOA(2)</span></div>
-            <div className="circle circle5"><span>UOA(2)</span></div>
-            <div className="circle circle6"><span>UOA(2)</span></div>
-            <div className="circle circle7"><span>UOA(2)</span></div>
-            <div className="circle circle8"><span>UOA(2)</span></div>
-            <div className="circle circle9"><span>UOA(2)</span></div>
-            <div className="circle circle11"><span>UOA(2)</span></div>
+          <div className={style.circleContainer}>
+            <div className={`${style.circle} ${style.circle1}`}><span>AUT(3)</span></div>
+            <div className={`${style.circle} ${style.circle2}`}><span>UOA(2)</span></div>
+            <div className={`${style.circle} ${style.circle3}`}><span>UOA(2)</span></div>
+            <div className={`${style.circle} ${style.circle4}`}><span>UOA(2)</span></div>
+            <div className={`${style.circle} ${style.circle5}`}><span>UOA(2)</span></div>
+            <div className={`${style.circle} ${style.circle6}`}><span>UOA(2)</span></div>
+            <div className={`${style.circle} ${style.circle7}`}><span>UOA(2)</span></div>
+            <div className={`${style.circle} ${style.circle8}`}><span>UOA(2)</span></div>
+            <div className={`${style.circle} ${style.circle9}`}><span>UOA(2)</span></div>
+            <div className={`${style.circle} ${style.circle11}`}><span>UOA(2)</span></div>
           </div>
         </div>
       </section>
       <section id="member">
-        <div className="flex-container">
+        <div className={style.flexContainer}>
           {/* Content Sections */}
-          <div className="content-sections">
-            <div className="sect-id search">
+          <div className={style.contentSections}>
+            <div className={`${style.sectId} ${style.search}`}>
               <h5>Connecting</h5>
               <h2>Unlock the Power of Collaboration and Networking</h2>
               <p>Discover a vibrant community of researchers and fellows,where you
                 can connect,collaborate, and grow together.Find experts based on
                 subject, skill or expertise and promot interdisciplinary collaboration.
               </p>
-              <div className="member-buttons">
-                <button className="learn-more-button">Learn More</button>
-                <button className="sign-up">Sign Up <span className="arrow-button">{'>'}</span></button>
+              <div className={style.memberButtons}>
+                <button className={style.learnMoreButton}>Learn More</button>
+                <button className={style.signUp}>Sign Up <span className={style.arrowButton}>{'>'}</span></button>
               </div>
             </div>
-            <div className="right-section-div">
-              <div className="right-member-div">
-                <div className="section sec-member-width">
-                  <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
+            <div className={style.rightSectionDiv}>
+              <div className={style.rightMemberDiv}>
+                <div className={`${style.section} ${style.secMemberWidth}`}>
+                  <img src='./landing/cube.png' className={style.cubeStyle} alt="icon" />
                   <h2>
                     Unlock the Power of Collaboration and Networking</h2>
                   <p>Connect with a diverse community of researchers and experts.</p>
                 </div>
-                <div className="section sec-member-width ">
-                  <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
+                <div className={`${style.section} ${style.secMemberWidth}`}>
+                  <img src='./landing/cube.png' className={style.cubeStyle} alt="icon" />
                   <h2>Promote Interdisciplinary Collaboration</h2>
                   <p>Break down barriers and foster collaboration across disciplines.</p>
                 </div>
               </div>
-              <div className="right-member-div">
-                <div className="section sec-member-width ">
-                  <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
+              <div className={style.rightMemberDiv}>
+                <div className={`${style.section} ${style.secMemberWidth}`}>
+                  <img src='./landing/cube.png' className={style.cubeStyle} alt="icon" />
                   <h2>Discover Expertise Across Disciplines</h2>
                   <p>Find experts based on subject, skill, or expertise.</p>
                 </div>
-                <div className="section sec-member-width ">
-                  <img src='./landing/cube.png' className="cubeStyle" alt="icon" />
+                <div className={`${style.section} ${style.secMemberWidth}`}>
+                  <img src='./landing/cube.png' className={style.cubeStyle} alt="icon" />
                   <h2>Discover Expertise Across Disciplines</h2>
                   <p>Find experts based on subject, skill, or expertise.</p>
                 </div>
@@ -172,26 +172,26 @@ export const Landing = () => {
         </div>
       </section>
       <section id="join-today">
-        <div className="flex-container">
-          <div className="join-div">
-            <div className="left-join left">
+        <div className={style.flexContainer}>
+          <div className={style.joinDiv}>
+            <div className={`${style.leftJoin} ${style.left}`}>
               <h1>Join Today!----------</h1>
               <span>Discover the power of collaboration and innovation</span>
             </div>
-            <div className="join-buttons">
-              <button className="join-button">Join</button>
-              <button className="learn-more-button">Learn More</button>
+            <div className={style.joinButtons}>
+              <button className={style.joinButton}>Join</button>
+              <button className={style.learnMoreButton}>Learn More</button>
             </div>
           </div>
         </div>
       </section>
       <section id="about-us">
-        <div className="footer-container">
-          {/* <Container className="footer-container"> */}
-          <div className="left-logo">
+        <div className={style.footerContainer}>
+          {/* <Container className={style.footer-container"> */}
+          <div className={style.leftLogo}>
             <h2>Logo</h2></div>
-          <div className="about">
-            <ul className="about-list">
+          <div className={style.about}>
+            <ul className={style.aboutList}>
               <li>About us</li>
               <li>Link Two</li>
               <li>Link Three</li>
@@ -199,28 +199,28 @@ export const Landing = () => {
             </ul>
           </div>
         </div>
-        <div className="border-line"></div>
+        <div className={style.borderLine}></div>
       </section>
       <section id="about-us">
-        <footer className="foot">
-          <div className="footer-icon-div">
-            <LinkedInIcon className="icon-margin"></LinkedInIcon>
-            <XIcon className="icon-margin"></XIcon>
+        <footer className={style.foot}>
+          <div className={style.footerIconDiv}>
+            <LinkedInIcon className={style.iconMargin}></LinkedInIcon>
+            <XIcon className={style.iconMargin}></XIcon>
             <YouTubeIcon></YouTubeIcon>
           </div>
-          <div className="footer-services">
-            <div className="padd">
+          <div className={style.footerServices}>
+            <div className={style.padd}>
               <span>
                 &copy;2024.All rights reserved.
               </span>
             </div>
-            <div className="padd">
+            <div className={style.padd}>
               <a href="">Privacy Policy</a>
             </div>
-            <div className="padd">
+            <div className={style.padd}>
               <a href="">Terms of Service</a>
             </div>
-            <div className="padd">
+            <div className={style.padd}>
               <a href="">Cookies Settings</a>
             </div>
           </div>
@@ -314,8 +314,8 @@ const css = `
 `;
 
 // Injecting the CSS into the page
-const style = document.createElement('style');
-style.innerHTML = css;
-document.head.appendChild(style);
+// const style = document.createElement('style');
+// style.innerHTML = css;
+// document.head.appendChild(style);
 
 export default Landing;
