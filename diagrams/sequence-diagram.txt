@@ -1,0 +1,40 @@
+title tuakiri
+User->React SPA: Click "Sign Up" button
+React SPA->User: Display Sign Up form (email/password or LinkedIn OAuth)
+User->React SPA: Enter email, password
+React SPA->authenticationService: authenticate(email, password)
+authenticationService->React SPA: authSuccess(token)
+React SPA->Postgres: createUserProfile(userId, profileData)
+
+User->React SPA: Click "Sign Up with LinkedIn"
+React SPA->authenticationService: authenticateWithLinkedIn()
+authenticationService->React SPA: authSuccess(token)
+React SPA->Postgres: createUserProfile(userId, profileData)
+
+User->React SPA: Click "Sign In" button
+React SPA->User: Display Sign In form (email/password or LinkedIn OAuth)
+User->React SPA: Enter email, password
+React SPA->authenticationService: authenticate(email, password)
+authenticationService->React SPA: authSuccess(token)
+React SPA->Postgres: verifyCredentials(userId)
+
+User->React SPA: Click "Sign In with LinkedIn"
+React SPA->authenticationService: authenticateWithLinkedIn()
+authenticationService->React SPA: authSuccess(token)
+React SPA->Postgres: verifyCredentials(userId)
+
+User->React SPA: Navigate to "Profile" page
+User->React SPA: Click "Edit Profile"
+React SPA->User: Display editable profile fields
+User->React SPA: Update profile fields (e.g., name, phone)
+User->React SPA: Click "Save"
+React SPA->Postgres: saveUserProfile(userId, updatedProfileData)
+
+User->React SPA: Enter search keywords in search bar
+User->React SPA: Click "Search" button
+React SPA->Postgres: getProfessionals(keywords)
+Postgres->React SPA: returnSearchResults(professionalsList)
+User->React SPA: Apply filters (e.g., expertise, university) [if logged in]
+React SPA->Postgres: getFilteredProfessionals(filterCriteria)
+Postgres->React SPA: returnFilteredResults(filteredProfessionalsList)
+User->React SPA: Click on professional's profile [if logged in]

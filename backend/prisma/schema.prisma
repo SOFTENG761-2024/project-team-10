@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource test {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+model User {
+  id        String   @id @default(uuid()) @test.VarChar()
+
+  Profile Profile[]
+}
+
+model Profile {
+  id        String  @id @default(uuid()) @test.VarChar() 
+  userId    String  @test.VarChar()
+  bio       String  @test.VarChar(500)
+
+  // set up foreign keys
+  user      User    @relation(fields: [userId], references: [id])
+  Project Project[]
+  TeachingItem TeachingItem[]
+  Publication Publication[]
+
+  @@index([userId])
+}
+
+model Project {
+  id          String   @id @default(uuid()) @test.VarChar()
+  profileId   String   @test.VarChar()
+
+  profile     Profile  @relation(fields: [profileId], references: [id])
+
+  @@index([profileId])
+}
+
+model TeachingItem {
+  id          String   @id @default(uuid()) @test.VarChar()
+  profileId   String   @test.VarChar()
+
+  profile     Profile  @relation(fields: [profileId], references: [id])
+
+  @@index([profileId])
+}
+
+model Publication {
+  id          String   @id @default(uuid()) @test.VarChar()
+  profileId   String   @test.VarChar()
+
+  profile     Profile  @relation(fields: [profileId], references: [id])
+
+  @@index([profileId])
+}

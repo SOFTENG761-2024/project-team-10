@@ -29,13 +29,12 @@ export const CommentDialogPaginated = ({
   setOpenComments,
   userId,
   voteId,
-  voteTitle
+  voteTitle,
 }) => {
   const [page, setPage] = useState(0);
   const [comments, setComments] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [input, setInput] = useState("");
-  const [isAICheckbox, setIsAICheckbox] = useState(false);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [isGeneratingAIResponse, setIsGeneratingAIResponse] = useState(false);
@@ -112,12 +111,8 @@ export const CommentDialogPaginated = ({
   const handleClose = () => {
     setOpenComments(false);
     setComments([]);
-    setIsAICheckbox(false);
     setIsSubmittingComment(false);
     setIsGeneratingAIResponse(false);
-  };
-  const handleCheckboxChange = (event) => {
-    setIsAICheckbox(event.target.checked);
   };
   const handleCommentTextFieldChange = (event) => {
     setInput(event.target.value);
@@ -135,18 +130,6 @@ export const CommentDialogPaginated = ({
 
       const comment = response.data.comment;
 
-      if (isAICheckbox) {
-        setIsGeneratingAIResponse(true);
-        setIsSubmittingComment(true);
-        const aiResp = await post(
-          `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/comments/${userId}/${voteId}`,
-          { comment: comment, isAI: true },
-        );
-
-        if (aiResp && aiResp.data) {
-          await fetchLatestComments();
-        }
-      }
       if (response && response.data) {
         await fetchLatestComments();
       }
@@ -213,32 +196,19 @@ export const CommentDialogPaginated = ({
               <TextField
                 onChange={handleCommentTextFieldChange}
                 autoFocus
-                placeholder="Put in your comment or ask AI questions"
+                placeholder="Put in your comment"
                 margin="dense"
                 type="text"
                 fullWidth
                 value={input}
               />
             </FormControl>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isAICheckbox}
-                  onChange={handleCheckboxChange}
-                  name="askAI"
-                  color="primary"
-                />
-              }
-              label="Ask AI"
-            />
           </Grid>
         </Box>
       </DialogContent>
       <DialogActions>
-        {isSubmittingComment &&
-          isAICheckbox &&
-          "Generating AI answer to your question..."}
-        {isSubmittingComment && !isAICheckbox && "Submitting your comment"}
+        {isSubmittingComment && "Generating AI answer to your question..."}
+        {isSubmittingComment && "Submitting your comment"}
         <Button
           variant="contained"
           color="primary"

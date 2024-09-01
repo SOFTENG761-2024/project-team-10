@@ -4,10 +4,9 @@ var morgan = require("morgan");
 const cors = require("cors");
 const logger = require("./utils/logger.js");
 
-var userController = require("./controllers/userControllers");
-var recommendationController = require("./controllers/recommendationController");
-var voteController = require("./controllers/voteControllers");
+var userController = require("./controllers/userController");
 var commentController = require("./controllers/commentController");
+var profileController = require("./controllers/profileController");
 
 const { connect } = require("./daos/mongodbClient");
 const swaggerController = require("./controllers/swaggerController");
@@ -25,9 +24,8 @@ connect().then(() => {
   logger.info("Mongodb connection pool created.");
 
   app.use("/api/users", userController);
-  app.use("/api/recommendations", recommendationController);
-  app.use("/api/votes", voteController);
   app.use("/api/comments", commentController);
+  app.use("/api/profiles", profileController);
 
   // setup swagger ui
   swaggerController(app);

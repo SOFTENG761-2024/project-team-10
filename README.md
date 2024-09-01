@@ -1,6 +1,7 @@
 # Give it a good name app
 
 # Solution Architecture
+
 ![SOLUTION-DIAGRAM](https://github.com/user-attachments/assets/3fd86ea3-6f87-4174-8391-a50ae3529819)
 
 # Code Structure
@@ -9,7 +10,7 @@
 > .github - Github Actions CICD Pipeline
     | cd.yml - continuous deployment workflow
     | ci.yml - continuous integration workflow
-> backend - Node & Express & MongoDB code
+> backend - Node & Express & Database code
     | .env local node config/creds
     | package.json - backend dependencies
 > e2eTests - playwright e2e tests(chrome only)
@@ -20,8 +21,7 @@
 > infrastructure AWS CDK TypeScript
     | package.json - AWS CDK dependencies
 > scripts - useful scripts for local dev, CI and CD
-> wiremock - A framework to mock api responses.
-.env - MONGODB local config/creds
+.env - database local config/creds
 docker-compose-ci.yml - docker-compose for CI environment
 docker-compose-prod.yml - docker-compose for PROD environment
 docker-compose.yml - docker-compose for LOCAL DEV environment
@@ -84,11 +84,13 @@ brew install docker
 
 ---
 
-# 4. How to run frontend react, backend node, mongodb in dev mode or as docker containers
+# 4. How to run frontend react, backend node, database in dev mode or as docker containers
 
-## 1. Run mongodb & wiremock(docker-compose)
+`NOTE that you have to get database spun up before backend and frontend.`
 
-Run this from Git Bash if you use Windows
+## 1. Spin up database (docker-compose)
+
+Run this from Git Bash if you use Windows.
 
 ```bash
 # In a new shell, and keep this shell opened
@@ -113,20 +115,6 @@ cd ./backend
 npm start
 # (starts node server at `localhost:3000`)
 ```
-
-## MongoDB
-
-## Login to MongoDB
-
-1. default username: devroot
-1. default password: devroot
-1. default database: test
-
-## Login to MongoDB Admin Portal
-
-http://localhost:8080/db/admin/
-
-Username: `dev`, Password:`dev`
 
 # How to test the code
 
@@ -154,14 +142,6 @@ cd ./infrastructure
 npm run deploy-dev
 ```
 
-## Wiremock
-
-Wiremock is a framework used to mock api responses. This is helpful when working with external APIs that have call limits or are slow to respond.
-
-Put your mock files under `deployment/wiremock/__files` and `deployment/wiremock/mappings`
-
-Refere to the `json` example here: https://wiremock.org/docs/stubbing/
-
 ## Browser end-to-end tests
 
 ### Note that we support only `Chrome` at this time
@@ -174,7 +154,7 @@ install playwright and chromium
 npx playwright install --with-deps chromium
 ```
 
-Ensure you have spinned up react, node servers & mongodb docker containers locally. If you have not, follow the `Important: How to set up local development environment` guide above.
+Ensure you have spinned up react, node servers & database docker containers locally. If you have not, follow the `Important: How to set up local development environment` guide above.
 
 under project root folder:
 
