@@ -30,7 +30,7 @@ class UniSpider(scrapy.Spider):
 
         while True:
             # Wait for the page to fully load
-            WebDriverWait(self.driver, 10).until(
+            WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "div.profileStub__name___lWU19 a"))
             )
 
@@ -56,7 +56,7 @@ class UniSpider(scrapy.Spider):
                 )
                 if next_button.is_enabled():
                     next_button.click()
-                    time.sleep(3)  
+                    time.sleep(25)  
                 else:
                     self.log("No more pages to crawl.", level=logging.INFO)
                     break
@@ -67,7 +67,7 @@ class UniSpider(scrapy.Spider):
     def parse_profile(self, response):
         self.driver.get(response.url)
 
-        WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, 25).until(
             EC.visibility_of_element_located((By.CSS_SELECTOR, "h1.hero__header___xfv2U"))
         )
 
