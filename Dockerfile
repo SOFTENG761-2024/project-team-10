@@ -5,6 +5,7 @@ COPY backend/package*.json ./
 RUN npm ci --omit=dev
 COPY backend/ .
 
+
 RUN ls
 # RUN npm run build
 
@@ -18,6 +19,7 @@ COPY frontend/ .
 FROM node:20-alpine3.18
 # Copy built assets from backend-build stage
 COPY --from=backend-build /usr/src/app/backend/. /usr/src/app/backend
+
 # Copy built assets from frontend-build stage
 COPY --from=frontend-build /usr/src/app/frontend/dist /usr/src/app/frontend
 # Copy .env from frontend-build stage

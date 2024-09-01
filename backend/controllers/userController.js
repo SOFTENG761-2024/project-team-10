@@ -2,34 +2,8 @@ const express = require("express");
 const router = express.Router();
 const userService = require("../services/userService.js");
 
-/**
- * @swagger
- * /api/users:
- *   post:
- *     tags:
- *     - User Controller
- *     consumes: application/json
- *     summary: Create a new user
- *     parameters:
- *       - in: body
- *         name: body
- *         schema:
- *           type: object
- *           properties:
- *             userId:
- *                 type: string
- *             userName:
- *                 type: string
- *             email:
- *                 type: string
- *             imageUrl:
- *                 type: string
- *     responses:
- *       '200':
- *         description: User created successfully
- *       '500':
- *         description: Internal server error
- */
+//swagger documentation in swaggerDoc.yaml with path: /api/users
+
 router.post("/", async function createUser(req, res) {
   try {
     const { userName, email, userId, imageUrl } = req.body;
@@ -46,28 +20,7 @@ router.post("/", async function createUser(req, res) {
   }
 });
 
-/**
- * @swagger
- * /api/users/{userId}:
- *   get:
- *     tags:
- *     - User Controller
- *     summary: Get user by userId
- *     parameters:
- *       - in: path
- *         name: userId
- *         schema:
- *           type: string
- *         required: true
- *         description: User ID
- *     responses:
- *       '200':
- *         description: User found
- *       '404':
- *         description: User not found
- *       '500':
- *         description: Internal server error
- */
+
 router.get("/:userId", async function getUserById(req, res) {
   try {
     const userId = req.params.userId;
