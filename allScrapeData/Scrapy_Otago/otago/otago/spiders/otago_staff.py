@@ -9,7 +9,7 @@ class OtagoMarketingSpider(scrapy.Spider):
     start_urls = [
         'https://www.otago.ac.nz/marketing/staff/staffprofiles'
     ]
-
+  
     def parse(self, response):
         # Extract links to all individual staff profile pages
         profile_links = response.css('.page-layout__body a::attr(href)').getall()
