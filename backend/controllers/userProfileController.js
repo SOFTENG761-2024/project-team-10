@@ -3,6 +3,7 @@ const router = express.Router();
 const logger = require("../utils/logger.js");
 const userProfileService = require("../services/userProfileService.js");
 
+//swagger documentation in swaggerDoc.yaml with path: /api/userprofile
 
 router.post("/", async function createUserProfile(req, res)
 {

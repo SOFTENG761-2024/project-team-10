@@ -4,7 +4,7 @@ const { prismaClient, disconnect } = require("../daos/prismaClient");
 //TODO: move to separate objects, add logic for faculty/organization -HI
 async function createUserProfile(userProfileData) {
   try {
-    /*
+    /* USE STATIC DATA FOR INSTITUTION
     let institution = await getInstitutionByName(userProfileData.institution_name);
     if(!institution)
       {

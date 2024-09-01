@@ -1,7 +1,14 @@
 //const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./controllers/swaggerDoc.yaml');
+
+const path = require('path');
+// Construct the absolute path
+const filePath = path.resolve(__dirname,'swaggerDoc.yaml');
+
+console.log('File Path:', filePath);
+const swaggerDocument = YAML.load(filePath);
+
 //console.log(swaggerDocument);
 
 // const options = {
