@@ -44,24 +44,24 @@ async function addInstitution(institutionName)
   }
 }
 
-async function getInstitutionByName(institutionName) {
-  try {
+// async function getInstitutionByName(institutionName) {
+//   try {
 
-    const institution = await prismaClient.institution.findFirst({
-      where: {
-        name: {
-          equals: institutionName,
-          mode: 'insensitive'
-        }
-      },
-    });
+//     const institution = await prismaClient.institution.findFirst({
+//       where: {
+//         name: {
+//           equals: institutionName,
+//           mode: 'insensitive'
+//         }
+//       },
+//     });
 
-    return institution;
-  }
-  finally {
-    await disconnect();
-  }
-}
+//     return institution;
+//   }
+//   finally {
+//     await disconnect();
+//   }
+// }
 
 
 async function getUserProfileById(userId) {
@@ -71,7 +71,7 @@ async function getUserProfileById(userId) {
         id: userId,
       },
     });
-    return profile;
+    return userProfile;
   }
   finally {
     await disconnect();
