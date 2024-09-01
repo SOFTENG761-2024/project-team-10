@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
@@ -66,11 +66,14 @@ const LinkedInButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.spacing(2),
 }));
 
+
+
 const AccountCreationPage = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [organization, setOrganization] = useState('');
   const [email, setEmail] = useState('');
+
 
   const handleCreateProfessionalAccount = () => {
     window.location.href = 'https://www.reannz.co.nz';
@@ -98,14 +101,37 @@ const AccountCreationPage = () => {
 
   const { linkedInLogin } = useLinkedIn({
     clientId: '86yqr14akub4tu',
-    redirectUri: `${window.location.origin}/linkedin`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
+    //import.meta.env.VITE_BACKEND_API_BASE_URL,
+    redirectUri: `https://www.linkedin.com/developers/tools/oauth/redirect`,
+    // `http://localhost:5173/signup`,
+    scope: 'profile email',
+    // state: 'DCEeFWf45A53sdfKef424',
     onSuccess: (code) => {
-      console.log(code);
+      alert(code);
     },
     onError: (error) => {
-      console.log(error);
+      alert(error);
     },
   });
+
+  useEffect(() => {
+    let windowUrl = window.location.href
+    if (windowUrl.includes('code=')) {
+      let codeMatch = windowUrl.match(/code=([a-zA-Z0-9_\\-]+)/)
+      axios.get('backend/auth', {
+        headers: {
+          auth_code: codeMatch[1]
+        }
+      })
+        .then(res => {
+          console.log(res.data)
+
+        })
+        .catch(console.log)
+    }
+
+  }, [])
+
 
   return (
     <Container maxWidth="md">
