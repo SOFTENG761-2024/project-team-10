@@ -55,9 +55,9 @@ jobs:
           ME_CONFIG_BASICAUTH_USERNAME: ${{ secrets.ME_CONFIG_BASICAUTH_USERNAME }}
           ME_CONFIG_BASICAUTH_PASSWORD: ${{ secrets.ME_CONFIG_BASICAUTH_PASSWORD }}
           #postgres
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
           PGADMIN_DEFAULT_EMAIL: ${{secrets.PGADMIN_DEFAULT_EMAIL}}
           PGADMIN_DEFAULT_PASSWORD: ${{secrets.PGADMIN_DEFAULT_PASSWORD}}
       - name: Configure AWS Credentials
@@ -90,13 +90,14 @@ jobs:
           echo "MONGO_SERVER=$MONGO_SERVER" >> .env
           echo "MONGO_USERNAME=$MONGO_USERNAME" >> .env
           echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> .env
-          npm install -g prisma
-          npx prisma generate
+          echo "DATABASE_URL=$DATABASE_URL" >> .env
+          echo "SWAGGER_API_BASE_URL=http://$EC2_INSTANCE_PUBLIC_DNS:3000" >> .env
         env:
           # node creds
           MONGO_SERVER: mongo
           MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
           MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/test?schema=public
       - name: Archive src code
         run: |
           cat ".env"
@@ -167,12 +168,27 @@ jobs:
         run: |
           echo "${{ secrets.EC2_PRIVATE_KEY }}" >> mykey.pem
           chmod 400 mykey.pem
-          ssh -i mykey.pem -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE_PUBLIC_DNS 'sudo rm -rf ~/give-it-a-good-name'
+
+          # Helper function for SSH commands with logging
+          ssh_cmd() {
+            ssh -i mykey.pem -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE_PUBLIC_DNS "$1"
+          }
+
+          # clean up existing folder and check memory/disk
+          ssh_cmd 'ls'
+          ssh_cmd 'pwd'
+          ssh_cmd 'sudo rm -rf ~/give-it-a-good-name'
+          ssh_cmd 'echo "Checking disk space"; df -h;'
+          ssh_cmd 'echo Checking disk space usage breakdown; du -x / | sort -n | tail -40;'
+
+          # copy zipped source code over.
           scp -i mykey.pem -o StrictHostKeyChecking=no -pr ./give-it-a-good-name ec2-user@$EC2_INSTANCE_PUBLIC_DNS:~/give-it-a-good-name
+          
           # install nvm and node
-          ssh -i mykey.pem -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE_PUBLIC_DNS 'sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
-          ssh -i mykey.pem -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE_PUBLIC_DNS 'source ~/.bashrc; nvm install 20.11.1'
+          ssh_cmd 'sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
+          ssh_cmd 'source ~/.bashrc; nvm install 20.11.1'
+          
           # unzip and spin up docker-compose
-          ssh -i mykey.pem -o StrictHostKeyChecking=no ec2-user@$EC2_INSTANCE_PUBLIC_DNS 'cd give-it-a-good-name; sudo tar -xzf ./source_code.tar.gz; sudo sh ~/give-it-a-good-name/scripts/start-prod.sh;'
+          ssh_cmd 'cd ~/give-it-a-good-name; sudo tar -xzf ./source_code.tar.gz; sudo sh ~/give-it-a-good-name/scripts/start-prod.sh;'
         env:
           EC2_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
