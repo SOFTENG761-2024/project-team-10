@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start:dev": "npx prisma db push && nodemon --exec node --env-file=.env ./bin/www",
-    "start:dep": "npx prisma generate && cd ../ && sh scripts/start.sh",
+    "start:dev": "nodemon --exec node --env-file=.env ./bin/www",
+    "start:dep": "npx prisma generate && cd ../ && sh scripts/start.sh && npx prisma db push",
+    "prisma-db-push": "npx prisma db push",
     "deploy": "npx prisma migrate deploy",
     "lint": "eslint . --fix --ext js",
     "test": "jest",

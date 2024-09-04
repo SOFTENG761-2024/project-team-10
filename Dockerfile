@@ -2,9 +2,12 @@
 FROM node:latest AS backend-build
 WORKDIR /usr/src/app/backend
 COPY backend/package*.json ./
-
-COPY backend/ .
 RUN npm ci --omit=dev
+COPY backend/ .
+
+
+RUN ls
+# RUN npm run build
 
 # Build stage for Frontend
 FROM node:latest AS frontend-build
@@ -26,19 +29,10 @@ WORKDIR /usr/src/app
 
 # Install serve to serve the frontend static files
 RUN npm install -g serve
-RUN npm install -g prisma
+
 # Expose ports (backend port and frontend port)
 EXPOSE 3000
 EXPOSE 5000
 
 # Run the backend and frontend
-
-# npx prisma migrate dev --name "migration-$(date +%Y%m%d%H%M%S)" --force
-CMD ["sh", "-c", "\
-    cd ./backend &&\
-    npx prisma generate &&\
-    npx prisma db push &&\
-    cd .. &&\
-    node --env-file=./backend/.env ./backend/bin/www &\
-    serve -s frontend -l 5000\
-    "]
+CMD ["sh", "-c", "node --env-file=./backend/.env ./backend/bin/www & serve -s frontend -l 5000"]
