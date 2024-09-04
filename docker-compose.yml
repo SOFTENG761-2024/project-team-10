@@ -35,6 +35,7 @@ services:
       - ME_CONFIG_BASICAUTH_PASSWORD=${ME_CONFIG_BASICAUTH_PASSWORD}
     depends_on:
       - mongo
+      - postgres
     ports:
       - "8080:8081"
     networks:

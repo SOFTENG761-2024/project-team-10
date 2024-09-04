@@ -4,7 +4,7 @@ info:
   version: "1.0.0"
   description: "fellows-project761-team10-API-for-user-profile-management"
 servers:
-  - url: "http://localhost:3000"
+  - url: "__SWAGGER_API_BASE_URL__"
 paths:
   /api/userprofile:
    get:
