@@ -8,6 +8,7 @@ import {
 } from "./components/GlobalProviders";
 import { SnackbarProvider } from "./components/Snackbar";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import ProfileSettingLayerout from "./components/ProfileSettingLayout";
 
 const App = () => (
   <LocalStorageProvider>
@@ -23,5 +24,6 @@ const App = () => (
       </APIProvider>
     </ThemeProvider>
   </LocalStorageProvider>
+
 );
 export default App;
