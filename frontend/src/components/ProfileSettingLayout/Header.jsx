@@ -1,65 +1,68 @@
 import React from 'react';
-import IconButton from '@mui/material/IconButton';
+import { AppBar, Toolbar, Typography, IconButton, Box } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';  // Picture icon1
 import MenuIcon from '@mui/icons-material/Menu';  // Picture icon2
+import { useMuiTheme } from '../GlobalProviders';
 
 const Header = () => {
-    const currentDate = new Date();
-    
-    const weekday = currentDate.toLocaleDateString('en-GB', { weekday: 'short' });
-    const day = currentDate.toLocaleDateString('en-GB', { day: '2-digit' });
-    const month = currentDate.toLocaleDateString('en-GB', { month: 'long' });
-    const year = currentDate.toLocaleDateString('en-GB', { year: 'numeric' });
-  
-    const formattedDate = `${weekday}, ${day} ${month} ${year}`;
-  
+  const currentDate = new Date();
+
+  const weekday = currentDate.toLocaleDateString('en-GB', { weekday: 'short' });
+  const day = currentDate.toLocaleDateString('en-GB', { day: '2-digit' });
+  const month = currentDate.toLocaleDateString('en-GB', { month: 'long' });
+  const year = currentDate.toLocaleDateString('en-GB', { year: 'numeric' });
+
+  const formattedDate = `${weekday}, ${day} ${month} ${year}`;
+
+  const { toggleLightDarkTheme, theme } = useMuiTheme();
+
+  const handleThemeSwitchClick = () => {
+    toggleLightDarkTheme();
+  };
 
   return (
-    <header style={styles.headerContainer}>
-      <div>
-        <h2 style={styles.welcomeText}>Welcome, Alzxa Rawlus</h2>
-        <p style={styles.dateText}>{formattedDate}</p>
-      </div>
-      <div style={styles.iconContainer}>
-        <IconButton style={styles.iconButton}>
-          <Brightness4Icon />
-        </IconButton>
-        <IconButton style={styles.iconButton}>
-          <MenuIcon />
-        </IconButton>
-      </div>
-    </header>
+    <AppBar position="static" sx={styles.appBar}>
+      <Toolbar>
+        <Box sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" sx={styles.welcomeText}>
+            Welcome, Alzxa Rawlus
+          </Typography>
+          <Typography variant="body2" sx={styles.dateText}>
+            {formattedDate}
+          </Typography>
+        </Box>
+        <Box sx={styles.iconContainer}>
+          <IconButton onClick={handleThemeSwitchClick} color="inherit">
+            <Brightness4Icon />
+          </IconButton>
+          <IconButton color="inherit">
+            <MenuIcon />
+          </IconButton>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 
 const styles = {
-  headerContainer: {
-    marginLeft: '80px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '10px 20px',
+  appBar: {
     backgroundColor: '#f7f7f7',
+    color: '#333',
+    marginLeft: '80px', // Adjust based on your layout
   },
   welcomeText: {
-    margin: 0,
     fontSize: '18px',
     fontWeight: 'bold',
     color: '#333',
   },
   dateText: {
-    margin: 0,
     fontSize: '14px',
-    fontFamily: 'Arial, sans-serif',  
-    fontWeight: 300,  
-    color: '#aaa',  
+    fontWeight: 300,
+    color: '#aaa',
   },
   iconContainer: {
     display: 'flex',
     gap: '10px',
-  },
-  iconButton: {
-    padding: '5px',
   },
 };
 
