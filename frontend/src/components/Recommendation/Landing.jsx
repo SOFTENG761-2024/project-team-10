@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SearchIcon from '@mui/icons-material/Search.js';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
 import { Box, Container, useMediaQuery } from "@mui/material";
-import LinkedInIcon from '@mui/icons-material/LinkedIn.js';
-import YouTubeIcon from '@mui/icons-material/YouTube.js';
-import XIcon from '@mui/icons-material/X.js';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import XIcon from '@mui/icons-material/X';
+import CopyrightIcon from '@mui/icons-material/Copyright';
 import style from './Landing.module.css';
-import { useMuiTheme } from "../GlobalProviders";
 
 export const Landing = () => {
-  // const navigate = useNavigate();
-  // const isMobile = useMediaQuery("(max-width:600px)");
-  const { toggleLightDarkTheme, theme } = useMuiTheme();
+  const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const [activeSection, setActiveSection] = useState('search');
-
-  const handleThemeSwitchClick = () => {
-    toggleLightDarkTheme();
-  };
 
   const handleScroll = () => {
     const sections = document.querySelectorAll('section');
@@ -37,72 +33,13 @@ export const Landing = () => {
       setActiveSection(currentSection);
     }
   };
-  
-// Styles for the Vertical Navigation Bar
-const styles = {
-  navContainer: {
-    position: 'fixed',
-    top: '47%',
-    right: '4%',
-    transform: 'translateY(-50%)',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    zIndex: 1000,
-  },
-  verticalLine: {
-    width: '2px',
-    // backgroundColor: 'rgb(205 199 199)',
-    backgroundColor: theme === 'dark' ? '#ccc' : 'rgb(205, 199, 199)', 
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: '-10px',
-  },
-  nav: {
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: 'transparent',
-    padding: '10px',
-    alignItems: 'flex-start',
-    position: 'relative',
-  },
-  navLink: {
-    color: theme === 'dark' ? '#fff' : 'black',
-    textDecoration: 'none',
-    padding: '39% 0%',
-    marginBottom: '10px',
-    textAlign: 'left',
-    position: 'relative',
-    cursor: 'pointer',
-  },
-  activeNavLink: {
-    color: theme === 'dark' ? '#000' : 'white', 
-    textDecoration: 'none',
-    padding: '10px 0',
-    marginBottom: '10px',
-    textAlign: 'left',
-    backgroundColor: theme === 'dark' ? 'white' : '#3f51b5', 
-    borderRadius: '4px',
-    fontWeight: 'bold',  
-    position: 'relative',
-  },
-  section: {
-    height: '100vh',
-    padding: '20px',
-    marginTop: '50px',
-    border: theme === 'dark' ? '1px solid #444' : '1px solid #ccc',
-  },
-  
-};
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-    document.body.setAttribute("data-theme", theme);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [activeSection,theme]);
+  }, [activeSection]);
 
   return (
     <Box mt={10}>
@@ -149,12 +86,12 @@ const styles = {
       <section id="search">
         <div className={style.flexContainer}>
           <div className={style.topIcons}>
-            <button onClick={handleThemeSwitchClick} className={style.menuIcon}>
+            <div className={style.menuIcon}>
               <img src='./landing/theme.png' className={style.themeStyle} alt="themeicon" />
-            </button>
-            <button className={style.menuIcon}>
+            </div>
+            <div className={style.menuIcon}>
               <img src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
-            </button>    
+            </div>
           </div>
           <div>
             <img src="./landing/top-image.png" className={style.topImage}></img>
@@ -291,11 +228,94 @@ const styles = {
       </section>
     </Box>
   );
-  
 };
 
+// Styles for the Vertical Navigation Bar
+const styles = {
+  navContainer: {
+    position: 'fixed',
+    top: '47%',
+    right: '4%',
+    transform: 'translateY(-50%)',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    zIndex: 1000,
+  },
+  verticalLine: {
+    width: '2px',
+    backgroundColor: 'rgb(205 199 199)',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: '-10px',
+  },
+  nav: {
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
+    padding: '10px',
+    alignItems: 'flex-start',
+    position: 'relative',
+  },
+  navLink: {
+    color: 'black',
+    textDecoration: 'none',
+    padding: '39% 0%',
+    marginBottom: '10px',
+    textAlign: 'left',
+    position: 'relative',
+    cursor: 'pointer',
+  },
+  activeNavLink: {
+    color: 'white',
+    textDecoration: 'none',
+    padding: '10px 0',
+    marginBottom: '10px',
+    textAlign: 'left',
+    backgroundColor: '#3f51b5',  // Highlight color for active link
+    borderRadius: '4px',  // Optional: Add some rounding for a nicer look
+    fontWeight: 'bold',  // Make the text bold
+    position: 'relative',
+  },
+  section: {
+    height: '100vh',
+    padding: '20px',
+    marginTop: '50px',
+    border: '1px solid #ccc',
+  },
+};
+
+// Adding the pseudo-elements through CSS
+const css = `
+  nav a.active::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: black;
+    border-radius: 50%;
+  }
+
+  nav a::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+    border-radius: 50%;
+  }
+`;
 
 // Injecting the CSS into the page
-
+// const style = document.createElement('style');
+// style.innerHTML = css;
+// document.head.appendChild(style);
 
 export default Landing;

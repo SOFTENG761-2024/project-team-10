@@ -1,40 +1,22 @@
 //const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-const YAML = require('yamljs');
+const YAML = require("yamljs");
 
-const path = require('path');
+const path = require("path");
 // Construct the absolute path
-const filePath = path.resolve(__dirname,'swaggerDoc.yaml');
+const filePath = path.resolve(__dirname, "swaggerDoc.yaml");
 
-console.log('File Path:', filePath);
 const swaggerDocument = YAML.load(filePath);
 
-//console.log(swaggerDocument);
+swaggerDocument.servers = swaggerDocument.servers.map((server) => {
+  server.url = server.url.replace(
+    "__SWAGGER_API_BASE_URL__",
+    process.env.SWAGGER_API_BASE_URL || "http://localhost:3000"
+  );
+  return server;
+});
 
-// const options = {
-//   swaggerDefinition: {
-//     restapi: "3.1.0",
-//     info: {
-//       title: "give-it-a-good-name api",
-//       version: "1.0.0",
-//       description: "give-it-a-good-name API",
-//     },
-//     servers: [
-//       {
-//         url: "http://localhost:3000",
-//       },
-//     ],
-//   },
-//   apis: ["/usr/src/app/backend/controllers/*.js", "./controllers/*.js"],
-// };
-
-//const specs = swaggerJsdoc(options);
-
-
-//module.exports = (app) => {
-//  app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
-//};
-
+// Now swaggerDocument contains your dynamically updated OpenAPI document
 module.exports = (app) => {
-  app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 };
