@@ -26,4 +26,23 @@ async function getProfileByUserId(userId) {
   }
 }
 
-module.exports = { createProfile, getProfileByUserId };
+async function getProfileByBio(bio)
+{
+  console.log("bio");
+  try {
+    const profile = await prismaClient.profile.findFirst({
+      where: {
+        bio: {
+          contains: bio,
+          mode: 'insensitive' // Case-insensitive search
+        }
+      }
+    });
+    return profile;
+  }
+   finally {
+    await disconnect();
+  }
+}
+
+module.exports = { createProfile, getProfileByUserId, getProfileByBio };

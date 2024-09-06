@@ -24,11 +24,17 @@ async function createProfile(profileDto) {
 }
 async function getProfileByUserId(userId) {
   logger.info(`Getting profile by userId: ${userId}`);
-
   const profile = await profileDao.getProfileByUserId(userId);
+  return profile;
+}
+
+async function getProfileByBio(bio) {
+  logger.info(`Getting profile by Bio: ${bio}`);
+  const profile = await profileDao.getProfileByBio(bio);
   return profile;
 }
 module.exports = {
   createProfile,
   getProfileByUserId,
+  getProfileByBio,
 };

@@ -1,0 +1,333 @@
+openapi: "3.1.0"
+info:
+  title: "fellows-project761-team10"
+  version: "1.0.0"
+  description: "fellows-project761-team10-API-for-user-profile-management"
+servers:
+  - url: "__SWAGGER_API_BASE_URL__"
+paths:
+  /api/userprofile:
+   get:
+      tags:
+        - User Profile Controller
+      summary: Get all user profiles
+      responses:
+        '200':
+          description: User profiles found
+        '404':
+          description: No user profiles found
+        '500':
+          description: Internal server error
+   post:
+      tags:
+        - User Profile Controller
+      summary: Create a new user profile
+      description: This endpoint creates a new user profile with the given details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                usertypeid:
+                  type: integer
+                institution_id:
+                  type: integer
+                #institution_name:
+                 # type:strimg
+                faculty_id:
+                  type: integer
+                organization_id:
+                  type: integer
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                preferred_name:
+                  type: string
+                title:
+                  type: string
+                primary_email:
+                  type: string
+                  format: email
+                orcid_identifier:
+                  type: string
+                linkedin_url:
+                  type: string
+                secondary_email:
+                  type: string
+                mobile_phone:
+                  type: string
+                bio:
+                  type: string
+                research_area:
+                  type: string
+                skills:
+                  type: string
+                research_tags:
+                  type: string
+                expertise:
+                  type: string
+                tools:
+                  type: string
+                profile_picture:
+                  type: string
+                isscrapped:
+                  type: boolean
+                signup_datetime:
+                  type: string
+                  format: date-time
+      responses:
+        '201':
+          description: User profile created successfully
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /api/userprofile/primaryemail{primaryemail}:
+    get:
+      tags:
+        - User Profile Controller
+      summary: Get user profile by primary email
+      parameters:
+        - name: primaryemail
+          in: path
+          required: true
+          schema:
+            type: string
+            format: email
+          description: Primary email address
+      responses:
+        '200':
+          description: Profile found
+        '404':
+          description: Profile not found
+        '500':
+          description: Internal server error
+    
+ #Swagger Definition for the user controller
+  /api/users:
+    post:              #Create a new user
+      tags:
+        - User Controller
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                userName:
+                  type: string
+                email:
+                  type: string
+                imageUrl:
+                  type: string
+      responses:
+        '200':
+          description: User created successfully
+        '500':
+          description: Internal server error
+
+  /api/users/{userId}:
+    get:                #get user by user ID
+      tags:
+        - User Controller
+      summary: Get user by userId
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: User ID
+      responses:
+        '200':
+          description: User found
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+#swagger definition for the Profile Controller
+  /api/profiles:  
+    post:             #Create new profile - takes userId and bio
+      tags:
+        - Profile Controller
+      summary: Create a new profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                bio:
+                  type: string
+      responses:
+        '200':
+          description: Profile created successfully
+        '500':
+          description: Internal server error
+
+  /api/profiles/userid{userId}:
+    get:                           #Get Profiles by userId
+      tags:
+        - Profile Controller
+      summary: Get profile by userId
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: User ID
+      responses:
+        '200':
+          description: Profile found
+        '404':
+          description: Profile not found
+        '500':
+          description: Internal server error
+
+  /api/profiles/bio{bio}:        
+    get:                                      #Get Profiles by bio
+      tags:
+        - Profile Controller
+      summary: Get profile by bio
+      parameters:
+        - name: bio
+          in: path
+          required: true
+          schema:
+            type: string
+          description: bio
+      responses:
+        '200':
+          description: Profile found
+        '404':
+          description: Profile not found
+        '500':
+          description: Internal server error
+
+#swagger definition for the Comment Controller
+  /api/comments/{voteId}: 
+    get:                           #Get comments by vote ID
+      tags:
+        - "Comment Controller"
+      summary: "Get total num records"
+      parameters:
+        - name: "voteId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "isTotalCount"
+          in: "query"
+          schema:
+            type: "boolean"
+          description: "Are we getting the count of comments for the voteId."
+      responses:
+        '200':
+          description: "Comments retrieved successfully"
+        '401':
+          description: "Unauthorized - Authentication required"
+        '403':
+          description: "Forbidden - Comment does not have permission to access this resource"
+        '500':
+          description: "Internal server error - Something went wrong on the server side"
+
+  /api/comments/{userId}/{voteId}: 
+    get:                          #Get comments by user ID and vote ID
+      tags:
+        - "Comment Controller"
+      summary: "Get paginated comments for userId and voteId"
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "voteId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "page"
+          in: "query"
+          schema:
+            type: "integer"
+          description: "Page number"
+        - name: "limit"
+          in: "query"
+          schema:
+            type: "integer"
+          description: "Number of items per page"
+      responses:
+        '200':
+          description: "Comments retrieved successfully"
+        '401':
+          description: "Unauthorized - Authentication required"
+        '403':
+          description: "Forbidden - Comment does not have permission to access this resource"
+        '500':
+          description: "Internal server error - Something went wrong on the server side"
+
+    post:             #Create new comment
+      tags:
+        - "Comment Controller"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                userId:
+                  type: "string"
+                isAI:
+                  type: "boolean"
+                voteId:
+                  type: "string"
+                comment:
+                  type: "string"
+      responses:
+        '201':
+          description: "Comment created successfully"
+        '401':
+          description: "Unauthenticated"
+        '403':
+          description: "Unauthorized"
+        '500':
+          description: "Internal server error"
+
+  /api/comments/{commentId}:
+    delete:                  #Delete a comment by ID
+      tags:
+        - "Comment Controller"
+      summary: "Delete a comment by ID"
+      parameters:
+        - name: "commentId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+          description: "ID of the comment to delete"
+      responses:
+        '204':
+          description: "Comment deleted successfully"
+        '401':
+          description: "Unauthenticated"
+        '403':
+          description: "Unauthorized"
+        '404':
+          description: "Comment not found"
+        '500':
+          description: "Internal server error"
