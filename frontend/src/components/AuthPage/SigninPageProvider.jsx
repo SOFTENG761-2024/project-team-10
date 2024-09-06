@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, createContext } from 'react';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
@@ -13,26 +13,27 @@ import {
   Grid,
   Container,
 } from '@mui/material';
-import { Password } from '@mui/icons-material';
-import { color } from '@mui/system';
 
 const mainColor = "#4b5a68";
 const primaryColor = "#d7d7d7";
+
 const OrDivider = styled(Typography)(({ theme }) => ({
   display: 'flex',
+  flexDirection: 'column', // Change the flex direction to column
   alignItems: 'center',
-  '&::before, &::after': {
+  justifyContent: 'center',
+  // paddingLeft: theme.spacing(10),
+  marginLeft: theme.spacing(10),
+  height: '200px', // Set a fixed height for the divider
+  '&::after': {
     content: '""',
     flex: 1,
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  '&::before': {
-    marginRight: theme.spacing(1),
-  },
-  '&::after': {
-    marginLeft: theme.spacing(1),
+    borderLeft: `1px solid ${theme.palette.divider}`, // Use borderLeft for vertical lines
+    alignSelf: 'stretch', // Ensure the lines stretch to fill the available space
+    marginTop: theme.spacing(1),
   },
 }));
+
 
 const StyledPaperTop = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
@@ -83,7 +84,7 @@ const LinkedInButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.spacing(2),
 }));
 
-const AccountCreationPage = () => {
+const SigninPageProvider = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [organization, setOrganization] = useState('');
@@ -116,7 +117,9 @@ const AccountCreationPage = () => {
 
   const { linkedInLogin } = useLinkedIn({
     clientId: '86yqr14akub4tu',
-    redirectUri: `https://www.linkedin.com/developers/tools/oauth/redirect`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
+    redirectUri: `http://localhost:5173/signin`,
+    scope: 'profile email openid',
+
     onSuccess: (code) => {
       console.log(code);
     },
@@ -150,11 +153,11 @@ const AccountCreationPage = () => {
             Sign in with Reannz
           </StyledButton>
         </Box>
-        <Box mt={2}>
+        {/* <Box mt={2}>
           <Typography variant="body2" >
             {`Don't have an account?`} <Link sx={{ color: primaryColor }} href="signup">Create account</Link>
           </Typography>
-        </Box>
+        </Box> */}
       </StyledPaperTop>
 
       <StyledPaperBottom elevation={3} sx={{ backgroundColor: 'grey.200' }}>
@@ -162,62 +165,7 @@ const AccountCreationPage = () => {
           Sign in with business account
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="body1" paragraph align="center">
-              Non members can sign in with their business ID
-            </Typography>
-            <form onSubmit={handleCreateBusinessAccount}>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    label="First Name"
-                    variant="outlined"
-                    margin="normal"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    fullWidth
-                    label="Last Name"
-                    variant="outlined"
-                    margin="normal"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
-                  />
-                </Grid>
-              </Grid>
-              <TextField
-                fullWidth
-                label="Organization"
-                variant="outlined"
-                margin="normal"
-                value={organization}
-                onChange={(e) => setOrganization(e.target.value)}
-                required
-              />
-              <TextField
-                fullWidth
-                label="Email"
-                variant="outlined"
-                margin="normal"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <Box display="flex" justifyContent="center">
-                <SubmitButton type="submit" variant="contained">
-                  Create account
-                </SubmitButton>
-              </Box>
-            </form>
-          </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={5}>
             <Typography variant="body1" paragraph align="center">
               Sign in with Email
             </Typography>
@@ -251,20 +199,24 @@ const AccountCreationPage = () => {
                 </SubmitButton>
               </Box>
             </form>
-            <Box mt={2} display="flex" justifyContent="center">
-              <OrDivider variant="body2">
-                Or
-              </OrDivider>
-            </Box>
-            <Box display="flex" justifyContent="center">
-              <Box display="flex" justifyContent="center" mt={2}>
-                <img
-                  onClick={linkedInLogin}
-                  src={linkedin}
-                  alt="Sign in with Linked In"
-                  style={{ maxWidth: '180px', cursor: 'pointer' }}
-                />
-              </Box>
+
+          </Grid>
+
+          <Grid item xs={12} md={1}>
+            <OrDivider variant="body2">
+            </OrDivider>
+          </Grid>
+
+          <Grid item xs={12} md={5}>
+
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%">
+              <img
+                onClick={linkedInLogin}
+                src={linkedin}
+                alt="Sign in with Linked In"
+                style={{ maxWidth: '180px', cursor: 'pointer' }}
+              />
+
               {/* <LinkedInButton
                 variant="contained"
                 color="primary"
@@ -286,4 +238,4 @@ const AccountCreationPage = () => {
   );
 };
 
-export default AccountCreationPage;
+export default SigninPageProvider;
