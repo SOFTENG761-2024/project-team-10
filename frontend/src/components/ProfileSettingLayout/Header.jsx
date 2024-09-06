@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, IconButton, Box } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';  // Picture icon1
 import MenuIcon from '@mui/icons-material/Menu';  // Picture icon2
 import { useMuiTheme } from '../GlobalProviders';
+import { width } from '@mui/system';
 
 const Header = () => {
   const currentDate = new Date();
@@ -48,7 +49,8 @@ const styles = {
   appBar: {
     backgroundColor: '#f7f7f7',
     color: '#333',
-    marginLeft: '80px', // Adjust based on your layout
+    marginBottom: '20px',
+    // Adjust based on your layout
   },
   welcomeText: {
     fontSize: '18px',
@@ -62,7 +64,8 @@ const styles = {
   },
   iconContainer: {
     display: 'flex',
-    gap: '10px',
+    
+    gap: '5px',
   },
 };
 

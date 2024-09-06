@@ -12,7 +12,7 @@ export default function ContentComponent() {
     };
 
     return (
-        <Container sx={styles.container}>
+        <Box sx={styles.container}>
             {/* Button Group */}
             <Box sx={styles.buttonsContainer}>
                 <Button variant="outlined">About</Button>
@@ -71,7 +71,7 @@ export default function ContentComponent() {
             <Button variant="contained" sx={styles.editButton} onClick={handleEditToggle}>
                 {isEditing ? 'Save' : 'Edit'}
             </Button>
-        </Container>
+        </Box>
     );
 }
 
@@ -82,13 +82,12 @@ const styles = {
         height: "100%"
     },
     container: {
-        border: '1px solid #ccc',
-        padding: '10px',
-        position: 'relative',
-        width: 'calc(100% - 80px)', // Adjust width to account for sidebar
-        marginLeft: '80px',
-        height: 'auto',
-        minHeight: '600px',
+        //display: flex;
+        //   flex-direction: column;
+        //   height: 100vh;
+        display: 'flex',
+        flexDirection: 'column',
+        height: '90vh',
         backgroundColor: '#fff',
     },
     buttonsContainer: {
@@ -103,7 +102,7 @@ const styles = {
         height: '100%',
     },
     box: {
-        height: '150px',
+        height:"30%",
         border: '1px solid #ccc',
         padding: '10px',
         backgroundColor: '#f9f9f9',
@@ -112,8 +111,8 @@ const styles = {
         justifyContent: 'center',
     },
     editButton: {
-        position: 'absolute',
-        bottom: '10px',
-        left: '10px',
+        width: '100px',
+        marginLeft: '10px',
+        marginTop: '-40px'
     },
 };

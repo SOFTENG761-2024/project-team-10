@@ -2,22 +2,20 @@ import React from 'react';
 import Sidebar from "./Sidebar";
 import Header from './Header';
 import ContentComponent from './ContentComponent';
+import './ProfileSettingLayout.css'
 
 
-const ProfileSettingLayout = ({ children }) => {
+const ProfileSettingLayout = () => {
   return (
-
-    <div className="profile-setting-layout">
-      <Header />
-      <Sidebar />
-
-      <div className="main-content">
-        <ContentComponent />
-        <div className="content">
-          {children}
+    <>
+      <div className="profile-setting-layout">
+        <Sidebar />
+        <div className="main-content">
+          <Header />
+          <ContentComponent />
         </div>
-      </div>
-    </div>
+        </div>
+    </>
   );
 }
 
