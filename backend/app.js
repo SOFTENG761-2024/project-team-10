@@ -20,6 +20,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
+// Import and use our application routes.
+import routes from "./routes/routes.js";
+app.use("/", routes);
+
 // Setup connection pool of mongoose.
 connect().then(() => {
   logger.info("Mongodb connection pool created.");
