@@ -20,9 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
-// Import and use our application routes.
-import routes from "./routes/routes.js";
-app.use("/", routes);
 
 // Setup connection pool of mongoose.
 connect().then(() => {
@@ -32,6 +29,7 @@ connect().then(() => {
   app.use("/api/comments", commentController);
   app.use("/api/profiles", profileController);
   app.use("/api/userprofile", userProfileController);
+  app.use("/api/linkedIn", linkedInController);
 
   // setup swagger ui
   swaggerController(app);
