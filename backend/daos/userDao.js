@@ -1,13 +1,4 @@
-const User = require("../models/user.js");
 const { prismaClient, disconnect } = require("../daos/prismaClient");
-
-async function createUser({ userName, email, userId, imageUrl }) {
-  return await User.create({ userName, email, userId, imageUrl });
-}
-
-async function getUserById(userId) {
-  return await User.findOne({ userId });
-}
 
 async function createUserV2(userData) {
   try {
@@ -37,8 +28,6 @@ async function getUserByIdV2(userId) {
 }
 
 module.exports = {
-  createUser,
-  getUserById,
   getUserByIdV2,
   createUserV2,
 };
