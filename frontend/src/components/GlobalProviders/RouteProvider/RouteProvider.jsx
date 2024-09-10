@@ -50,12 +50,7 @@ const RouteProvider = () => {
     <RouteContext.Provider value={{ pageTitle, setPageTitle }}>
       <BrowserRouter>
         <Routes>
-          {/* <Route
-            path="/"
-            element={
-              <Landing />
-            }
-          /> */}
+          <Route path="/" element={<Landing />} />
           <Route
             path="/auth"
             element={
