@@ -81,7 +81,8 @@ jobs:
           --exclude=node_modules \
           --exclude=infrastructure \
           --exclude=.ssh \
-          --exclude=e2eTests .
+          --exclude=e2eTests \
+          --exclude=allScrapeData .
         working-directory: "./"
       - name: upload archived src code
         uses: actions/upload-artifact@v2
