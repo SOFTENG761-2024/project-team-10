@@ -15,7 +15,6 @@ import {
   // RestaurantOptions,
 } from "@frontend-ui/components/Recommendation";
 // import { Voting } from "@frontend-ui/components/Voting";
-import { CommentDialogPaginated } from "@frontend-ui/components/Comment/";
 import { Button, Container, Grid, Stack } from "@mui/material";
 import SigninPageProvider from "@frontend-ui/components/AuthPage/SigninPageProvider";
 import SignupPageProvider from "@frontend-ui/components/AuthPage/SignupPageProvider";
