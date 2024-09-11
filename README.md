@@ -101,6 +101,14 @@ npm run start:dep
 #Verify the env,
 Open http://localhost:8080/db/admin/ in your browser, and login with dev/dev
 
+Open http://localhost:8888/  Login with user-name@domain-name.com/pgadminpassword
+Register server:
+Server name: test
+Name: postgres
+User name: postgres
+Password: postgres
+
+
 ## 2. Run frontend react
 
 ```bash

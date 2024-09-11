@@ -1,23 +1,23 @@
 import React from 'react';
 import Sidebar from "./Sidebar";
 import Header from './Header';
+import ContentComponent from './ContentComponent';
+import './ProfileSettingLayout.css'
 
-const ProfileSettingLayout = ({ children }) => {
-    return (
-    
+
+const ProfileSettingLayout = () => {
+  return (
+    <>
       <div className="profile-setting-layout">
-        <Header/>
-        <Sidebar /> 
-        
+        <Sidebar />
         <div className="main-content">
-        
-          <div className="content">
-            {children}
-          </div>
+          <Header />
+          <ContentComponent />
         </div>
-      </div>
-    );
-  }
-  
-  export default ProfileSettingLayout;
-  
+        </div>
+    </>
+  );
+}
+
+export default ProfileSettingLayout;
+
