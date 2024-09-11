@@ -3,7 +3,7 @@ const logger = require("../utils/logger.js");
 
 async function createUser(userDto) {
   logger.info(`Creating user: ${JSON.stringify(userDto)}`);
-  const user = await userDao.createUserV2(userDto);
+  const user = await userDao.createUser(userDto);
   logger.info(`Created user: ${JSON.stringify(user)}`);
 
   return user;

@@ -1,6 +1,6 @@
 const { prismaClient, disconnect } = require("../daos/prismaClient");
 
-async function createUserV2(userData) {
+async function createUser(userData) {
   try {
     const user = await prismaClient.user.create({
       data: { id: userData.userId },
@@ -12,7 +12,7 @@ async function createUserV2(userData) {
   }
 }
 
-async function getUserByIdV2(userId) {
+async function getUserById(userId) {
   try {
     console.log(userId);
     const user = await prismaClient.user.findUnique({
@@ -28,6 +28,6 @@ async function getUserByIdV2(userId) {
 }
 
 module.exports = {
-  getUserByIdV2,
-  createUserV2,
+  getUserById,
+  createUser,
 };
