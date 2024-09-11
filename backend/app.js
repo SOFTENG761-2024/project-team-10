@@ -8,6 +8,7 @@ var userController = require("./controllers/userController");
 var commentController = require("./controllers/commentController");
 var profileController = require("./controllers/profileController");
 var userProfileController =require("./controllers/userProfileController.js");
+//var linkedInController =require("./controllers/linkedinController.js");
 
 const { connect } = require("./daos/mongodbClient");
 const swaggerController = require("./controllers/swaggerController");
@@ -29,7 +30,7 @@ connect().then(() => {
   app.use("/api/comments", commentController);
   app.use("/api/profiles", profileController);
   app.use("/api/userprofile", userProfileController);
-  app.use("/api/linkedIn", linkedInController);
+  //app.use("/api/linkedIn", linkedInController);
 
   // setup swagger ui
   swaggerController(app);
