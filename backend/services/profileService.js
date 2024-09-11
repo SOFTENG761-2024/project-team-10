@@ -3,8 +3,8 @@ const userService = require("../services/userService.js");
 const logger = require("../utils/logger.js");
 
 async function createProfile(profileDto) {
-  if (!(await userService.getUserByIdV2(profileDto.userId))) {
-    await userService.createUserV2({ userId: profileDto.userId });
+  if (!(await userService.getUserById(profileDto.userId))) {
+    await userService.createUser({ userId: profileDto.userId });
   }
 
   const existingProfile = await getProfileByUserId(profileDto.userId);
