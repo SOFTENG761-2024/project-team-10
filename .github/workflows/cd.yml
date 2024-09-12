@@ -151,9 +151,9 @@ jobs:
           ssh_cmd 'ls'
           ssh_cmd 'pwd'
           ssh_cmd 'sudo rm -rf ~/give-it-a-good-name'
-          ssh_cmd 'docker image prune -f'
-          ssh_cmd 'echo "Checking disk space"; df -h;'
-          ssh_cmd 'echo Checking disk space usage breakdown; du -x / | sort -n | tail -40;'
+          # ssh_cmd 'docker image prune -f'
+          # ssh_cmd 'echo "Checking disk space"; df -h;'
+          # ssh_cmd 'echo Checking disk space usage breakdown; du -x / | sort -n | tail -40;'
 
           # copy zipped source code over.
           scp -i mykey.pem -o StrictHostKeyChecking=no -pr ./give-it-a-good-name ec2-user@$EC2_INSTANCE_PUBLIC_DNS:~/give-it-a-good-name
