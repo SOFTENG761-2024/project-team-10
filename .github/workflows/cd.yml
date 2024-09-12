@@ -85,7 +85,7 @@ jobs:
           --exclude=allScrapeData .
         working-directory: "./"
       - name: upload archived src code
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: source_code
           path: ./give-it-a-good-name/source_code.tar.gz
@@ -124,7 +124,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download latest archived source code
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: source_code
           path: ./give-it-a-good-name
