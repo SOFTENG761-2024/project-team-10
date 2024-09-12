@@ -16,6 +16,8 @@ import { Profile } from "@frontend-ui/components/Profile/Profile";
 import { Box } from "@mui/system";
 import { HeaderProvider } from "@frontend-ui/components/Header";
 import ProfileSettingLayout from "@frontend-ui/components/ProfileSettingLayout";
+import ProfileVisitorView from "@frontend-ui/components/Profile/ProfileVisitorView";
+
 const RouteContext = createContext({});
 
 export const useRoute = () => useContext(RouteContext);
@@ -56,25 +58,12 @@ const RouteProvider = () => {
               <Landing />
             }
           /> */}
-          <Route
-            path="/"
-            element={
-              <Landing />
-            }
-          />
+          <Route path="/" element={<Landing />} />
 
           {/* Optionally, you can keep the /auth route if needed */}
-          <Route
-            path="/auth"
-            element={<AuthPageProvider />}
-
-          />
-          <Route
-            path="/profile-setting"
-            element={<ProfileSettingLayout />}
-
-          />
-
+          <Route path="/auth" element={<AuthPageProvider />} />
+          <Route path="/profile-setting" element={<ProfileSettingLayout />} />
+          <Route path="/profile-visitor" element={<ProfileVisitorView />} />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>
