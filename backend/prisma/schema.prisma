@@ -23,37 +23,47 @@ model Profile {
 }
 
 model user_profile {
-  id                   Int                    @id @default(autoincrement())
-  usertypeid           Int
-  institution_id       Int?
-  faculty_id           Int?
-  organization_id      Int?
-  first_name           String                 @test.VarChar
-  last_name            String                 @test.VarChar
-  preferred_name       String?                @test.VarChar
-  title                String?                @test.VarChar
-  primary_email        String?                @unique @test.VarChar
-  orcid_identifier     String?                @unique @test.VarChar
-  linkedin_url         String?                @test.VarChar
-  secondary_email      String?                @test.VarChar
-  mobile_phone         String?                @test.VarChar
-  bio                  String?
-  research_area        String?
-  skills               String?
-  research_tags        String?
-  expertise            String?
-  tools                String?
-  profile_picture      String?                @test.VarChar
-  isscrapped           Boolean?
-  signup_datetime      DateTime?              @test.Timestamp(6)
-  professional_details professional_details[]
-  publication          publication[]
-  teaching_activity    teaching_activity[]
-  user_affiliations    user_affiliations[]
-  faculty              faculty?               @relation(fields: [faculty_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  institution          institution?           @relation(fields: [institution_id], references: [institution_id], onDelete: NoAction, onUpdate: NoAction)
-  organization         organization?          @relation(fields: [organization_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  usertype             usertype               @relation(fields: [usertypeid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id                                                   Int                    @id @default(autoincrement())
+  usertypeid                                           Int
+  institution_id                                       Int?
+  faculty_id                                           Int?
+  organization_id                                      Int?
+  first_name                                           String                 @test.VarChar
+  last_name                                            String                 @test.VarChar
+  preferred_name                                       String?                @test.VarChar
+  title                                                String?                @test.VarChar
+  primary_email                                        String?                @unique @test.VarChar
+  orcid_identifier                                     String?                @unique @test.VarChar
+  linkedin_url                                         String?                @test.VarChar
+  secondary_email                                      String?                @test.VarChar
+  mobile_phone                                         String?                @test.VarChar
+  bio                                                  String?
+  research_area                                        String?
+  skills                                               String?
+  research_tags                                        String?
+  expertise                                            String?
+  tools                                                String?
+  profile_picture                                      String?                @test.VarChar
+  isscrapped                                           Boolean?
+  signup_datetime                                      DateTime?              @test.Timestamp(6)
+  event                                                event[]
+  event_attendee                                       event_attendee[]
+  funding                                              funding[]
+  group_members                                        group_members[]
+  professional_details                                 professional_details[]
+  project                                              project[]
+  publication                                          publication[]
+  teaching_activity                                    teaching_activity[]
+  user_affiliations                                    user_affiliations[]
+  user_group                                           user_group[]
+  user_links                                           user_links[]
+  user_media                                           user_media[]
+  user_message_user_message_from_user_idTouser_profile user_message[]         @relation("user_message_from_user_idTouser_profile")
+  user_message_user_message_to_user_idTouser_profile   user_message[]         @relation("user_message_to_user_idTouser_profile")
+  faculty                                              faculty?               @relation(fields: [faculty_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  institution                                          institution?           @relation(fields: [institution_id], references: [institution_id], onDelete: NoAction, onUpdate: NoAction)
+  organization                                         organization?          @relation(fields: [organization_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usertype                                             usertype               @relation(fields: [usertypeid], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model institution {
@@ -69,7 +79,6 @@ model faculty {
   name         String?        @test.VarChar
   user_profile user_profile[]
 }
-
 
 model organization {
   id           Int            @id @default(autoincrement())
@@ -113,9 +122,97 @@ model user_affiliations {
   user_profile   user_profile? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-
 model usertype {
   id           Int            @id @default(autoincrement())
   name         String?        @test.VarChar
   user_profile user_profile[]
+}
+
+model event {
+  id                   Int              @id @default(autoincrement())
+  name                 String?          @test.VarChar
+  user_id              Int?
+  event_start_datetime DateTime?        @test.Timestamp(6)
+  event_end_datetime   DateTime?        @test.Timestamp(6)
+  user_profile         user_profile?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  event_attendee       event_attendee[]
+  event_media          event_media[]
+}
+
+model event_attendee {
+  id           Int           @id @default(autoincrement())
+  event_id     Int?
+  user_id      Int?
+  rsvp         Boolean?
+  event        event?        @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_profile user_profile? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model event_media {
+  id          Int     @id @default(autoincrement())
+  event_id    Int?
+  media       String? @test.VarChar
+  name        String? @test.VarChar
+  description String?
+  event       event?  @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model funding {
+  id           Int           @id @default(autoincrement())
+  name         String?       @test.VarChar
+  user_id      Int?
+  start_date   DateTime?     @test.Date
+  end_date     DateTime?     @test.Date
+  description  String?
+  user_profile user_profile? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model group_members {
+  id           Int           @id @default(autoincrement())
+  group_id     Int?
+  user_id      Int?
+  user_group   user_group?   @relation(fields: [group_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_profile user_profile? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model project {
+  id            Int           @id @default(autoincrement())
+  name          String?       @test.VarChar
+  user_id       Int?
+  commence_date DateTime?     @test.Date
+  user_profile  user_profile? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user_group {
+  id            Int             @id @default(autoincrement())
+  name          String?         @test.VarChar
+  user_id       Int?
+  group_members group_members[]
+  user_profile  user_profile?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user_links {
+  id           Int           @id @default(autoincrement())
+  user_id      Int?
+  link         String?       @test.VarChar
+  name         String?       @test.VarChar
+  user_profile user_profile? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user_media {
+  id           Int           @id @default(autoincrement())
+  user_id      Int?
+  media        String?       @test.VarChar
+  name         String?       @test.VarChar
+  description  String?
+  user_profile user_profile? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user_message {
+  id                                                   Int           @id @default(autoincrement())
+  message_text                                         String?
+  from_user_id                                         Int?
+  to_user_id                                           Int?
+  user_profile_user_message_from_user_idTouser_profile user_profile? @relation("user_message_from_user_idTouser_profile", fields: [from_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_profile_user_message_to_user_idTouser_profile   user_profile? @relation("user_message_to_user_idTouser_profile", fields: [to_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

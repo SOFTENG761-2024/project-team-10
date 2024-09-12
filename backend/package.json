@@ -2,8 +2,11 @@
   "name": "v",
   "version": "0.0.0",
   "private": true,
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
-    "start:dev": "npx prisma db push && nodemon --exec node --env-file=.env ./bin/www",
+    "start:dev": "npx prisma db push && npx prisma db seed && nodemon --exec node --env-file=.env ./bin/www",
     "start:dep": "npx prisma generate && cd ../ && sh scripts/start.sh",
     "deploy": "npx prisma migrate deploy",
     "lint": "eslint . --fix --ext js",
