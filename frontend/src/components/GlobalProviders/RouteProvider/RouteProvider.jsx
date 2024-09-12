@@ -17,7 +17,7 @@ import { Box } from "@mui/system";
 import { HeaderProvider } from "@frontend-ui/components/Header";
 import ProfileSettingLayout from "@frontend-ui/components/ProfileSettingLayout";
 import ProfileVisitorView from "@frontend-ui/components/Profile/ProfileVisitorView";
-
+import { TermsAndConditions } from "@frontend-ui/components/Profile/ProfileVisitorView/TermsAndConditions";
 const RouteContext = createContext({});
 
 export const useRoute = () => useContext(RouteContext);
@@ -64,6 +64,7 @@ const RouteProvider = () => {
           <Route path="/auth" element={<AuthPageProvider />} />
           <Route path="/profile-setting" element={<ProfileSettingLayout />} />
           <Route path="/profile-visitor" element={<ProfileVisitorView />} />
+          <Route path="/terms" component={TermsAndConditions} />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>

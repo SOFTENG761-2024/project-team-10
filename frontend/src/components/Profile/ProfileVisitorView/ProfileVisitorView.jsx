@@ -1,9 +1,282 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
 import { ContactForm } from "./ContactForm";
+
+const tabs = [
+  "About",
+  "Outputs",
+  "Professional",
+  "Teaching/Research",
+  "Contact",
+];
+
+const ProfileVisitorView = () => {
+  const [activeTab, setActiveTab] = useState("About");
+  const [profileData, setProfileData] = useState(null);
+
+  useEffect(() => {
+    // Define dummy data
+    const dummyProfileData = {
+      name: "Alzxa Rawlus",
+      date: "Tue, 07 June 2024",
+      about: "This is the About section with some introductory information.",
+      picture: "/default-profile.png",
+      title: "Professor",
+      fullName: "Alzxa Rawlus",
+      orcId: "0000-0002-1825-0097",
+      department: "Department of Engineering",
+      affiliations: ["Affiliation1", "Affiliation2", "Affiliation3"],
+      researchField: ["Field1", "Field2", "Field3"],
+      researchTags: ["Tag1", "Tag2", "Tag3"],
+      university: "The University of Canterbury",
+      publications: [
+        {
+          title: "Publication 1",
+          description: "Description of Publication 1",
+        },
+        {
+          title: "Publication 2",
+          description: "Description of Publication 2",
+        },
+      ],
+      projects: [
+        {
+          title: "Project 1",
+          description: "Description of Project 1",
+        },
+        {
+          title: "Project 2",
+          description: "Description of Project 2",
+        },
+      ],
+      teachingItems: [
+        {
+          title: "Teaching/Research Item 1",
+          description: "Description of Teaching/Research Item 1",
+        },
+        {
+          title: "Teaching/Research Item 2",
+          description: "Description of Teaching/Research Item 2",
+        },
+      ],
+    };
+
+    // Simulate fetching data
+    setProfileData(dummyProfileData);
+  }, []);
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "About":
+        return (
+          <div>
+            {profileData?.about || "No data available"}
+
+            <div className="description-section">
+              <p>
+                Afhjsfjhsfkshfksdfhskfhsdkfdsfhksdfhjhsdfhksdfhskdfhskjnvndlkdnvslkdmnvnvsdlfmn,mnv,nv,mnvmdslvdvldksdljsjsdlnsdknlsvnsnldvndnlvssdlns
+                ldnlsnsldsknsldvnlndsnvdslsvlvslkvns,vnsvlndklnvsvmdvmnsklns,dvnsklnvnvkslndslnvdklnsklvslvndkvlvsklvslvsm,dvns,nvvskdvs,kds;weowpjfewuefkcsjkljelocksdjs,cnnsnc
+              </p>
+              <p>
+                hflhklklsflksflsklfhkdklsfhsieksdlfjhseisksdlfjeidkfhieildkfheildkfheildkfheildcncmeifpejkaowwajjjbbfksjsbfjbfdlslvslvssdhfksjfhs
+                hflhklklsflksflsklfhkdklsfhsieksdlfjhseisksdlfjeidkfhieildkfheildkfheildkfheildcncmeifpejkaowwajjjbbfksjsbfjbfdlslvslvssdhfksjfhs
+              </p>
+            </div>
+            {/* Showcase Work Section */}
+            <div className="showcase-section">
+              <h4>Key area</h4>
+
+              <div className="showcase-grid">
+                {/* Card 1 */}
+                <div className="showcase-card">
+                  <h3>Showcase Work</h3>
+                  <p>One line summary</p>
+                </div>
+
+                {/* Card 2 */}
+                <div className="showcase-card">
+                  <img src="./landing/cube.png" alt="Cube" class="cube-icon" />
+                  <h3>Unlock the Power of Collaboration and Networking</h3>
+                  <p>
+                    Connect with a diverse community of researchers and experts.
+                  </p>
+                </div>
+
+                {/* Card 3 */}
+                <div className="showcase-card">
+                  <img src="./landing/cube.png" alt="Cube" class="cube-icon" />
+                  <h3>Discover Expertise Across Disciplines</h3>
+                  <p>Find experts based on subject, skill, or expertise.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case "Outputs":
+        return (
+          <div>
+            {profileData?.publications?.length > 0 ? (
+              profileData.publications.map((publication, index) => (
+                <div key={index} className="content-item">
+                  <h4>{publication.title}</h4>
+                  <p>{publication.description}</p>
+                </div>
+              ))
+            ) : (
+              <p>No publications available.</p>
+            )}
+          </div>
+        );
+
+      case "Professional":
+        return (
+          <div>
+            {profileData?.projects?.length > 0 ? (
+              profileData.projects.map((project, index) => (
+                <div key={index} className="content-item">
+                  <h4>{project.title}</h4>
+                  <p>{project.description}</p>
+                </div>
+              ))
+            ) : (
+              <p>No projects available.</p>
+            )}
+          </div>
+        );
+
+      case "Teaching/Research":
+        return (
+          <div>
+            {profileData?.teachingItems?.length > 0 ? (
+              profileData.teachingItems.map((teaching, index) => (
+                <div key={index} className="content-item">
+                  <h4>{teaching.title}</h4>
+                  <p>{teaching.description}</p>
+                </div>
+              ))
+            ) : (
+              <p>No teaching items available.</p>
+            )}
+          </div>
+        );
+
+      case "Contact":
+        return <ContactForm />;
+
+      default:
+        return <div>No data available</div>;
+    }
+  };
+
+  return (
+    <div className="profile-visitor-view-wrapper-container">
+      <div className="sidebar"></div>
+      <div className="header">
+        <div className="name-and-date">
+          <h2>Welcome, {profileData?.name || "Alzxa Rawlus"}</h2>
+          <p>Date: {profileData?.date || "Tue, 07 June 2024"}</p>
+        </div>
+        <div className="colourtheme-and-menuicon">
+          <div className="colour-theme"></div>
+          <div className="menu-icon"></div>
+        </div>
+      </div>
+
+      <div className="profile-view-container">
+        <div className="basic-info">
+          <div className="basic-info-top">
+            <img
+              src={profileData?.picture || "/default-profile.png"}
+              alt="Profile"
+              className="profile-pic"
+            />
+            <h3 className="title">{profileData?.title || "Title"}</h3>
+            <h2 className="full-name">
+              {profileData?.fullName || "Alzxa Rawlus"}
+            </h2>
+            <hr className="line-separator" />
+            <h3 className="orc-id">
+              <span className="label-text">ORCID ID:</span>
+              <br />
+              <span className="content-text">
+                {profileData?.orcId || "XXX-XXXX-XXXX"}
+              </span>
+            </h3>
+            <hr className="line-separator" />
+            <h4 className="department">
+              {profileData?.department || "Department of Engineering"}
+            </h4>
+            <hr className="line-separator" />
+          </div>
+
+          <div className="basic-info-middle">
+            <h4 className="affiliations">
+              <span className="label-text">Affiliations:</span>
+              <div className="content-list">
+                {profileData?.affiliations?.map((item, index) => (
+                  <span key={index} className="content-text">
+                    {item}
+                  </span>
+                )) || "abcd, abcd, abcd"}
+              </div>
+            </h4>
+            <h4 className="research-field">
+              <span className="label-text">Research Field:</span>
+              <div className="content-list">
+                {profileData?.researchField?.map((item, index) => (
+                  <span key={index} className="content-text">
+                    {item}
+                  </span>
+                )) || "abcd, abcd, abcd"}
+              </div>
+            </h4>
+            <h4 className="research-tags">
+              <span className="label-text">Research Tags:</span>
+              <div className="content-list">
+                {profileData?.researchTags?.map((item, index) => (
+                  <span key={index} className="content-text">
+                    {item}
+                  </span>
+                )) || "abcd, abcd, abcd"}
+              </div>
+            </h4>
+          </div>
+
+          <div className="basic-info-bottom">
+            <div className="university">
+              {profileData?.university || "The University of Canterbury"}
+            </div>
+          </div>
+        </div>
+
+        {/* Profile tabs and content rendering */}
+        <div className="profile-tabs-content">
+          <div className="tabs">
+            {tabs.map((tab) => (
+              <button
+                key={tab}
+                className={`tab-button ${activeTab === tab ? "active" : ""}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+          <div className="tab-content">{renderTabContent()}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProfileVisitorView;
+
+/*import React, { useState, useEffect } from "react";
+import "./styles.css";
+import { ContactForm } from "./ContactForm";
 import { getProfileData } from "./api";
 
-// Tabs array
 const tabs = [
   "About",
   "Outputs",
@@ -25,37 +298,17 @@ const ProfileVisitorView = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case "About":
-        return (
-          <div>
-            <p>{profileData?.about || "About information is not available"}</p>
-            <div className="about-content">
-              <h3>Key Area: Showcase Work</h3>
-              <p>One line summary of your work</p>
-              <div className="about-icons">
-                <div>
-                  <h4>Unlock the Power of Collaboration</h4>
-                  <p>
-                    Connect with a diverse community of researchers and experts.
-                  </p>
-                </div>
-                <div>
-                  <h4>Discover Expertise Across Disciplines</h4>
-                  <p>Find experts based on subject, skill, or expertise.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+        return <div>{profileData?.about || "No data available"}</div>;
 
+      // Outputs Tab (Publications)
       case "Outputs":
-        // Map through publications to dynamically create items
         return (
           <div>
-            {profileData?.outputs?.length > 0 ? (
-              profileData.outputs.map((output, index) => (
-                <div key={index} className="output-item">
-                  <h4>Publication {index + 1}</h4>
-                  <p>{output}</p>
+            {profileData?.publications?.length > 0 ? (
+              profileData.publications.map((publication, index) => (
+                <div key={index} className="content-item">
+                  <h4>{publication.title}</h4>
+                  <p>{publication.description}</p>
                 </div>
               ))
             ) : (
@@ -64,88 +317,144 @@ const ProfileVisitorView = () => {
           </div>
         );
 
+      // Professional Tab (Projects)
       case "Professional":
         return (
           <div>
-            {profileData?.professional?.map((project, index) => (
-              <div key={index} className="project-item">
-                <h4>Project {index + 1}</h4>
-                <p>{project || "No project data available"}</p>
-              </div>
-            ))}
+            {profileData?.projects?.length > 0 ? (
+              profileData.projects.map((project, index) => (
+                <div key={index} className="content-item">
+                  <h4>{project.title}</h4>
+                  <p>{project.description}</p>
+                </div>
+              ))
+            ) : (
+              <p>No projects available.</p>
+            )}
           </div>
         );
 
+      // Teaching/Research Tab
       case "Teaching/Research":
         return (
           <div>
-            {profileData?.teaching?.map((teachingItem, index) => (
-              <div key={index} className="teaching-item">
-                <h4>Teaching Item {index + 1}</h4>
-                <p>{teachingItem || "No teaching/research data available"}</p>
-              </div>
-            ))}
+            {profileData?.teachingItems?.length > 0 ? (
+              profileData.teachingItems.map((teaching, index) => (
+                <div key={index} className="content-item">
+                  <h4>{teaching.title}</h4>
+                  <p>{teaching.description}</p>
+                </div>
+              ))
+            ) : (
+              <p>No teaching items available.</p>
+            )}
           </div>
         );
 
+      // Contact Tab with Contact Form
       case "Contact":
         return <ContactForm />;
+
       default:
         return <div>No data available</div>;
     }
   };
 
   return (
-    <div className="wrapper-container">
-      <div className="profile-visitor-view">
-        <div className="header">
-          <div className="name-and-date">
-            <h2>Welcome, {profileData?.name || "Alzxa Rawlus"}</h2>
-            <p>Date: {profileData?.date || "Tue, 07 June 2024"}</p>
-          </div>
-          <div className="colourtheme-and-menuicon">
-            <div className="colour-theme"></div>
-            <div className="menu-icon"></div>
-          </div>
+    <div className="profile-visitor-view-wrapper-container">
+      <div className="sidebar"></div>
+      <div className="header">
+        <div className="name-and-date">
+          <h2>Welcome, {profileData?.name || "Alzxa Rawlus"}</h2>
+          <p>Date: {profileData?.date || "Tue, 07 June 2024"}</p>
         </div>
-        <div className="sidebar"></div>
+        <div className="colourtheme-and-menuicon">
+          <div className="colour-theme"></div>
+          <div className="menu-icon"></div>
+        </div>
+      </div>
 
-        <div className="profile-container">
-          <div className="basic-info">
+      <div className="profile-view-container">
+        <div className="basic-info">
+          <div className="basic-info-top">
             <img
               src={profileData?.picture || "/default-profile.png"}
               alt="Profile"
               className="profile-pic"
             />
-            <h3 className="title">{profileData?.title || "Loading..."}</h3>
+            <h3 className="title">{profileData?.title || "Title"}</h3>
             <h2 className="full-name">
-              {profileData?.fullName || "Loading..."}
+              {profileData?.fullName || "Alzxa Rawlus"}
             </h2>
+            <hr className="line-separator" />
             <h3 className="orc-id">
-              ORCID ID: {profileData?.orcId || "ORCID: XXX-XXXX-XXXX"}
+              <span className="label-text">ORCID ID:</span>
+              <br />
+              <span className="content-text">
+                {profileData?.orcId || "XXX-XXXX-XXXX"}
+              </span>
             </h3>
-            <h4 className="department">{profileData?.department}</h4>
-            <h4 className="affiliation">{profileData?.affiliation}</h4>
-            <h4 className="research-field">{profileData?.researchField}</h4>
-            <h4 className="research-tags">{profileData?.researchTags}</h4>
-            <h4 className="university">{profileData?.university}</h4>
+            <hr className="line-separator" />
+            <h4 className="department">
+              {profileData?.department || "Department of Engineering"}
+            </h4>
+            <hr className="line-separator" />
           </div>
 
-          {/* Profile tabs and content rendering */}
-          <div className="profile-tabs-content">
-            <div className="tabs">
-              {tabs.map((tab) => (
-                <button
-                  key={tab}
-                  className={`tab-button ${activeTab === tab ? "active" : ""}`}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
-            <div className="tab-content">{renderTabContent()}</div>
+          <div className="basic-info-middle">
+            <h4 className="affiliations">
+              <span className="label-text">Affiliations:</span>
+              <div className="content-list">
+                {profileData?.affiliations?.map((item, index) => (
+                  <span key={index} className="content-text">
+                    {item}
+                  </span>
+                )) || "abcd, abcd, abcd"}
+              </div>
+            </h4>
+            <h4 className="research-field">
+              <span className="label-text">Research Field:</span>
+              <div className="content-list">
+                {profileData?.researchField?.map((item, index) => (
+                  <span key={index} className="content-text">
+                    {item}
+                  </span>
+                )) || "abcd, abcd, abcd"}
+              </div>
+            </h4>
+            <h4 className="research-tags">
+              <span className="label-text">Research Tags:</span>
+              <div className="content-list">
+                {profileData?.researchTags?.map((item, index) => (
+                  <span key={index} className="content-text">
+                    {item}
+                  </span>
+                )) || "abcd, abcd, abcd"}
+              </div>
+            </h4>
           </div>
+
+          <div className="basic-info-bottom">
+            <div className="university">
+              {profileData?.university || "The University of Canterbury"}
+            </div>
+          </div>
+        </div>
+
+       }
+        <div className="profile-tabs-content">
+          <div className="tabs">
+            {tabs.map((tab) => (
+              <button
+                key={tab}
+                className={`tab-button ${activeTab === tab ? "active" : ""}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+          <div className="tab-content">{renderTabContent()}</div>
         </div>
       </div>
     </div>
@@ -153,3 +462,4 @@ const ProfileVisitorView = () => {
 };
 
 export default ProfileVisitorView;
+*/
