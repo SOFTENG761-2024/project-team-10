@@ -163,6 +163,8 @@ jobs:
           ssh_cmd 'source ~/.bashrc; nvm install 20.11.1'
           
           # unzip and spin up docker-compose
-          ssh_cmd 'cd ~/give-it-a-good-name; sudo tar -xzf ./source_code.tar.gz; sudo sh ~/give-it-a-good-name/scripts/start-prod.sh;'
+          ssh_cmd 'cd ~/give-it-a-good-name; sudo tar -xzf ./source_code.tar.gz;'
+          ssh_cmd 'sudo rm ./source_code.tar.gz;'
+          ssh_cmd 'sudo sh ~/give-it-a-good-name/scripts/start-prod.sh;'
         env:
           EC2_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
