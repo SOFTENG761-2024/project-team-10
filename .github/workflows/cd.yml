@@ -85,7 +85,7 @@ jobs:
           --exclude=allScrapeData .
         working-directory: "./"
       - name: upload archived src code
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: source_code
           path: ./give-it-a-good-name/source_code.tar.gz
@@ -124,7 +124,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download latest archived source code
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: source_code
           path: ./give-it-a-good-name
@@ -151,9 +151,9 @@ jobs:
           ssh_cmd 'ls'
           ssh_cmd 'pwd'
           ssh_cmd 'sudo rm -rf ~/give-it-a-good-name'
-          ssh_cmd 'docker image prune -f'
-          ssh_cmd 'echo "Checking disk space"; df -h;'
-          ssh_cmd 'echo Checking disk space usage breakdown; du -x / | sort -n | tail -40;'
+          # ssh_cmd 'docker image prune -f'
+          # ssh_cmd 'echo "Checking disk space"; df -h;'
+          # ssh_cmd 'echo Checking disk space usage breakdown; du -x / | sort -n | tail -40;'
 
           # copy zipped source code over.
           scp -i mykey.pem -o StrictHostKeyChecking=no -pr ./give-it-a-good-name ec2-user@$EC2_INSTANCE_PUBLIC_DNS:~/give-it-a-good-name
@@ -163,6 +163,7 @@ jobs:
           ssh_cmd 'source ~/.bashrc; nvm install 20.11.1'
           
           # unzip and spin up docker-compose
-          ssh_cmd 'cd ~/give-it-a-good-name; sudo tar -xzf ./source_code.tar.gz; sudo sh ~/give-it-a-good-name/scripts/start-prod.sh;'
+          ssh_cmd 'cd ~/give-it-a-good-name; sudo tar -xzf ./source_code.tar.gz;'
+          ssh_cmd 'sudo sh ~/give-it-a-good-name/scripts/start-prod.sh;'
         env:
           EC2_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
