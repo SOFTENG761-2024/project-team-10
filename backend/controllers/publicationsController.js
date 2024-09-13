@@ -19,18 +19,19 @@ router.post("/", async function addPublicationForUser(req, res)
 
 
 
-router.get("/userId:userId", async function getUserProfileByPrimaryEmail(req, res) {
+router.get("/userId:userId", async function getPublicationsByUserId(req, res) {
   try 
   {
     const userId = req.params.userId;
     const publication = await publicationService.getPublicationsById(userId);
-    if(publication === null )
+    if(publication === null || publication.length ===0)
       return res.status(404).json("No publication found");
     else
       return res.json(publication);
   } catch (error) {
     console.log(error);
-    return res.status(500).json(error);
+    return res.status(500).json(error.message);
+
   }
 });
 module.exports = router;

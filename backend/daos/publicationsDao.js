@@ -19,12 +19,14 @@ async function createUserPublication(userPublicationData) {
 
 
 async function getUserPublicationsById(userId) {
+  let userIdInt = +userId;
   try {
     const allUserPublications = await prismaClient.publication.findMany ({
       where: {
-        id: userId,
+        id: userIdInt,
       },
     });
+    console.log(allUserPublications);
     return allUserPublications;
   }
   finally {
