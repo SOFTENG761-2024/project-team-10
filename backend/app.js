@@ -7,6 +7,7 @@ const logger = require("./utils/logger.js");
 var userController = require("./controllers/userController");
 var profileController = require("./controllers/profileController");
 var userProfileController = require("./controllers/userProfileController.js");
+var publicationController = require("./controllers/publicationsController.js");
 
 const swaggerController = require("./controllers/swaggerController");
 
@@ -21,6 +22,7 @@ app.use(cors());
 app.use("/api/users", userController);
 app.use("/api/profiles", profileController);
 app.use("/api/userprofile", userProfileController);
+app.use("/api/publications", publicationController);
 
 // setup swagger ui
 swaggerController(app);
