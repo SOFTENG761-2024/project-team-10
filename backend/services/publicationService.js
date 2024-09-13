@@ -5,7 +5,7 @@ const logger = require("../utils/logger.js");
 
 //Create publications for a user
 async function createUserPublication(userPublicationObject) {
-  var userId= userPublicationObject.userId;
+  var userId= userPublicationObject.user_id;
   logger.info(
     `Creeating publication for ${userId}.`
   );
@@ -39,8 +39,12 @@ async function getPublicationsById(userId) {
 async function ProfileExists(userId)
 {
     const existingUser= await userProfileService.getUserProfileById(Number(userId));
-    return existingUser && existingUser.length > 0;
-   
+    if(existingUser === null || existingUser.length ===0 )
+            return false;
+        
+        else 
+            return true;
+        
 }
 
 

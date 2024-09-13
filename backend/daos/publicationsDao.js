@@ -23,7 +23,7 @@ async function getUserPublicationsById(userId) {
   try {
     const allUserPublications = await prismaClient.publication.findMany ({
       where: {
-        id: userIdInt,
+        user_id: userIdInt,
       },
     });
     console.log(allUserPublications);

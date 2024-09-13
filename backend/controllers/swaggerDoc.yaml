@@ -121,7 +121,7 @@ paths:
             schema:
               type: object
               properties:
-                userId:
+                user_id:
                   type: integer
                 title:
                   type: string
@@ -130,7 +130,7 @@ paths:
                 link:
                   type: string
                   format: uri
-                data_published:
+                date_published:
                   type: string
                   format: date-time
       responses:
@@ -149,7 +149,7 @@ paths:
           in: path
           required: true
           schema:
-            type: string
+            type: integer
           description: User ID
       responses:
         '200':
