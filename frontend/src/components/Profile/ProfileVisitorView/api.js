@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Function to fetch profile data
+// fetch profile data
 export const getProfileData = async () => {
   try {
     const response = await axios.get("http://localhost:3000/api/userprofile");
