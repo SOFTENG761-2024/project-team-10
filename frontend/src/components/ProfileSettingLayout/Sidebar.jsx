@@ -63,10 +63,10 @@ const Sidebar = () => {
         </div>
       </div>
       <div 
-        className={`settings-container ${selected === 'settings' ? 'active' : ''}`}
+        className={`settings-container sidebar-icon ${selected === 'settings' ? 'active' : ''}`}
         onClick={() => handleIconClick('settings')}
       >
-        <SettingsIcon className="sidebar-icon" />
+        <SettingsIcon />
       </div>
     </div>
   );
