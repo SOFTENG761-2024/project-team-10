@@ -1,0 +1,8 @@
+.profile-setting-layout {
+  display: flex;
+}
+
+.main-content{
+  margin-left: 80px; /* Set the margin to the width of the sidebar */
+  width: calc(100% - 80px); /* Subtract the width of the sidebar */
+}

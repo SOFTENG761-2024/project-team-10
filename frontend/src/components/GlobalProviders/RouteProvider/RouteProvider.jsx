@@ -10,9 +10,9 @@ import {
 import { useAuth } from "../AuthProvider";
 import AuthPageProvider from "@frontend-ui/components/AuthPage/AuthPageProvider";
 import { Landing } from "@frontend-ui/components/Recommendation";
-import { CommentDialogPaginated } from "@frontend-ui/components/Comment/";
 import { Button, Container, Grid, Stack } from "@mui/material";
-import { Profile } from "@frontend-ui/components/Profile/Profile";
+import SigninPageProvider from "@frontend-ui/components/AuthPage/SigninPageProvider";
+import SignupPageProvider from "@frontend-ui/components/AuthPage/SignupPageProvider";
 import { Box } from "@mui/system";
 import { HeaderProvider } from "@frontend-ui/components/Header";
 import ProfileSettingLayout from "@frontend-ui/components/ProfileSettingLayout";
@@ -52,19 +52,29 @@ const RouteProvider = () => {
     <RouteContext.Provider value={{ pageTitle, setPageTitle }}>
       <BrowserRouter>
         <Routes>
-          {/* <Route
-            path="/"
-            element={
-              <Landing />
-            }
-          /> */}
           <Route path="/" element={<Landing />} />
+          <Route
+            path="/auth"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/authenticated" />
+              ) : (
+                <AuthPageProvider />
+              )
+            }
+          />
+
+          <Route path="/authenticated" element={<Landing />} />
 
           {/* Optionally, you can keep the /auth route if needed */}
           <Route path="/auth" element={<AuthPageProvider />} />
           <Route path="/profile-setting" element={<ProfileSettingLayout />} />
           <Route path="/profile-visitor" element={<ProfileVisitorView />} />
           <Route path="/terms" component={TermsAndConditions} />
+
+          <Route path="/signin" element={<SigninPageProvider />} />
+
+          <Route path="/signup" element={<SignupPageProvider />} />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>
