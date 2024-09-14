@@ -227,6 +227,7 @@
   font-size: medium;
   background: white;
   border: none;
+  border-radius: 4px;
 }
 
 .arrowButton {

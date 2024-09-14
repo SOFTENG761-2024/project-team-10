@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -32,11 +32,16 @@ export const Landing = () => {
     toggleLightDarkTheme();
   };
 
+  
+  const handleMenuClick = () => {
+    navigate("/signup");  // This navigates to the /signup page
+  };
+
   const handleScroll = () => {
     const sections = document.querySelectorAll('section');
     let currentSection = '';
     const searchBar = searchBarRef.current;
-    if(!searchBar) return;
+    if (!searchBar) return;
 
     sections.forEach((section) => {
       const sectionTop = section.getBoundingClientRect().top + window.scrollY;
@@ -53,21 +58,17 @@ export const Landing = () => {
     }
 
     const buffer = 25;
-   const networkSection = document.getElementById('network');
-      const memberSection = document.getElementById('member');
-      
-      if (networkSection && memberSection) {
-        const networkTop = networkSection ? networkSection.offsetTop : 0;
-        const memberTop = memberSection ? memberSection.offsetTop : 0;
+    const networkSection = document.getElementById('network');
+    const memberSection = document.getElementById('member');
 
-        // Store the positions only once
-        setPositions({ networkTop, memberTop });
-        console.log(`Initial positions -> networkTop: ${networkTop}, memberTop: ${memberTop}`);
-      } else {
-        console.error('Sections not found');
-      }
+    if (networkSection && memberSection) {
+      const networkTop = networkSection ? networkSection.offsetTop : 0;
+      const memberTop = memberSection ? memberSection.offsetTop : 0;
+      setPositions({ networkTop, memberTop });
+    } else {
+      console.error('Sections not found');
+    }
 
-    // const { networkTop, memberTop } = positions;
     setPositions({
       networkTop: networkSection.offsetTop,
       memberTop: memberSection.offsetTop,
@@ -96,11 +97,11 @@ export const Landing = () => {
     }
   };
 
- 
+
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     document.body.setAttribute("data-theme", theme);
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -108,59 +109,58 @@ export const Landing = () => {
 
   return (
     <Box mt={10}>
-    <nav style={styles.navContainer}>
-      <div style={styles.nav}>
-        <a
-          href="#search"
-          className={activeSection === 'search' ? 'active' : ''}
-          style={activeSection === 'search' ? styles.activeNavLink : styles.navLink}
-        >
-          Search
-        </a>
-        <a
-          href="#network"
-          className={activeSection === 'network' ? 'active' : ''}
-          style={activeSection === 'network' ? styles.activeNavLink : styles.navLink}
-        >
-          Network
-        </a>
-        <a
-          href="#member"
-          className={activeSection === 'member' ? 'active' : ''}
-          style={activeSection === 'member' ? styles.activeNavLink : styles.navLink}
-        >
-          Members
-        </a>
-        <a
-          href="#join-today"
-          className={`new ${activeSection === 'join-today' ? 'active' : ''} ${activeSection === 'about-us' ? 'about-active' : ''}`}
-          style={activeSection === 'join-today' ? styles.activeNavLink : styles.navLink}
-        >
-          Join Today
-        </a>
-        <a
-          href="#about-us"
-          className={activeSection === 'about-us' ? 'active' : ''}
-          style={activeSection === 'about-us' ? styles.activeNavLink : styles.navLink}
-        >
-          About Us
-        </a>
-      </div>
-      {/* <div style={styles.verticalLine}></div> */}
-    </nav>
+      <nav style={styles.navContainer}>
+        <div style={styles.nav}>
+          <a
+            href="#search"
+            className={activeSection === 'search' ? 'active' : ''}
+            style={activeSection === 'search' ? styles.activeNavLink : styles.navLink}
+          >
+            Search
+          </a>
+          <a
+            href="#network"
+            className={activeSection === 'network' ? 'active' : ''}
+            style={activeSection === 'network' ? styles.activeNavLink : styles.navLink}
+          >
+            Network
+          </a>
+          <a
+            href="#member"
+            className={activeSection === 'member' ? 'active' : ''}
+            style={activeSection === 'member' ? styles.activeNavLink : styles.navLink}
+          >
+            Members
+          </a>
+          <a
+            href="#join-today"
+            className={`new ${activeSection === 'join-today' ? 'active' : ''} ${activeSection === 'about-us' ? 'about-active' : ''}`}
+            style={activeSection === 'join-today' ? styles.activeNavLink : styles.navLink}
+          >
+            Join Today
+          </a>
+          <a
+            href="#about-us"
+            className={activeSection === 'about-us' ? 'active' : ''}
+            style={activeSection === 'about-us' ? styles.activeNavLink : styles.navLink}
+          >
+            About Us
+          </a>
+        </div>
+      </nav>
       <section id="search">
         <div className={style.flexContainer}>
-        <div className={style.topIcons}>
-            <button  onClick={handleThemeSwitchClick} className={style.menuIcon}>
+          <div className={style.topIcons}>
+            <button onClick={handleThemeSwitchClick} className={style.menuIcon}>
               <img src='./landing/theme.png' className={style.themeStyle} alt="themeicon" />
             </button>
 
-            <button className={style.menuIcon}>
+            <button className={style.menuIcon} onClick={handleMenuClick}>
               <img src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
-            </button>              
+            </button>
           </div>
           <div>
-            <video className={style.topImage}  autoPlay muted playsInline loop>
+            <video className={style.topImage} autoPlay muted playsInline loop>
               <source src="./landing/design.mp4" type="video/mp4" />
             </video>
           </div>
@@ -209,7 +209,7 @@ export const Landing = () => {
                 <button className={style.signUp}>Sign Up <span className={style.arrowButton}>{'>'}</span></button>
               </div>
             </div>
-            <div className= {style.emptyDiv}></div>
+            <div className={style.emptyDiv}></div>
             <div className={style.rightSectionDiv}>
               <div className={style.rightMemberDiv}>
                 <div className={`${style.section} ${style.secMemberWidth}`}>
@@ -236,7 +236,7 @@ export const Landing = () => {
                   <p>Find experts based on subject, skill, or expertise.</p>
                 </div>
               </div>
-            </div>            
+            </div>
           </div>
         </div>
       </section>
