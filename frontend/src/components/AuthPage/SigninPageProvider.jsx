@@ -123,9 +123,11 @@ const SigninPageProvider = () => {
 
   const linkedInLogin = async () => {
     let loginState = null;
-    loginState = get(import.meta.env.VITE_LINKEDIN_AUTH_REDIRECTURI + '/api/linkedin-login').then((response) => {
-      console.log('response', response);
-    });
+    // loginState = get(import.meta.env.VITE_BACKEND_API_BASE_URL + '/api/auth/linkedin').then((response) => {
+    //   console.log('response', response);
+    // });
+    
+    window.location.href =`${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/auth/linkedin`;
   };
 
   useEffect(() => {
