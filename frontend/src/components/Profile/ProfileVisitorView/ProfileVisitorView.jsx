@@ -3,7 +3,9 @@ import "./styles.css";
 import { ContactForm } from "./ContactForm";
 import ProfileSidebar from "../SidebarAndHeader/ProfileSidebar";
 import ProfileHeader from "../SidebarAndHeader/ProfileHeader";
-import { getProfileData } from "./api";
+import { getProfileByEmail } from "./api";
+
+const useDummyData = true;
 
 const tabs = [
   "About",
@@ -18,19 +20,21 @@ const ProfileVisitorView = () => {
   const [profileData, setProfileData] = useState(null);
 
   useEffect(() => {
+    if(useDummyData)
+    {
     const dummyProfileData = {
-      name: "Alzxa Rawlus",
+      first_name: "Alexa",
+      last_name: "Rawlus",
       date: "Tue, 07 June 2024",
-      about: "This is the About section with some introductory information.",
+      bio: "This is the About section with some introductory information.",
       picture: "/default-profile.png",
       title: "Professor",
-      fullName: "Alzxa Rawlus",
-      orcId: "0000-0002-1825-0097",
-      department: "Department of Engineering",
-      affiliations: ["Affiliation1", "Affiliation2", "Affiliation3"],
-      researchField: ["Field1", "Field2", "Field3"],
-      researchTags: ["Tag1", "Tag2", "Tag3"],
-      university: "The University of Canterbury",
+      orcid_identifier: "0000-0002-1825-0097",
+      faculty_name: "Department of Engineering",
+      affiliations: "Affiliation1, Affiliation2, Affiliation3",
+      research_area: "Field1, Field2, Field3",
+      research_tags: "Tag1, Tag2, Tag3",
+      institution_name: "The University of Canterbury",
       publications: [
         {
           title: "Publication 1",
@@ -63,8 +67,17 @@ const ProfileVisitorView = () => {
       ],
     };
 
-    // Simulate fetching data
+    //Simulate fetching data
     setProfileData(dummyProfileData);
+  }
+
+
+  else
+  { 
+    getProfileByEmail("user@example.com")
+      .then((data) => setProfileData(data))
+      .catch((err) => console.error("Error fetching profile data:", err));
+  }
   }, []);
 
   const renderTabContent = () => {
@@ -72,7 +85,7 @@ const ProfileVisitorView = () => {
       case "About":
         return (
           <div>
-            {profileData?.about || "No data available"}
+            {profileData?.bio || "No data available"}
 
             <div className="description-section">
               <p>
@@ -185,28 +198,27 @@ const ProfileVisitorView = () => {
             />
             <h3 className="title">{profileData?.title || "Title"}</h3>
             <h2 className="full-name">
-              {profileData?.fullName || "Alzxa Rawlus"}
+              {profileData?.first_name + " " + profileData?.last_name || "Alzxa Rawlus"}
             </h2>
             <hr className="line-separator" />
             <h3 className="orc-id">
               <span className="label-text">ORCID ID:</span>
               <br />
               <span className="content-text">
-                {profileData?.orcId || "XXX-XXXX-XXXX"}
+                {profileData?.orcid_identifier || "XXX-XXXX-XXXX"}
               </span>
             </h3>
             <hr className="line-separator" />
             <h4 className="department">
-              {profileData?.department || "Department of Engineering"}
+              {profileData?.faculty_name || "Department of Engineering"}
             </h4>
             <hr className="line-separator" />
           </div>
-
           <div className="basic-info-middle">
             <h4 className="affiliations">
               <span className="label-text">Affiliations:</span>
               <div className="content-list">
-                {profileData?.affiliations?.map((item, index) => (
+                {["abc", "abc2", "abc3"].map((item, index) => (
                   <span key={index} className="content-text">
                     {item}
                   </span>
@@ -216,28 +228,41 @@ const ProfileVisitorView = () => {
             <h4 className="research-field">
               <span className="label-text">Research Field:</span>
               <div className="content-list">
-                {profileData?.researchField?.map((item, index) => (
+                {profileData?.research_area?.split(',').map((item, index) => (
                   <span key={index} className="content-text">
                     {item}
                   </span>
                 )) || "abcd, abcd, abcd"}
               </div>
             </h4>
+            {/* <h4 className="research-tags">
+              <span className="label-text">Research Tags:</span>
+              <div className="content-list">
+                  {profileData?.research_tags?.split(',')
+                   .map((item, index) => (
+                    <span key={index} className="content-text">
+                        {item.trim()}
+                   </span>
+                    )) || "abcd, abcd, abcd"}
+              </div>
+
+            </h4> */}
             <h4 className="research-tags">
               <span className="label-text">Research Tags:</span>
               <div className="content-list">
-                {profileData?.researchTags?.map((item, index) => (
-                  <span key={index} className="content-text">
-                    {item}
-                  </span>
-                )) || "abcd, abcd, abcd"}
+              {profileData?.research_tags?.split(',')
+                   .map((item, index) => (
+                    <span key={index} className="content-text">
+                        {item.trim()}
+                   </span>
+                    )) || "abcd, abcd, abcd"}
               </div>
-            </h4>
+              </h4>
           </div>
 
           <div className="basic-info-bottom">
             <div className="university">
-              {profileData?.university || "The University of Canterbury"}
+              {profileData?.institution_name || "The University of Canterbury"}
             </div>
           </div>
         </div>
