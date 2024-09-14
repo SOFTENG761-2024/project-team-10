@@ -13,15 +13,6 @@ export default function ContentComponent() {
 
     return (
         <Box sx={styles.container}>
-            {/* Button Group */}
-            <Box sx={styles.buttonsContainer}>
-                <Button variant="outlined">About</Button>
-                <Button variant="outlined">Publications</Button>
-                <Button variant="outlined">Professional</Button>
-                <Button variant="outlined">Teaching/Research</Button>
-            </Box>
-
-            {/* Content Boxes */}
             <Box sx={styles.boxesContainer}>
                 <Box sx={styles.box}>
                     {isEditing ? (
@@ -87,7 +78,7 @@ const styles = {
         //   height: 100vh;
         display: 'flex',
         flexDirection: 'column',
-        height: '90vh',
+        height: '80vh',
         backgroundColor: '#fff',
     },
     buttonsContainer: {
@@ -113,6 +104,7 @@ const styles = {
     editButton: {
         width: '100px',
         marginLeft: '10px',
-        marginTop: '-40px'
+        marginTop: '-40px',
+        backgroundColor: '#666'
     },
 };
