@@ -83,7 +83,7 @@ router.get('/linkedin/redirect', async (req, res) => {
                 }
             }
         });
-
+        passport.serializeUser(tokenData.email);
         
         
       } catch (error) {

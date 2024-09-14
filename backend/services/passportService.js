@@ -1,8 +1,15 @@
 const passport = require('passport');
 const linkedInStrategy = require('passport-linkedin-oauth2').Strategy;
+const { getUserProfileByPrimaryEmail } = require("../daos/userProfileDao");
 const path = require('path');
 const env = require('dotenv');
 env.config({ path: path.resolve(__dirname, '../.env') });
+
+passport.deserializeUser((email, done) => {
+    getUserProfileByPrimaryEmail(email).then((user) => {
+        done(null, user);
+    });
+});
 
 passport.use(new linkedInStrategy({
     clientID: process.env.LINKEDIN_CLIENT_ID,
