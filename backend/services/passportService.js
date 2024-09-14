@@ -20,4 +20,8 @@ passport.use(new linkedInStrategy({
     //passport call back function
     console.log('passport fucntion fired');
     console.log(accessToken);
+    //TEST CODE TO STOP BUILD FROM FAILING - HI
+    console.log(refreshToken);
+    console.log(profile);
+    console.log(done);
 }));
