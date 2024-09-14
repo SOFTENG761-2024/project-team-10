@@ -23,6 +23,7 @@ router.get("/primaryEmail:primaryEmail", async function getUserProfileByPrimaryE
   try 
   {
     const primaryEmail = req.params.primaryEmail;
+    console.log(primaryEmail);
     const userProfile = await userProfileService.getUserProfileByPrimaryEmail(primaryEmail);
     if(userProfile === null )
       return res.status(404).json("No user profile found");
