@@ -8,7 +8,7 @@ const path = require('path');
 const router = express.Router();
 const getOpenIdToken = require('../services/openIDService');
 const env = require('dotenv');
-//const { route } = require("./userController"); - Commented temporarily Attn:Karen HI
+//const { route } = require("./userController"); 
 const { createUserProfile, getUserProfileByPrimaryEmail } = require("../daos/userProfileDao");
 env.config({ path: path.resolve(__dirname, '../.env') });
 
@@ -26,7 +26,7 @@ router.get('/signout', async (req,res)=>{
 //Linkdein SignIn
 router.get('/linkedin', passport.authenticate('linkedin', { state: '123', passReqToCallback: true, }), 
     async (req,res)=>{
-        //TEMP CODE to stop build from failing - Attn Karen - HI
+        
         console.log(req.body);
         res.send('linkedin');
 });
@@ -102,32 +102,32 @@ router.get('/linkedin/redirect', async (req, res) => {
 
 //router.get('/linkedin')
 
-router.post("/signin-linkedin", async (req, res) => {
-    try {
-        //Attn: KAREN - fix this please - HI  
+// router.post("/signin-linkedin", async (req, res) => {
+//     try {
+//         //Attn: KAREN - fix this please - HI  
 
-        // const grant_type = 'authorization_code';
-        // const code = req.body; // req.body.code
-        // const client_id = process.env.LINKEDIN_CLIENT_ID;
-        // const client_secret = process.env.LINKEDIN_CLIENT_SECRET;
-        // const redirect_uri = process.env.LINKEDIN_REDIRECT_URI;
-        // const url = process.env.LINKEDIN_TOKEN_URL;
-        // const tokenData = await getIdToken(grant_type, code, client_id, client_secret, redirect_uri, url);
-        // console.log('Token Data:', tokenData);
-        // //createUser(user_email); xxx@xxx.com -> set password -> api
+//         // const grant_type = 'authorization_code';
+//         // const code = req.body; // req.body.code
+//         // const client_id = process.env.LINKEDIN_CLIENT_ID;
+//         // const client_secret = process.env.LINKEDIN_CLIENT_SECRET;
+//         // const redirect_uri = process.env.LINKEDIN_REDIRECT_URI;
+//         // const url = process.env.LINKEDIN_TOKEN_URL;
+//         // const tokenData = await getIdToken(grant_type, code, client_id, client_secret, redirect_uri, url);
+//         // console.log('Token Data:', tokenData);
+//         // //createUser(user_email); xxx@xxx.com -> set password -> api
         
 
-        // authService.login(user_id);
-        // return res.status(201)
-        //     .json(tokenData.email); // redirect to home
+//         // authService.login(user_id);
+//         // return res.status(201)
+//         //     .json(tokenData.email); // redirect to home
 
-        console.log(req.body); //TEMP CODE Attn Karen - HI
-    } catch (error) {
-        console.error('Error during test:', error);
-        return res.sendStatus(422);
-    }
+//         console.log(req.body); //TEMP CODE Attn Karen - HI
+//     } catch (error) {
+//         console.error('Error during test:', error);
+//         return res.sendStatus(422);
+//     }
 
-}
-)
+// }
+// )
 
 module.exports = router;

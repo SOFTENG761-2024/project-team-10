@@ -16,12 +16,8 @@ passport.use(new linkedInStrategy({
     clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
     callbackURL: "http://localhost:3000/api/auth/linkedin/redirect",
     scope: ['email','profile','openid'],
-}, function(accessToken, refreshToken, profile, done) {
+}, function(done) {
     //passport call back function
     console.log('passport fucntion fired');
-    console.log(accessToken);
-    //TEST CODE TO STOP BUILD FROM FAILING - HI
-    console.log(refreshToken);
-    console.log(profile);
     console.log(done);
 }));
