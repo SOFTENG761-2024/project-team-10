@@ -9,7 +9,7 @@ const router = express.Router();
 const getOpenIdToken = require('../services/openIDService');
 const env = require('dotenv');
 const { route } = require("./userController");
-const { createUserProfile } = require("../daos/userProfileDao");
+const { createUserProfile, getUserProfileByPrimaryEmail } = require("../daos/userProfileDao");
 env.config({ path: path.resolve(__dirname, '../.env') });
 
 // auth login
@@ -43,37 +43,48 @@ router.get('/linkedin/redirect', async (req, res) => {
         const redirect_uri = process.env.LINKEDIN_REDIRECT_URI;
         const url = process.env.LINKEDIN_TOKEN_URL;
         const tokenData = await getOpenIdToken(grant_type, code, client_id, client_secret, redirect_uri,url);
-        const userProfile = {
-            "usertypeid": 2,
-            "institution_id": null,
-            "faculty_id": null,
-            "organization_id": null,
-            "first_name": tokenData.given_name,
-            "last_name": tokenData.family_name,
-            "preferred_name": null,
-            "title": "Ms",
-            "primary_email": tokenData.email,
-            "orcid_identifier": null,
-            "linkedin_url": "",
-            "secondary_email": "",
-            "mobile_phone": "",
-            "bio": "Test bio",
-            "research_area": "",
-            "skills": "",
-            "research_tags": "",
-            "expertise": "",
-            "tools": "",
-            "profile_picture": tokenData.picture,
-            "isscrapped": true,
-            "signup_datetime": "2024-09-13T10:11:58.021Z"
-          }
+        getUserProfileByPrimaryEmail(tokenData.email).then((currentUser) => {
+            if(currentUser){
+                // already have this user
+                console.log('user is: ', currentUser);
+                //done(null, currentUser);
+            } else {
+                // if not, create user in our db
+                const userProfile = {
+                    "usertypeid": 2,
+                    "institution_id": null,
+                    "faculty_id": null,
+                    "organization_id": null,
+                    "first_name": tokenData.given_name,
+                    "last_name": tokenData.family_name,
+                    "preferred_name": null,
+                    "title": "Ms",
+                    "primary_email": tokenData.email,
+                    "orcid_identifier": null,
+                    "linkedin_url": "",
+                    "secondary_email": "",
+                    "mobile_phone": "",
+                    "bio": "Test bio",
+                    "research_area": "",
+                    "skills": "",
+                    "research_tags": "",
+                    "expertise": "",
+                    "tools": "",
+                    "profile_picture": tokenData.picture,
+                    "isscrapped": true,
+                    "signup_datetime": "2024-09-13T10:11:58.021Z"
+                  }
+        
+                const response = createUserProfile(userProfile);
+                if(response){
+                    console.log("Saving Successfully");
+                } else {
+                    console.log("failed to create user");
+                }
+            }
+        });
 
-        const response = createUserProfile(userProfile);
-        if(response){
-            console.log("Saving Successfully");
-        } else {
-            console.log("failed to create user");
-        }
+        
         
       } catch (error) {
         console.error('Error during test:', error);
