@@ -24,15 +24,6 @@ jobs:
         working-directory: "./"
         run: |
           rm .env
-          echo "MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME" >> .env
-          echo "MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD" >> .env
-          echo "MONGO_INITDB_DATABASE=$MONGO_INITDB_DATABASE" >> .env
-          echo "ME_CONFIG_MONGODB_SERVER=$ME_CONFIG_MONGODB_SERVER" >> .env
-          echo "ME_CONFIG_MONGODB_PORT=$ME_CONFIG_MONGODB_PORT" >> .env
-          echo "ME_CONFIG_MONGODB_ENABLE_ADMIN=$ME_CONFIG_MONGODB_ENABLE_ADMIN" >> .env
-          echo "ME_CONFIG_MONGODB_AUTH_DATABASE=$ME_CONFIG_MONGODB_AUTH_DATABASE" >> .env
-          echo "ME_CONFIG_MONGODB_AUTH_USERNAME=$ME_CONFIG_MONGODB_AUTH_USERNAME" >> .env
-          echo "ME_CONFIG_MONGODB_AUTH_PASSWORD=$ME_CONFIG_MONGODB_AUTH_PASSWORD" >> .env
           echo "ME_CONFIG_BASICAUTH_USERNAME=$ME_CONFIG_BASICAUTH_USERNAME" >> .env
           echo "ME_CONFIG_BASICAUTH_PASSWORD=$ME_CONFIG_BASICAUTH_PASSWORD" >> .env
           echo "POSTGRES_USER=$POSTGRES_USER" >> .env
@@ -41,19 +32,6 @@ jobs:
           echo "PGADMIN_DEFAULT_EMAIL=$PGADMIN_DEFAULT_EMAIL" >> .env
           echo "PGADMIN_DEFAULT_PASSWORD=$PGADMIN_DEFAULT_PASSWORD" >> .env
         env:
-          # mongo creds
-          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
-          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
-          MONGO_INITDB_DATABASE: ${{ secrets.MONGO_INITDB_DATABASE }}
-          # mongo express creds
-          ME_CONFIG_MONGODB_SERVER: mongo
-          ME_CONFIG_MONGODB_PORT: 27017
-          ME_CONFIG_MONGODB_ENABLE_ADMIN: false
-          ME_CONFIG_MONGODB_AUTH_DATABASE: admin
-          ME_CONFIG_MONGODB_AUTH_USERNAME: ${{ secrets.ME_CONFIG_MONGODB_AUTH_USERNAME }}
-          ME_CONFIG_MONGODB_AUTH_PASSWORD: ${{ secrets.ME_CONFIG_MONGODB_AUTH_PASSWORD }}
-          ME_CONFIG_BASICAUTH_USERNAME: ${{ secrets.ME_CONFIG_BASICAUTH_USERNAME }}
-          ME_CONFIG_BASICAUTH_PASSWORD: ${{ secrets.ME_CONFIG_BASICAUTH_PASSWORD }}
           #postgres
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -87,16 +65,10 @@ jobs:
         working-directory: "./backend"
         run: |
           rm .env
-          echo "MONGO_SERVER=$MONGO_SERVER" >> .env
-          echo "MONGO_USERNAME=$MONGO_USERNAME" >> .env
-          echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> .env
           echo "DATABASE_URL=$DATABASE_URL" >> .env
           echo "SWAGGER_API_BASE_URL=http://$EC2_INSTANCE_PUBLIC_DNS:3000" >> .env
         env:
           # node creds
-          MONGO_SERVER: mongo
-          MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
-          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
           DATABASE_URL: postgresql://postgres:postgres@postgres:5432/test?schema=public
       - name: Archive src code
         run: |
@@ -109,10 +81,11 @@ jobs:
           --exclude=node_modules \
           --exclude=infrastructure \
           --exclude=.ssh \
-          --exclude=e2eTests .
+          --exclude=e2eTests \
+          --exclude=allScrapeData .
         working-directory: "./"
       - name: upload archived src code
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: source_code
           path: ./give-it-a-good-name/source_code.tar.gz
@@ -151,7 +124,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download latest archived source code
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: source_code
           path: ./give-it-a-good-name
@@ -178,8 +151,9 @@ jobs:
           ssh_cmd 'ls'
           ssh_cmd 'pwd'
           ssh_cmd 'sudo rm -rf ~/give-it-a-good-name'
-          ssh_cmd 'echo "Checking disk space"; df -h;'
-          ssh_cmd 'echo Checking disk space usage breakdown; du -x / | sort -n | tail -40;'
+          # ssh_cmd 'docker image prune -f'
+          # ssh_cmd 'echo "Checking disk space"; df -h;'
+          # ssh_cmd 'echo Checking disk space usage breakdown; du -x / | sort -n | tail -40;'
 
           # copy zipped source code over.
           scp -i mykey.pem -o StrictHostKeyChecking=no -pr ./give-it-a-good-name ec2-user@$EC2_INSTANCE_PUBLIC_DNS:~/give-it-a-good-name
@@ -189,6 +163,7 @@ jobs:
           ssh_cmd 'source ~/.bashrc; nvm install 20.11.1'
           
           # unzip and spin up docker-compose
-          ssh_cmd 'cd ~/give-it-a-good-name; sudo tar -xzf ./source_code.tar.gz; sudo sh ~/give-it-a-good-name/scripts/start-prod.sh;'
+          ssh_cmd 'cd ~/give-it-a-good-name; sudo tar -xzf ./source_code.tar.gz;'
+          ssh_cmd 'sudo sh ~/give-it-a-good-name/scripts/start-prod.sh;'
         env:
           EC2_PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}

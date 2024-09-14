@@ -49,7 +49,6 @@ const styles = {
   appBar: {
     backgroundColor: '#f7f7f7',
     color: '#333',
-    marginBottom: '20px',
     // Adjust based on your layout
   },
   welcomeText: {

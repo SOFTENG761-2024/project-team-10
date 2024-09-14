@@ -38,6 +38,7 @@ CMD ["sh", "-c", "\
     cd ./backend &&\
     npx prisma generate &&\
     npx prisma db push &&\
+    npx prisma db seed &&\
     cd .. &&\
     node --env-file=./backend/.env ./backend/bin/www &\
     serve -s frontend -l 5000\
