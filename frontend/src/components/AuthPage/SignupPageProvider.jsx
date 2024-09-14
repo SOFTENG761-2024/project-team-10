@@ -12,6 +12,7 @@ import {
   Paper,
   Grid,
   Container,
+  CircularProgress
 } from '@mui/material';
 
 const mainColor = "#4b5a68";
@@ -24,7 +25,7 @@ const OrDivider = styled(Typography)(({ theme }) => ({
   justifyContent: 'center',
   // paddingLeft: theme.spacing(10),
   marginLeft: theme.spacing(10),
-  height: '300px', // Set a fixed height for the divider
+  height: '200px', // Set a fixed height for the divider
   '&::after': {
     content: '""',
     flex: 1,
@@ -42,7 +43,7 @@ const StyledPaperTop = styled(Paper)(({ theme }) => ({
   justifyContent: 'center',
   borderTopLeftRadius: theme.spacing(2),
   borderTopRightRadius: theme.spacing(2),
-  minHeight: '50vh',
+  minHeight: '30vh',
 }));
 
 const StyledPaperBottom = styled(Paper)(({ theme }) => ({
@@ -92,6 +93,7 @@ const SignupPageProvider = () => {
   const [lastName, setLastName] = useState('');
   const [organization, setOrganization] = useState('');
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
 
   const handleCreateProfessionalAccount = () => {
@@ -119,21 +121,22 @@ const SignupPageProvider = () => {
   };
 
   const { linkedInLogin } = useLinkedIn({
-    clientId: '86yqr14akub4tu',
+    clientId: `${import.meta.env.VITE_LINKEDIN_CLIENT_ID}`,
     //import.meta.env.VITE_BACKEND_API_BASE_URL,
-    redirectUri: `http://localhost:5173/signup`,
+    redirectUri: `${import.meta.env.VITE_LINKEDIN_AUTH_REDIRECTURI}`,
     // `http://localhost:5173/signup`,
-    scope: 'profile email',
+    scope: 'profile email openid',
     // state: 'DCEeFWf45A53sdfKef424',
     onSuccess: (code) => {
-      alert(code);
+      // alert(code);
+      // url=/api/likedin/signup,
     },
     onError: (error) => {
-      alert(error);
+      // alert(error);
     },
   });
 
-  useEffect(() => {
+  useEffect((e) => {
     let windowUrl = window.location.href
     if (windowUrl.includes('code=')) {
       let codeMatch = windowUrl.match(/code=([a-zA-Z0-9_\\-]+)/)
@@ -143,10 +146,12 @@ const SignupPageProvider = () => {
         }
       })
         .then(res => {
-          console.log(res.data)
-
+          e.preventDefault();
+          setLoading(true);
         })
-        .catch(console.log)
+        .catch(console.log).finally(() => {
+          setLoading(true);
+        });
     }
 
   }, [])
@@ -155,125 +160,133 @@ const SignupPageProvider = () => {
   return (
     <SignupPageContext.Provider value={{}}>
       <Container maxWidth="md">
-        <StyledPaperTop elevation={3} sx={{ backgroundColor: mainColor, color: primaryColor }}>
-          <Box mt="1">
-            <Typography variant="h6" gutterBottom>
-              Create a professional account
-            </Typography>
-          </Box>
-          <Box sx={{
-            flexGrow: 1, display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+        {
+          loading ? (
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+              <CircularProgress />
+            </Box>
+          ) : (
 
-            <Typography variant="body1" paragraph align="center">
-              Institutional members can sign up with their institutional ID through www.reannz.co.nz
-            </Typography>
-            <StyledButton
-              variant="contained"
-              onClick={handleCreateProfessionalAccount}
-            >
-              Create account with Reannz
-            </StyledButton>
-          </Box>
-          {/* <Box mt={2}>
-            <Typography variant="body2">
-              Already have a professional Account? <Link href="signin">Sign in</Link>
-            </Typography>
-          </Box> */}
-        </StyledPaperTop>
 
-        <StyledPaperBottom elevation={3} sx={{ backgroundColor: 'grey.200' }}>
-          <Typography variant="h6" gutterBottom>
-            Create a business account
-          </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={5}>
-              <Typography variant="body1" paragraph align="center">
-                Non members can create account through their business ID
-              </Typography>
-              <form onSubmit={handleCreateBusinessAccount}>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      label="First Name"
-                      variant="outlined"
-                      margin="normal"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      required
-                    />
+            <><StyledPaperTop elevation={3} sx={{ backgroundColor: mainColor, color: primaryColor }}>
+              <Box mt="1">
+                <Typography variant="h6" gutterBottom>
+                  Create a professional account
+                </Typography>
+              </Box>
+              <Box sx={{
+                flexGrow: 1, display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+
+                <Typography variant="body1" paragraph align="center">
+                  Institutional members can sign up with their institutional ID through www.reannz.co.nz
+                </Typography>
+                <StyledButton
+                  variant="contained"
+                  onClick={handleCreateProfessionalAccount}
+                >
+                  Create account with Reannz
+                </StyledButton>
+              </Box>
+              {/* <Box mt={2}>
+      <Typography variant="body2">
+        Already have a professional Account? <Link href="signin">Sign in</Link>
+      </Typography>
+    </Box> */}
+            </StyledPaperTop><StyledPaperBottom elevation={3} sx={{ backgroundColor: 'grey.200' }}>
+                <Typography variant="h6" gutterBottom>
+                  Create a business account
+                </Typography>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={5}>
+                    <Typography variant="body1" paragraph align="center">
+                      Non members can create account through their business ID
+                    </Typography>
+                    <form onSubmit={handleCreateBusinessAccount}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <TextField
+                            fullWidth
+                            label="First Name"
+                            variant="filled"
+                            margin="small"
+                            size='small'
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                            required />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            fullWidth
+                            label="Last Name"
+                            variant="filled"
+                            margin="small"
+                            size='small'
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            required />
+                        </Grid>
+                      </Grid>
+                      <TextField
+                        fullWidth
+                        label="Organization"
+                        variant="filled"
+                        margin="small"
+                        size='small'
+                        value={organization}
+                        onChange={(e) => setOrganization(e.target.value)}
+                        required />
+                      <TextField
+
+                        fullWidth
+                        label="Email"
+                        variant="filled"
+                        margin="small"
+                        size='small'
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required />
+                      <Box margin={1} display="flex" justifyContent="center">
+                        <SubmitButton type="submit" variant="contained">
+                          Create account
+                        </SubmitButton>
+                      </Box>
+                    </form>
                   </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      label="Last Name"
-                      variant="outlined"
-                      margin="normal"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      required
-                    />
+                  <Grid item xs={12} md={1}>
+                    <OrDivider variant="body2">
+                    </OrDivider>
+                  </Grid>
+                  <Grid item xs={12} md={5}>
+                    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%">
+                      <img
+                        onClick={linkedInLogin}
+                        src={linkedin}
+                        alt="Sign in with Linked In"
+                        style={{ maxWidth: '180px', cursor: 'pointer' }} />
+
+                      {/* <LinkedInButton
+    variant="contained"
+    color="primary"
+    onClick={handleCreateLinkedInAccount}
+  >
+    Create account with LinkedIn
+  </LinkedInButton> */}
+                    </Box>
                   </Grid>
                 </Grid>
-                <TextField
-                  fullWidth
-                  label="Organization"
-                  variant="outlined"
-                  margin="normal"
-                  value={organization}
-                  onChange={(e) => setOrganization(e.target.value)}
-                  required
-                />
-                <TextField
-                  fullWidth
-                  label="Email"
-                  variant="outlined"
-                  margin="normal"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <Box display="flex" justifyContent="center">
-                  <SubmitButton type="submit" variant="contained">
-                    Create account
-                  </SubmitButton>
+                <Box mt={2}>
+                  <Typography variant="body2" align="center">
+                    Already have a business Account? <Link href="signin">Sign in</Link>
+                  </Typography>
                 </Box>
-              </form>
-            </Grid>
-            <Grid item xs={12} md={1}>
-              <OrDivider variant="body2">
-              </OrDivider>
-            </Grid>
-            <Grid item xs={12} md={5}>
-              <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%">
-                <img
-                  onClick={linkedInLogin}
-                  src={linkedin}
-                  alt="Sign in with Linked In"
-                  style={{ maxWidth: '180px', cursor: 'pointer' }}
-                />
+              </StyledPaperBottom></>
 
-                {/* <LinkedInButton
-                variant="contained"
-                color="primary"
-                onClick={handleCreateLinkedInAccount}
-              >
-                Create account with LinkedIn
-              </LinkedInButton> */}
-              </Box>
-            </Grid>
-          </Grid>
-          <Box mt={2}>
-            <Typography variant="body2" align="center">
-              Already have a business Account? <Link href="signin">Sign in</Link>
-            </Typography>
-          </Box>
-        </StyledPaperBottom>
+          )}
       </Container>
     </SignupPageContext.Provider>
 
