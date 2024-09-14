@@ -3,6 +3,8 @@ import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
 import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
+import { useAPI } from "../GlobalProviders/APIProvider";
+
 import {
   Box,
   Typography,
@@ -94,6 +96,7 @@ const SignupPageProvider = () => {
   const [organization, setOrganization] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const { get, post, setError } = useAPI();
 
 
   const handleCreateProfessionalAccount = () => {
@@ -120,42 +123,12 @@ const SignupPageProvider = () => {
     console.log('Creating account with LinkedIn');
   };
 
-  const { linkedInLogin } = useLinkedIn({
-    clientId: `${import.meta.env.VITE_LINKEDIN_CLIENT_ID}`,
-    //import.meta.env.VITE_BACKEND_API_BASE_URL,
-    redirectUri: `${import.meta.env.VITE_LINKEDIN_AUTH_REDIRECTURI}`,
-    // `http://localhost:5173/signup`,
-    scope: 'profile email openid',
-    // state: 'DCEeFWf45A53sdfKef424',
-    onSuccess: (code) => {
-      // alert(code);
-      // url=/api/likedin/signup,
-    },
-    onError: (error) => {
-      // alert(error);
-    },
-  });
-
-  useEffect((e) => {
-    let windowUrl = window.location.href
-    if (windowUrl.includes('code=')) {
-      let codeMatch = windowUrl.match(/code=([a-zA-Z0-9_\\-]+)/)
-      axios.get('backend/signup', {
-        headers: {
-          auth_code: codeMatch[1]
-        }
-      })
-        .then(res => {
-          e.preventDefault();
-          setLoading(true);
-        })
-        .catch(console.log).finally(() => {
-          setLoading(true);
-        });
-    }
-
-  }, [])
-
+  const linkedInLogin = async () => {
+    let loginState = null;
+    loginState = get(import.meta.env.VITE_LINKEDIN_AUTH_REDIRECTURI + '/api/linkedin-login').then((response) => {
+      console.log('response', response);
+    });
+  };
 
   return (
     <SignupPageContext.Provider value={{}}>
@@ -166,8 +139,6 @@ const SignupPageProvider = () => {
               <CircularProgress />
             </Box>
           ) : (
-
-
             <><StyledPaperTop elevation={3} sx={{ backgroundColor: mainColor, color: primaryColor }}>
               <Box mt="1">
                 <Typography variant="h6" gutterBottom>
@@ -212,7 +183,7 @@ const SignupPageProvider = () => {
                             fullWidth
                             label="First Name"
                             variant="filled"
-                            margin="small"
+                            margin="dense"
                             size='small'
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
@@ -223,7 +194,7 @@ const SignupPageProvider = () => {
                             fullWidth
                             label="Last Name"
                             variant="filled"
-                            margin="small"
+                            margin="dense"
                             size='small'
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
@@ -234,7 +205,7 @@ const SignupPageProvider = () => {
                         fullWidth
                         label="Organization"
                         variant="filled"
-                        margin="small"
+                        margin="dense"
                         size='small'
                         value={organization}
                         onChange={(e) => setOrganization(e.target.value)}
@@ -244,7 +215,7 @@ const SignupPageProvider = () => {
                         fullWidth
                         label="Email"
                         variant="filled"
-                        margin="small"
+                        margin="dense"
                         size='small'
                         type="email"
                         value={email}
@@ -267,7 +238,7 @@ const SignupPageProvider = () => {
                         onClick={linkedInLogin}
                         src={linkedin}
                         alt="Sign in with Linked In"
-                        style={{ maxWidth: '180px', cursor: 'pointer' }} />
+                        style={{ maxWidth: '200px', cursor: 'pointer' }} />
 
                       {/* <LinkedInButton
     variant="contained"

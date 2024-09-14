@@ -3,6 +3,7 @@ import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import { useLinkedIn } from 'react-linkedin-login-oauth2';
 import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
+import { useAPI } from "../GlobalProviders/APIProvider";
 import {
   Box,
   Typography,
@@ -94,10 +95,10 @@ const SigninPageContext = createContext({});
 export const useSigninPage = () => useContext(SigninPageContext);
 
 const SigninPageProvider = () => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const { get, post, setError } = useAPI();
 
   const handleCreateProfessionalAccount = () => {
     window.location.href = 'https://www.reannz.co.nz';
@@ -106,8 +107,8 @@ const SigninPageProvider = () => {
   const handleCreateBusinessAccount = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/create-business-account', {
-        email,
+      post('/api/create-business-account', {
+        email
       });
       alert('Business account created successfully!');
     } catch (error) {
@@ -120,40 +121,17 @@ const SigninPageProvider = () => {
     console.log('Creating account with LinkedIn');
   };
 
-  const { linkedInLogin } = useLinkedIn({
-    clientId: `${import.meta.env.VITE_LINKEDIN_CLIENT_ID}`,
-    redirectUri: `${import.meta.env.VITE_LINKEDIN_AUTH_REDIRECTURI}`,
-    scope: 'profile email openid',
+  const linkedInLogin = async () => {
+    let loginState = null;
+    loginState = get(import.meta.env.VITE_LINKEDIN_AUTH_REDIRECTURI + '/api/linkedin-login').then((response) => {
+      console.log('response', response);
+    });
+  };
 
-    onSuccess: (code) => {
-      console.log(code);
-      // url=/api/likedin/signup,
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
-  useEffect((e) => {
-    let windowUrl = window.location.href
-    if (windowUrl.includes('code=')) {
-      let codeMatch = windowUrl.match(/code=([a-zA-Z0-9_\\-]+)/)
-
-      axios.get('backend/signin', {
-        headers: {
-          auth_code: codeMatch[1]
-        }
-      })
-        .then(res => {
-          e.preventDefault();
-          setLoading(true);
-        })
-        .catch(console.log).finally(() => {
-          setLoading(true);
-        });
-    }
+  useEffect(() => {
 
   }, []);
+
 
   return (
     <Container maxWidth="md">
@@ -186,11 +164,6 @@ const SigninPageProvider = () => {
                 Sign in with Reannz
               </StyledButton>
             </Box>
-            {/* <Box mt={2}>
-      <Typography variant="body2" >
-        {`Don't have an account?`} <Link sx={{ color: primaryColor }} href="signup">Create account</Link>
-      </Typography>
-    </Box> */}
           </StyledPaperTop>
             <StyledPaperBottom elevation={3} sx={{ backgroundColor: 'grey.200' }}>
               <Typography variant="h6" gutterBottom>
@@ -247,7 +220,7 @@ const SigninPageProvider = () => {
                       onClick={linkedInLogin}
                       src={linkedin}
                       alt="Sign in with Linked In"
-                      style={{ maxWidth: '180px', cursor: 'pointer' }} />
+                      style={{ maxWidth: '200px', cursor: 'pointer' }} />
 
                     {/* <LinkedInButton
       variant="contained"
