@@ -34,7 +34,7 @@ const ProfileCantEdit = ({ profile }) => {
             <div className="profile-cant-edit__detail-item">
               <label>Full Name:</label>
               <input
-                type="text"
+                type="text" className='input-Name'
                 value={editedProfile.fullName}
                 readOnly={!isEditing}
                 onChange={(e) => handleInputChange('fullName', e.target.value)}
@@ -43,7 +43,7 @@ const ProfileCantEdit = ({ profile }) => {
             <div className="profile-cant-edit__detail-item">
               <label>Last Name:</label>
               <input
-                type="text"
+                type="text" className='input-Name'
                 value={editedProfile.lastName}
                 readOnly={!isEditing}
                 onChange={(e) => handleInputChange('lastName', e.target.value)}
@@ -54,7 +54,7 @@ const ProfileCantEdit = ({ profile }) => {
             <div className="profile-cant-edit__detail-item">
               <label>Preferred Name:</label>
               <input
-                type="text"
+                type="text" className='input-Name'
                 value={editedProfile.preferredName}
                 readOnly={!isEditing}
                 onChange={(e) => handleInputChange('preferredName', e.target.value)}
@@ -63,7 +63,7 @@ const ProfileCantEdit = ({ profile }) => {
             <div className="profile-cant-edit__detail-item">
               <label>E-mail Address:</label>
               <input
-                type="text"
+                type="text" className='input-Name'
                 value={editedProfile.email}
                 readOnly={!isEditing}
                 onChange={(e) => handleInputChange('email', e.target.value)}
@@ -74,7 +74,7 @@ const ProfileCantEdit = ({ profile }) => {
             <div className="profile-cant-edit__detail-item">
               <label>ORCID ID:</label>
               <input
-                type="text"
+                type="text"  className='input-Name'
                 value={editedProfile.orcid}
                 readOnly={!isEditing}
                 onChange={(e) => handleInputChange('orcid', e.target.value)}
@@ -83,7 +83,7 @@ const ProfileCantEdit = ({ profile }) => {
             <div className="profile-cant-edit__detail-item">
               <label>Linkedin:</label>
               <input
-                type="text"
+                type="text" className='input-Name'
                 value={editedProfile.linkedin}
                 readOnly={!isEditing}
                 onChange={(e) => handleInputChange('linkedin', e.target.value)}
@@ -96,7 +96,7 @@ const ProfileCantEdit = ({ profile }) => {
               <div className="profile-cant-edit__detail-item">
                 <label>Name:</label>
                 <input
-                  type="text"
+                  type="text" className='input-Name'
                   value={editedProfile.affiliations}
                   readOnly={!isEditing}
                   onChange={(e) => handleInputChange('affiliations', e.target.value)}
@@ -105,7 +105,7 @@ const ProfileCantEdit = ({ profile }) => {
               <div className="profile-cant-edit__detail-item">
                 <label>Role and Title:</label>
                 <input
-                  type="text"
+                  type="text" className='input-Name'
                   value={editedProfile.role}
                   readOnly={!isEditing}
                   onChange={(e) => handleInputChange('role', e.target.value)}

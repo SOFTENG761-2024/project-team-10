@@ -53,8 +53,8 @@ export const Landing = () => {
     }
 
     const buffer = 25;
-    const networkSection = document.getElementById('network');
-    const memberSection = document.getElementById('member');
+   const networkSection = document.getElementById('network');
+      const memberSection = document.getElementById('member');
       
       if (networkSection && memberSection) {
         const networkTop = networkSection ? networkSection.offsetTop : 0;
@@ -154,7 +154,7 @@ export const Landing = () => {
             <button  onClick={handleThemeSwitchClick} className={style.menuIcon}>
               <img src='./landing/theme.png' className={style.themeStyle} alt="themeicon" />
             </button>
-          
+
             <button className={style.menuIcon}>
               <img src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
             </button>              
@@ -331,7 +331,7 @@ const styles = {
     top: '11vh',
   },
   navLink: {
-    color: 'black',
+    color: 'var(--body_color)',
     textDecoration: 'none',
     padding: '10px 0px',
     marginBottom: '7px',
@@ -340,7 +340,7 @@ const styles = {
     cursor: 'pointer',
   },
   activeNavLink: {
-    color: 'black',
+    color: 'var(--body_color)',
     textDecoration: 'none',
     padding: '10px 0',
     marginBottom: '10px',
@@ -367,14 +367,14 @@ const css = `
   transform: translateY(-50%);
   width: 8px;
   height: 8px;
-  background-color: black; /* Active dot color */
+  background-color: var(--body_color); /* Active dot color */
   border-radius: 50%;
 }
 .new {
   margin-bottom: 129px !important;
 }
 .active {
-  color: black;
+  color: var(--body_color);
   font-weight: normal;
   background-color: transparent;
 }
