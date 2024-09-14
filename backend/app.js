@@ -14,7 +14,7 @@ var profileController = require("./controllers/profileController");
 var userProfileController = require("./controllers/userProfileController.js");
 var publicationController = require("./controllers/publicationsController.js");
 var authController = require('./controllers/authController.js');
-
+var testController = require('./controllers/testController.js')
 const swaggerController = require("./controllers/swaggerController");
 
 var app = express();
@@ -41,6 +41,7 @@ app.use("/api/profiles", profileController);
 app.use("/api/userprofile", userProfileController);
 app.use("/api/publications", publicationController);
 app.use("/api/auth", authController);
+app.use("/api/test", testController);
 
 // setup swagger ui
 swaggerController(app);

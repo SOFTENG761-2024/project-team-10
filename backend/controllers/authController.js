@@ -48,6 +48,7 @@ router.get('/linkedin/redirect', async (req, res) => {
                 // already have this user
                 console.log('user is: ', currentUser);
                 //done(null, currentUser);
+                //res.redirect('/api/test');
             } else {
                 // if not, create user in our db
                 const userProfile = {
