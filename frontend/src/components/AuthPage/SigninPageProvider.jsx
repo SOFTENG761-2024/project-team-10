@@ -121,12 +121,14 @@ const SigninPageProvider = () => {
     scope: 'profile email openid',
 
     onSuccess: (code) => {
-      console.log(code);
+      console.log('LinkedIn login successful, code:', code);
     },
     onError: (error) => {
-      console.log(error);
+      console.error('LinkedIn login failed:', error);
     },
   });
+
+  console.log('linkedInLogin function:', linkedInLogin);
 
   return (
     <Container maxWidth="md">
