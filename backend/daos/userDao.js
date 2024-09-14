@@ -9,6 +9,21 @@ async function getUserById(userId) {
   return await User.findOne({ userId });
 }
 
+async function getUserByEmail(token_email) {
+  try {
+    
+    const user = await prismaClient.user.findUnique({
+      where: {
+        email: token_email,
+      },
+    });
+
+    return user;
+  } finally {
+    disconnect();
+  }
+}
+
 async function createUserV2(userData) {
   try {
     const user = await prismaClient.user.create({
@@ -41,4 +56,5 @@ module.exports = {
   getUserById,
   getUserByIdV2,
   createUserV2,
+  getUserByEmail
 };

@@ -20,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
+//app.set('view engine','ejs');
 
 
 // Setup connection pool of mongoose.
@@ -30,7 +31,7 @@ connect().then(() => {
   app.use("/api/comments", commentController);
   app.use("/api/profiles", profileController);
   app.use("/api/userprofile", userProfileController);
-  //app.use("/api/linkedIn", linkedInController);
+  //app.use("/api/linkedin", linkedInController);
 
   // setup swagger ui
   swaggerController(app);

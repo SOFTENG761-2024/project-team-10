@@ -2,12 +2,13 @@
 // get token and profile - email address
 // use email address to query database to get userid, return to front-end
 
-import express, { Router } from "express";
+const express = require("express");
+const Router = express.Router();
 const getOpenIdToken = require('../services/openIDService');
 const env = require('dotenv');
 env.config({ path: path.resolve(__dirname, '../.env') });
 
-const router = express.Router();
+
 
 //SignIn
 
