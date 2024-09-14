@@ -51,6 +51,8 @@ paths:
                 primary_email:
                   type: string
                   format: email
+                department:
+                  type: string
                 orcid_identifier:
                   type: string
                 linkedin_url:
@@ -69,11 +71,15 @@ paths:
                   type: string
                 expertise:
                   type: string
+                positions:
+                  type: string
                 tools:
                   type: string
                 profile_picture:
                   type: string
-                isscrapped:
+                is_scraped:
+                  type: boolean
+                is_verified:
                   type: boolean
                 signup_datetime:
                   type: string
