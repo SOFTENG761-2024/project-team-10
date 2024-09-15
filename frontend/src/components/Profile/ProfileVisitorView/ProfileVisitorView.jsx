@@ -5,7 +5,10 @@ import ProfileSidebar from "../SidebarAndHeader/ProfileSidebar";
 import ProfileHeader from "../SidebarAndHeader/ProfileHeader";
 import { getProfileByEmail } from "./api";
 
-const useDummyData = true;
+//TEMPORARY VARIABLE TO CHOOSE BETWEEN DUMMY DATA OR DATA FROM THE API - REMOVE LATER - HI
+let useDummyData = false;
+let userPrimaryEmailForTesting ="natalie.baird@canterbury.ac.nz";
+//TODO: REMOVE THE ABOVE LINES LATER
 
 const tabs = [
   "About",
@@ -74,7 +77,7 @@ const ProfileVisitorView = () => {
 
   else
   { 
-    getProfileByEmail("user@example.com")
+    getProfileByEmail(userPrimaryEmailForTesting)
       .then((data) => setProfileData(data))
       .catch((err) => console.error("Error fetching profile data:", err));
   }
@@ -89,12 +92,10 @@ const ProfileVisitorView = () => {
 
             <div className="description-section">
               <p>
-                Afhjsfjhsfkshfksdfhskfhsdkfdsfhksdfhjhsdfhksdfhskdfhskjnvndlkdnvslkdmnvnvsdlfmn,mnv,nv,mnvmdslvdvldksdljsjsdlnsdknlsvnsnldvndnlvssdlns
-                ldnlsnsldsknsldvnlndsnvdslsvlvslkvns,vnsvlndklnvsvmdvmnsklns,dvnsklnvnvkslndslnvdklnsklvslvndkvlvsklvslvsm,dvns,nvvskdvs,kds;weowpjfewuefkcsjkljelocksdjs,cnnsnc
+                --BLANK FOR NOW-------
               </p>
               <p>
-                hflhklklsflksflsklfhkdklsfhsieksdlfjhseisksdlfjeidkfhieildkfheildkfheildkfheildcncmeifpejkaowwajjjbbfksjsbfjbfdlslvslvssdhfksjfhs
-                hflhklklsflksflsklfhkdklsfhsieksdlfjhseisksdlfjeidkfhieildkfheildkfheildkfheildcncmeifpejkaowwajjjbbfksjsbfjbfdlslvslvssdhfksjfhs
+                --BLANK FOR NOW-------
               </p>
             </div>
             {/* Showcase Work Section */}
