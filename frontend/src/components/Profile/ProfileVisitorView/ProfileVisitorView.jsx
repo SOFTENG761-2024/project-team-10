@@ -7,7 +7,8 @@ import { getProfileByEmail } from "./api";
 
 //TEMPORARY VARIABLE TO CHOOSE BETWEEN DUMMY DATA OR DATA FROM THE API - REMOVE LATER - HI
 let useDummyData = false;
-let userPrimaryEmailForTesting ="natalie.baird@canterbury.ac.nz";
+//Hard coded email address - this will later be provided by the sign-in/sign up module - HI
+let userPrimaryEmailForTesting ="natalie.baird@canterbury.ac.nz"; 
 //TODO: REMOVE THE ABOVE LINES LATER
 
 const tabs = [
@@ -188,7 +189,7 @@ const ProfileVisitorView = () => {
   return (
     <div className="profile-visitor-view-wrapper-container">
       <ProfileSidebar />
-      <ProfileHeader />
+      <ProfileHeader profileData={profileData}  />
       <div className="profile-view-container">
         <div className="basic-info">
           <div className="basic-info-top">
@@ -219,7 +220,7 @@ const ProfileVisitorView = () => {
             <h4 className="affiliations">
               <span className="label-text">Affiliations:</span>
               <div className="content-list">
-                {["abc", "abc2", "abc3"].map((item, index) => (
+                {["N/A", "N/A"].map((item, index) => (
                   <span key={index} className="content-text">
                     {item}
                   </span>

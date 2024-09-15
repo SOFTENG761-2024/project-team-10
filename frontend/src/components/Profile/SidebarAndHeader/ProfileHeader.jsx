@@ -5,7 +5,7 @@ const ProfileHeader = ({ profileData }) => {
   return (
     <div className="header">
       <div className="name-and-date">
-        <h2>Welcome, {profileData?.name || "Alzxa Rawlus"}</h2>
+        <h2>Welcome, {profileData?.first_name + " " + profileData?.last_name || "Alexa Rawus"}</h2>
         <p>Date: {profileData?.date || "Tue, 07 June 2024"}</p>
       </div>
       <div className="colourtheme-and-menuicon">
