@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { sendContactMessage } from "./api";
 import {
   Box,
   Button,
@@ -38,12 +39,13 @@ export const ContactForm = () => {
       return;
     }
     setIsLoading(true);
-    setTimeout(() => {
-      console.log("Data submitted:", formData);
-      setSuccess(true);
-      setIsLoading(false);
-      setFormData({ name: "", email: "", message: "", termsAccepted: false });
-    }, 1000); // Simulate a network request
+    sendContactMessage(formData)
+      .then(() => {
+        setSuccess(true);
+        setFormData({ name: "", email: "", message: "", termsAccepted: false });
+      })
+      .catch((err) => console.error("Error sending message:", err))
+      .finally(() => setIsLoading(false));
   };
 
   const handleTermsClick = (e) => {

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 // fetch profile data
 export const getProfileData = async () => {
   try {
@@ -7,6 +9,20 @@ export const getProfileData = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching profile data:", error);
+    throw error;
+  }
+};
+
+// send contact message
+export const sendContactMessage = async (messageData) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/api/contact", // Update the endpoint here when implemented
+      messageData,
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error sending contact message:", error);
     throw error;
   }
 };
