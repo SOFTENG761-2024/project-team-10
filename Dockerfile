@@ -4,7 +4,7 @@ WORKDIR /usr/src/app/backend
 COPY backend/package*.json ./
 
 COPY backend/ .
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 
 # Build stage for Frontend
 FROM node:latest AS frontend-build
