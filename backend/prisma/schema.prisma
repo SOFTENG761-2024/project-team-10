@@ -8,20 +8,6 @@ datasource test {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id      String    @id @default(uuid()) @test.VarChar
-  Profile Profile[]
-}
-
-model Profile {
-  id     String @id @default(uuid()) @test.VarChar
-  userId String @test.VarChar
-  bio    String @test.VarChar(500)
-  user   User   @relation(fields: [userId], references: [id])
-
-  @@index([userId])
-}
-
 model user_profile {
   id                                                   Int                    @id @default(autoincrement())
   usertypeid                                           Int
@@ -32,11 +18,13 @@ model user_profile {
   last_name                                            String                 @test.VarChar
   preferred_name                                       String?                @test.VarChar
   title                                                String?                @test.VarChar
-  primary_email                                        String?                @unique @test.VarChar
+  primary_email                                        String                 @unique @test.VarChar
   orcid_identifier                                     String?                @unique @test.VarChar
   linkedin_url                                         String?                @test.VarChar
   secondary_email                                      String?                @test.VarChar
   mobile_phone                                         String?                @test.VarChar
+  department                                           String?                @test.VarChar
+  positions                                            String?
   bio                                                  String?
   research_area                                        String?
   skills                                               String?
@@ -44,7 +32,8 @@ model user_profile {
   expertise                                            String?
   tools                                                String?
   profile_picture                                      String?                @test.VarChar
-  isscrapped                                           Boolean?
+  is_scraped                                           Boolean                @default(false)
+  is_verified                                           Boolean                @default(false)
   signup_datetime                                      DateTime?              @test.Timestamp(6)
   event                                                event[]
   event_attendee                                       event_attendee[]
@@ -61,13 +50,13 @@ model user_profile {
   user_message_user_message_from_user_idTouser_profile user_message[]         @relation("user_message_from_user_idTouser_profile")
   user_message_user_message_to_user_idTouser_profile   user_message[]         @relation("user_message_to_user_idTouser_profile")
   faculty                                              faculty?               @relation(fields: [faculty_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  institution                                          institution?           @relation(fields: [institution_id], references: [institution_id], onDelete: NoAction, onUpdate: NoAction)
+  institution                                          institution?           @relation(fields: [institution_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   organization                                         organization?          @relation(fields: [organization_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   usertype                                             usertype               @relation(fields: [usertypeid], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model institution {
-  institution_id    Int                 @id @default(autoincrement())
+  id    Int                 @id @unique
   name              String?             @test.VarChar
   address           String?             @test.VarChar
   user_affiliations user_affiliations[]
@@ -75,13 +64,13 @@ model institution {
 }
 
 model faculty {
-  id           Int            @id @default(autoincrement())
+  id           Int            @id @unique
   name         String?        @test.VarChar
   user_profile user_profile[]
 }
 
 model organization {
-  id           Int            @id @default(autoincrement())
+  id           Int            @id @unique
   name         String?        @test.VarChar
   address      String?        @test.VarChar
   user_profile user_profile[]
@@ -118,12 +107,12 @@ model user_affiliations {
   user_id        Int?
   institution_id Int?
   role           String?       @test.VarChar
-  institution    institution?  @relation(fields: [institution_id], references: [institution_id], onDelete: NoAction, onUpdate: NoAction)
+  institution    institution?  @relation(fields: [institution_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   user_profile   user_profile? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model usertype {
-  id           Int            @id @default(autoincrement())
+  id           Int            @id @unique
   name         String?        @test.VarChar
   user_profile user_profile[]
 }
@@ -216,3 +205,18 @@ model user_message {
   user_profile_user_message_from_user_idTouser_profile user_profile? @relation("user_message_from_user_idTouser_profile", fields: [from_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   user_profile_user_message_to_user_idTouser_profile   user_profile? @relation("user_message_to_user_idTouser_profile", fields: [to_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
+
+model User {
+  id      String    @id @default(uuid()) @test.VarChar
+  Profile Profile[]
+}
+
+model Profile {
+  id     String @id @default(uuid()) @test.VarChar
+  userId String @test.VarChar
+  bio    String @test.VarChar(500)
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
