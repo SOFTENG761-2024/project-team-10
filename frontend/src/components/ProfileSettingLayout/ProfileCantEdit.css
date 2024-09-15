@@ -69,7 +69,17 @@ label {
     font-weight: bold;
 }
 
-input[type="text"] {
+/* input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    color: #333;
+} */
+
+.input-Name {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -79,10 +89,15 @@ input[type="text"] {
     color: #333;
 }
 
-input[type="text"]:read-write {
+.input-Name:read-write {
     background-color: #fff;
     cursor: text;
 }
+
+/* input[type="text"]:read-write {
+    background-color: #fff;
+    cursor: text;
+} */
 
 .profile-cant-edit__button-row {
     display: flex;
