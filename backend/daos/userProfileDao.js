@@ -85,6 +85,11 @@ async function getUserProfileByPrimaryEmail(primaryEmail) {
       where: {
         primary_email: primaryEmail,
       },
+      include: 
+      {
+        institution:true,
+        faculty: true,
+      }
     });
     return profile;
   }

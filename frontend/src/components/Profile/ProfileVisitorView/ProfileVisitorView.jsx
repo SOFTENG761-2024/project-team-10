@@ -212,7 +212,7 @@ const ProfileVisitorView = () => {
             </h3>
             <hr className="line-separator" />
             <h4 className="department">
-              {profileData?.faculty_name || "Department of Engineering"}
+              {profileData?.department || "Department of Engineering"}
             </h4>
             <hr className="line-separator" />
           </div>
@@ -264,7 +264,7 @@ const ProfileVisitorView = () => {
 
           <div className="basic-info-bottom">
             <div className="university">
-              {profileData?.institution_name || "The University of Canterbury"}
+              {profileData?.institution.name || "Dummy Data University"}
             </div>
           </div>
         </div>
