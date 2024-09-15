@@ -36,8 +36,6 @@ router.get('/linkedin', passport.authenticate('linkedin', { state: '123', passRe
 router.get('/linkedin/redirect', async (req, res) => {
     res.redirect(process.env.FRONT_END_BASE_URL);
     // res.send('you reached the redirect URI');
-   
-    
     try {
         const grant_type = 'authorization_code';
         const code = req.query.code;
@@ -100,6 +98,10 @@ router.get('/linkedin/redirect', async (req, res) => {
 
 });
 
+router.get('current-user', async (req, res) => {
+
+
+});
 
 //router.get('/linkedin')
 

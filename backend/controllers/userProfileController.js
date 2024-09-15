@@ -49,9 +49,23 @@ router.get("/", async function getAllUserProfiles(req, res) {
   }
 });
 
+router.put("/:id", async function updateUserProfile(req, res) {
+  try {
+    const userProfile = req.body;
+    console.log(userProfile);
+    console.log(req.params.id);
+    const updatedUserProfile = await userProfileService.updateUserProfileById(req.params.id, userProfile);
+    res.json(updatedUserProfile);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
 router.put("/", async function updateUserProfile(req, res) {
   try {
     const userProfile = req.body;
+    console.log(userProfile);
     const updatedUserProfile = await userProfileService.updateUserProfile(userProfile);
     res.json(updatedUserProfile);
   } catch (error) {

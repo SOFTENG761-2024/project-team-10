@@ -40,8 +40,31 @@ async function getAllUserProfiles() {
   return userProfiles;
 }
 
+async function updateUserProfileById(id, userProfileObject) {
+  if (id == undefined || id == null) {
+    throw new Error(
+      `User Profile id is required.`
+    );
+  }
+  let pid = parseInt(id);
+  if (!(await getUserProfileById(pid))) {
+    throw new Error(
+      `User Profile with id ${id} does not exist.`
+    );
+  }
+  userProfileObject.id = pid;
+  logger.info(`Updating user profile for id ${id}.`);
+  const userProfile = await userProfileDao.updateUserProfile(userProfileObject);
+  return userProfile;
+}
+
 async function updateUserProfile(userProfileObject) {
-  if (!(await getUserProfileById(userProfile))) {
+  if (userProfileObject.id == undefined || userProfileObject.id == null) {
+    throw new Error(
+      `User Profile id is required.`
+    );
+  }
+  if (!(await getUserProfileById(parseInt(userProfileObject.id)))) {
     throw new Error(
       `User Profile with id  ${userProfileObject.id} does not exist.`
     );
@@ -52,11 +75,11 @@ async function updateUserProfile(userProfileObject) {
   return userProfile;
 }
 
-
 module.exports = {
   createUserProfile,
   getUserProfileById,
   getUserProfileByPrimaryEmail,
   getAllUserProfiles,
-  updateUserProfile
+  updateUserProfile,
+  updateUserProfileById
 };
