@@ -15,7 +15,6 @@ import {
   useMuiTheme,
   useRoute,
 } from "../GlobalProviders";
-import { height } from "@mui/system";
 
 export const Landing = () => {
   const navigate = useNavigate();
