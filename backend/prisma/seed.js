@@ -11,29 +11,29 @@ async function main()
 
   await prismaClient.usertype.createMany({
     data: [
-      { name: 'Academic User' },
-      { name: 'Business User' },
-      { name: 'Unauthenticated User' },
+      {id:1, name: 'Academic User' },
+      { id:2, name: 'Business User' },
+      { id:3, name: 'Unauthenticated User' },
     ],
   });
 
   await prismaClient.institution.createMany({
     data: [
-      { name: 'University of Auckland', address: 'Auckland' },
-      { name: 'Massey University', address: 'Palmerston North' },
-      { name: 'University of Waikato', address: 'Hamilton' },
-      { name: 'University of Otago', address: 'Dunedin' },
-      { name: 'Victoria University of Wellington', address: 'Wellington' },
-      { name: 'University of Canterbury', address: 'Christchurch' },
-      { name: 'Lincoln University', address: 'Lincoln' },
-      { name: 'Auckland University of Technology', address: 'Auckland' },
+      { id:1, name: 'University of Auckland', address: 'Auckland' },
+      { id:2, name: 'Massey University', address: 'Palmerston North' },
+      { id:3, name: 'University of Waikato', address: 'Hamilton' },
+      { id:4, name: 'University of Otago', address: 'Dunedin' },
+      { id:5, name: 'Victoria University of Wellington', address: 'Wellington' },
+      { id:6, name: 'University of Canterbury', address: 'Christchurch' },
+      { id:7, name: 'Lincoln University', address: 'Lincoln' },
+      { id:8, name: 'Auckland University of Technology', address: 'Auckland' },
     ],
   });
 
   await prismaClient.faculty.createMany({
     data: [
-      { name: 'Law School' },
-      { name: 'School of business management' },
+      { id:1, name: 'Law School' },
+      { id:2, name: 'School of business management' },
     ],
   });
 }

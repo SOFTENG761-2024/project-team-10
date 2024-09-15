@@ -1,8 +1,18 @@
-.profile-setting-layout {
-  display: flex;
-}
-
-.main-content{
+.main-content {
   margin-left: 80px; /* Set the margin to the width of the sidebar */
   width: calc(100% - 80px); /* Subtract the width of the sidebar */
+}
+
+.button {
+  margin-left: 90px;
+  background-color: #666; /* Green background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 15px 32px; /* Some padding */
+  text-align: center; /* Centered text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make the buttons appear side by side */
+  font-size: 16px; /* Increase font size */ /* Some margin */
+  cursor: pointer; /* Pointer/hand icon */
+  border-radius: 4px; /* Rounded corners */
 }
