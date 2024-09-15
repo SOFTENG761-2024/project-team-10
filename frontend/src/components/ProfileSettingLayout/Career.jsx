@@ -40,7 +40,7 @@ const Career = ({ profile, onSave }) => {
           <div className="career__detail-item">
             <label>Research area</label>
             <input
-              type="text"
+              type="text" className='input-research'
               readOnly={!isEditing}
               value={editedProfile.researchArea}
               onChange={(e) => handleInputChange('researchArea', e.target.value)}
@@ -49,7 +49,7 @@ const Career = ({ profile, onSave }) => {
           <div className="career__detail-item">
             <label>Skills:</label>
             <input
-              type="text"
+              type="text" className='input-research'
               readOnly={!isEditing}
               value={editedProfile.skills}
               onChange={(e) => handleInputChange('skills', e.target.value)}

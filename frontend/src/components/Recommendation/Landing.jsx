@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
@@ -8,16 +8,40 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import XIcon from '@mui/icons-material/X';
 import CopyrightIcon from '@mui/icons-material/Copyright';
 import style from './Landing.module.css';
+import {
+  MuiTheme,
+  useAuth,
+  useLocalStorage,
+  useMuiTheme,
+  useRoute,
+} from "../GlobalProviders";
+import { height } from "@mui/system";
 
 export const Landing = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:600px)");
+  const { toggleLightDarkTheme, theme } = useMuiTheme();
+
+  const { getItem } = useLocalStorage();
+  const searchBarRef = useRef(null);
 
   const [activeSection, setActiveSection] = useState('search');
+  const [positions, setPositions] = useState({ networkTop: 0, memberTop: 0 });
+
+  const handleThemeSwitchClick = () => {
+    toggleLightDarkTheme();
+  };
+
+  
+  const handleMenuClick = () => {
+    navigate("/signup");  // This navigates to the /signup page
+  };
 
   const handleScroll = () => {
     const sections = document.querySelectorAll('section');
     let currentSection = '';
+    const searchBar = searchBarRef.current;
+    if (!searchBar) return;
 
     sections.forEach((section) => {
       const sectionTop = section.getBoundingClientRect().top + window.scrollY;
@@ -32,19 +56,60 @@ export const Landing = () => {
     if (currentSection && currentSection !== activeSection) {
       setActiveSection(currentSection);
     }
+
+    const buffer = 25;
+    const networkSection = document.getElementById('network');
+    const memberSection = document.getElementById('member');
+
+    if (networkSection && memberSection) {
+      const networkTop = networkSection ? networkSection.offsetTop : 0;
+      const memberTop = memberSection ? memberSection.offsetTop : 0;
+      setPositions({ networkTop, memberTop });
+    } else {
+      console.error('Sections not found');
+    }
+
+    setPositions({
+      networkTop: networkSection.offsetTop,
+      memberTop: memberSection.offsetTop,
+    });
+
+    console.log(`networkTop: ${networkSection.offsetTop}, memberTop: ${memberSection.offsetTop}`);
+
+    const scrollPosition = window.scrollY || window.pageYOffset;
+    // const buffer = 25;
+    const { networkTop, memberTop } = positions;
+
+    // Log the current scroll position and stored section positions
+    console.log(`ScrollPosition: ${scrollPosition}, networkTop: ${networkTop}, memberTop: ${memberTop}`);
+
+    // Add or remove sticky class based on scroll position
+    if (scrollPosition >= networkTop - buffer && scrollPosition <= memberTop) {
+      if (!searchBarRef.current.classList.contains(style.sticky)) {
+        searchBarRef.current.classList.add(style.sticky);
+        console.log(`${scrollPosition}: Sticky added`);
+      }
+    } else {
+      if (searchBarRef.current.classList.contains(style.sticky)) {
+        searchBarRef.current.classList.remove(style.sticky);
+        console.log(`${scrollPosition}: Sticky removed`);
+      }
+    }
   };
+
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
+    document.body.setAttribute("data-theme", theme);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [activeSection]);
+  }, [activeSection, theme]);
 
   return (
     <Box mt={10}>
       <nav style={styles.navContainer}>
-        <div style={styles.verticalLine}></div>
         <div style={styles.nav}>
           <a
             href="#search"
@@ -69,7 +134,7 @@ export const Landing = () => {
           </a>
           <a
             href="#join-today"
-            className={activeSection === 'join-today' ? 'active' : ''}
+            className={`new ${activeSection === 'join-today' ? 'active' : ''} ${activeSection === 'about-us' ? 'about-active' : ''}`}
             style={activeSection === 'join-today' ? styles.activeNavLink : styles.navLink}
           >
             Join Today
@@ -79,24 +144,27 @@ export const Landing = () => {
             className={activeSection === 'about-us' ? 'active' : ''}
             style={activeSection === 'about-us' ? styles.activeNavLink : styles.navLink}
           >
-            About us
+            About Us
           </a>
         </div>
       </nav>
       <section id="search">
         <div className={style.flexContainer}>
           <div className={style.topIcons}>
-            <div className={style.menuIcon}>
+            <button onClick={handleThemeSwitchClick} className={style.menuIcon}>
               <img src='./landing/theme.png' className={style.themeStyle} alt="themeicon" />
-            </div>
-            <div className={style.menuIcon}>
+            </button>
+
+            <button className={style.menuIcon} onClick={handleMenuClick}>
               <img src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
-            </div>
+            </button>
           </div>
           <div>
-            <img src="./landing/top-image.png" className={style.topImage}></img>
+            <video className={style.topImage} autoPlay muted playsInline loop>
+              <source src="./landing/design.mp4" type="video/mp4" />
+            </video>
           </div>
-          <div className={style.searchBar}>
+          <div className={style.searchBar} ref={searchBarRef}>
             <input
               type="text"
               placeholder="Search"
@@ -141,6 +209,7 @@ export const Landing = () => {
                 <button className={style.signUp}>Sign Up <span className={style.arrowButton}>{'>'}</span></button>
               </div>
             </div>
+            <div className={style.emptyDiv}></div>
             <div className={style.rightSectionDiv}>
               <div className={style.rightMemberDiv}>
                 <div className={`${style.section} ${style.secMemberWidth}`}>
@@ -235,7 +304,7 @@ const styles = {
   navContainer: {
     position: 'fixed',
     top: '47%',
-    right: '4%',
+    right: '7%',
     transform: 'translateY(-50%)',
     display: 'flex',
     flexDirection: 'row',
@@ -245,10 +314,12 @@ const styles = {
   verticalLine: {
     width: '2px',
     backgroundColor: 'rgb(205 199 199)',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
+    position: 'relative',
+    top: '0px',
+    bottom: '0px',
     left: '-10px',
+    height: '260px', // Adjust height to cover "Join Today" and "About Us"
+    alignSelf: 'flex-start',
   },
   nav: {
     display: 'flex',
@@ -257,25 +328,25 @@ const styles = {
     padding: '10px',
     alignItems: 'flex-start',
     position: 'relative',
+    top: '11vh',
   },
   navLink: {
-    color: 'black',
+    color: 'var(--body_color)',
     textDecoration: 'none',
-    padding: '39% 0%',
-    marginBottom: '10px',
+    padding: '10px 0px',
+    marginBottom: '7px',
     textAlign: 'left',
     position: 'relative',
     cursor: 'pointer',
   },
   activeNavLink: {
-    color: 'white',
+    color: 'var(--body_color)',
     textDecoration: 'none',
     padding: '10px 0',
     marginBottom: '10px',
     textAlign: 'left',
-    backgroundColor: '#3f51b5',  // Highlight color for active link
-    borderRadius: '4px',  // Optional: Add some rounding for a nicer look
-    fontWeight: 'bold',  // Make the text bold
+    borderRadius: '4px',
+    fontWeight: 'bolder',
     position: 'relative',
   },
   section: {
@@ -288,34 +359,54 @@ const styles = {
 
 // Adding the pseudo-elements through CSS
 const css = `
-  nav a.active::before {
-    content: '';
-    position: absolute;
-    left: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    background-color: black;
-    border-radius: 50%;
-  }
-
-  nav a::before {
-    content: '';
-    position: absolute;
-    left: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    background-color: transparent;
-    border-radius: 50%;
-  }
+ nav a.active::before {
+  content: '';
+  position: absolute;
+  left: 83px; /* Adjust this to position the dot closer or further */
+  /* top: 50%; */
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: var(--body_color); /* Active dot color */
+  border-radius: 50%;
+}
+.new {
+  margin-bottom: 129px !important;
+}
+.active {
+  color: var(--body_color);
+  font-weight: normal;
+  background-color: transparent;
+}
+.new::after {
+  content: '';
+  position: absolute;
+  left: 86px;
+  top: 56%;
+  height: 24vh;
+  width: 2px;
+  z-index: 0;
+  background-color: gray; /* Line color */
+}
+.new.about-active::after {
+  height: 24vh; /* Height change when About Us is active */
+}
+nav a::before {
+  content: '';
+  position: absolute;
+  left: 83px; /* Adjust this to position the dot */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: gray; /* Default dot color */
+  border-radius: 50%;
+}
 `;
 
 // Injecting the CSS into the page
-// const style = document.createElement('style');
-// style.innerHTML = css;
-// document.head.appendChild(style);
+const styleNew = document.createElement('style');
+styleNew.innerHTML = css;
+document.head.appendChild(styleNew);
 
 export default Landing;
