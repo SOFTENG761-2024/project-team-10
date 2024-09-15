@@ -4,7 +4,7 @@ const cookieSession = require('cookie-session');
 var morgan = require("morgan");
 const cors = require("cors");
 const logger = require("./utils/logger.js");
-const passportService = require("./services/passportService.js");
+const passportService = require("./services/passportService.js"); 
 const passport = require('passport');
 const env = require('dotenv');
 env.config();
@@ -18,6 +18,8 @@ var testController = require('./controllers/testController.js')
 const swaggerController = require("./controllers/swaggerController");
 
 var app = express();
+
+passportService;
 
 app.use(morgan("dev"));
 app.use(express.json());
