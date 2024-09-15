@@ -46,7 +46,7 @@ export class EC2Stack extends Stack {
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(22));
     // securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(80));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(3000));
-    securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(5000));
+    // securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(5000));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(8080));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(8888));
 
