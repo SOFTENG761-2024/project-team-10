@@ -89,6 +89,7 @@ async function getUserProfileByPrimaryEmail(primaryEmail) {
       {
         institution:true,
         faculty: true,
+        publication: true,
       }
     });
     return profile;

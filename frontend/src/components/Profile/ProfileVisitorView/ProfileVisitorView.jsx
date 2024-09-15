@@ -133,11 +133,11 @@ const ProfileVisitorView = () => {
       case "Outputs":
         return (
           <div>
-            {profileData?.publications?.length > 0 ? (
-              profileData.publications.map((publication, index) => (
+            {profileData?.publication?.length > 0 ? (
+              profileData.publication.map((output, index) => (
                 <div key={index} className="content-item">
-                  <h4>{publication.title}</h4>
-                  <p>{publication.description}</p>
+                  <h4>{output.title}</h4>
+                  <p>{output.link}</p>
                 </div>
               ))
             ) : (
