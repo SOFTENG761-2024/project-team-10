@@ -1,6 +1,15 @@
 import React, { useState } from "react";
-import { sendContactMessage } from "./api";
-import "./ContactFormStyle.css";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Checkbox,
+  FormControlLabel,
+  Modal,
+  Link,
+} from "@mui/material";
+
 import { TermsAndConditions } from "./TermsAndConditions";
 
 export const ContactForm = () => {
@@ -29,14 +38,12 @@ export const ContactForm = () => {
       return;
     }
     setIsLoading(true);
-
-    sendContactMessage(formData)
-      .then(() => {
-        setSuccess(true);
-        setFormData({ name: "", email: "", message: "", termsAccepted: false });
-      })
-      .catch((err) => console.error("Error sending message:", err))
-      .finally(() => setIsLoading(false));
+    setTimeout(() => {
+      console.log("Data submitted:", formData);
+      setSuccess(true);
+      setIsLoading(false);
+      setFormData({ name: "", email: "", message: "", termsAccepted: false });
+    }, 1000); // Simulate a network request
   };
 
   const handleTermsClick = (e) => {
@@ -44,78 +51,159 @@ export const ContactForm = () => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
-    <div className="contact-container">
-      <div className="url">URL:</div>
-      <div className="linkedln">Linkedln:</div>
-      <h3>Contact</h3>
-      <h4>Have a question? Send a message.</h4>
-      {success && <p>Message sent successfully!</p>}
-      <form onSubmit={handleSubmit} className="contact-form">
-        <div className="input-group">
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="input-group">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="input-group">
-          <label>Message</label>
-          <textarea
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            placeholder="Type your message..."
-            required
-          />
-        </div>
-        <div className="checkbox-group">
-          <label>
-            <input
-              type="checkbox"
-              name="termsAccepted"
+    <Box
+      sx={{
+        p: 2,
+        backgroundColor: "#f3f5f7",
+        borderRadius: 2,
+        maxWidth: 600,
+        ml: 5,
+        mt: 3,
+        mr: "auto",
+      }}
+    >
+      <Typography variant="body1" sx={{ mb: 1 }}>
+        URL: <Link href="#">YourURL.com</Link>
+      </Typography>{" "}
+      <Typography variant="body1" sx={{ mb: 4 }}>
+        LinkedIn: <Link href="#">YourLinkedInProfile</Link>
+      </Typography>{" "}
+      <Typography variant="h5" sx={{ mb: 3 }} gutterBottom>
+        Contact
+      </Typography>
+      <Typography gutterBottom>Have a question? Send a message.</Typography>
+      {success && (
+        <Typography color="success.main">Message sent successfully!</Typography>
+      )}
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ display: "flex", flexDirection: "column" }}
+      >
+        <TextField
+          label="Name"
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          sx={{ backgroundColor: "#f3f5f7", mb: 2 }}
+        />
+        <TextField
+          label="Email"
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          label="Type your message..."
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
+          multiline
+          rows={4}
+          required
+          sx={{ mb: 2 }}
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
               checked={formData.termsAccepted}
               onChange={handleChange}
+              name="termsAccepted"
             />
-            I accept the{" "}
-            <a href="#" onClick={handleTermsClick}>
-              Terms
-            </a>{" "}
-            {/* Updated to trigger the modal */}
-          </label>
-        </div>
+          }
+          label={
+            <span>
+              I accept the{" "}
+              <Link
+                component="button"
+                onClick={handleTermsClick}
+                underline="hover"
+                style={{ cursor: "pointer" }}
+              >
+                Terms and Conditions
+              </Link>
+            </span>
+          }
+        />
 
-        <button type="submit" disabled={isLoading}>
+        <Button
+          type="submit"
+          variant="contained"
+          disabled={isLoading}
+          sx={{
+            mt: 2,
+            backgroundColor: "#4b5a68",
+            color: "white",
+            border: "none",
+            padding: "10px 15px",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontSize: "16px",
+            width: "20%",
+            "&:hover": {
+              backgroundColor: "#3a4858",
+            },
+            "&.Mui-disabled": {
+              backgroundColor: "#ccc",
+              color: "rgba(0, 0, 0, 0.26)",
+            },
+          }}
+        >
           {isLoading ? "Sending..." : "Submit"}
-        </button>
-      </form>
-
-      {isModalOpen && (
-        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <TermsAndConditions />{" "}
-            {/* Replace static content with TermsAndConditions component */}
-            <button onClick={() => setIsModalOpen(false)}>Close</button>
-          </div>
-        </div>
-      )}
-    </div>
+        </Button>
+      </Box>
+      <Modal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backdropFilter: "blur(5px)",
+          zIndex: 1000,
+        }}
+      >
+        <Box
+          onClick={(e) => e.stopPropagation()}
+          sx={{
+            backgroundColor: "white",
+            padding: 4,
+            borderRadius: 2,
+            width: { xs: "90vw", md: "400px" },
+            textAlign: "center",
+            maxHeight: "80vh",
+            overflowY: "auto",
+          }}
+        >
+          <Typography variant="h5" id="modal-title">
+            Terms and Conditions
+          </Typography>
+          <TermsAndConditions />
+          <Button
+            onClick={() => setIsModalOpen(false)}
+            sx={{
+              marginTop: 2,
+              padding: "10px 20px",
+              backgroundColor: "#4b5a68",
+              color: "white",
+              borderRadius: "5px",
+              "&:hover": {
+                backgroundColor: "#3a4858",
+              },
+            }}
+          >
+            Close
+          </Button>
+        </Box>
+      </Modal>
+    </Box>
   );
 };
