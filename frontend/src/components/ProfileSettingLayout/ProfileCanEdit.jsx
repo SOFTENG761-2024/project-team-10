@@ -29,14 +29,14 @@ const ProfileCanEdit = ({ profile, onSave }) => {
           <label>Research area</label>
           <input 
             type="text" 
-            value={editedProfile.researchArea} 
+            value={editedProfile.researchArea} className='input-field'
             onChange={(e) => handleInputChange('researchArea', e.target.value)}
           />
         </div>
         <div className="detail-item">
           <label>Skills:</label>
           <input 
-            type="text" 
+            type="text" className='input-field'
             value={editedProfile.skills} 
             onChange={(e) => handleInputChange('skills', e.target.value)}
           />
