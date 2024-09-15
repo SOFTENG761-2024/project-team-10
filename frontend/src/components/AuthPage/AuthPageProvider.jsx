@@ -16,7 +16,6 @@ import { IconButton } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import {
   GoogleLogin,
-  GoogleOAuthProvider,
   useGoogleLogin,
 } from "@react-oauth/google";
 
