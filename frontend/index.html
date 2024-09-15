@@ -14,11 +14,24 @@
 </body>
 
 <style>
+  :root {
+        --body_background : white;
+        --body_color: black;
+        --link_color : navy;
+    }
+
+    [data-theme="dark"] {
+        --body_background: black;
+        --body_color: white;
+        --link_color: cyan;
+    }
   body {
     margin: 0;
     padding: 0;
-    background-color: white;
     font-family: 'Nunito', sans-serif;
+    background-color: var(--body_background);
+    color: var(--body_color);
+    transition: all 0.3s ease-in-out;
   }
 
   @font-face {
@@ -125,8 +138,6 @@
 
   p,
   a,
-  ul,
-  li,
   button {
     font-family: 'Nunito', sans-serif;
     font-weight: 400;
@@ -143,6 +154,12 @@
     font-family: 'Nunito', sans-serif;
     font-weight: 500;
     /* Medium */
+  }
+
+  ul,li
+  {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
   }
 </style>
 </html>
