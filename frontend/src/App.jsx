@@ -7,20 +7,16 @@ import {
   APIProvider,
 } from "./components/GlobalProviders";
 import { SnackbarProvider } from "./components/Snackbar";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import ProfileSettingLayerout from "./components/ProfileSettingLayout";
 
 const App = () => (
   <LocalStorageProvider>
     <ThemeProvider>
       <CssBaseline />
       <APIProvider>
-        <GoogleOAuthProvider clientId="1083292527788-2ehr1pss5tjac6156qk7likrbu4eps58.apps.googleusercontent.com">
-          <AuthProvider>
-            <RouteProvider />
-            <SnackbarProvider />
-          </AuthProvider>
-        </GoogleOAuthProvider>
+        <AuthProvider>
+          <RouteProvider />
+          <SnackbarProvider />
+        </AuthProvider>
       </APIProvider>
     </ThemeProvider>
   </LocalStorageProvider>
