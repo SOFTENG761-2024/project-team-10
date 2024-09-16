@@ -27,11 +27,9 @@ async function createUserProfile(userProfileData) {
   }
 }
 
-async function addInstitution(institutionName)
-{
-  try
-  {
-    const institute= await prismaClient.institution.create({
+async function addInstitution(institutionName) {
+  try {
+    const institute = await prismaClient.institution.create({
       data: {
         name: institutionName,
       },
@@ -80,7 +78,7 @@ async function getUserProfileById(userId) {
 
 async function getUserProfileByPrimaryEmail(primaryEmail) {
   try {
-  
+
     const profile = await prismaClient.user_profile.findUnique({
       where: {
         primary_email: primaryEmail,
@@ -94,20 +92,37 @@ async function getUserProfileByPrimaryEmail(primaryEmail) {
   }
 }
 
-async function getAllUserProfiles()
-{
-    try{
-        const userProfiles = await prismaClient.user_profile.findMany();
-        return userProfiles;
-    }
-        finally {
-            await disconnect();
-          }
+async function getAllUserProfiles() {
+  try {
+    const userProfiles = await prismaClient.user_profile.findMany();
+    return userProfiles;
+  }
+  finally {
+    await disconnect();
+  }
+}
+
+async function updateUserProfile(userProfileData) {
+  try {
+    const userProfile = await prismaClient.user_profile.update({
+      where: {
+        id: userProfileData.id,
+      },
+      data: userProfileData,
+    });
+    return userProfile;
+  }
+  finally {
+    await disconnect();
+  }
 }
 
 
-module.exports = { createUserProfile, 
-                  getUserProfileById, 
-                  getAllUserProfiles,
-                  getUserProfileByPrimaryEmail,
-                  addInstitution };
+module.exports = {
+  createUserProfile,
+  getUserProfileById,
+  getAllUserProfiles,
+  getUserProfileByPrimaryEmail,
+  addInstitution,
+  updateUserProfile
+};

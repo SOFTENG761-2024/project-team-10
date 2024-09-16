@@ -87,6 +87,7 @@ const LinkedInButton = styled(Button)(({ theme }) => ({
 }));
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
+  borderRadius: theme.spacing(5),
 }));
 
 
