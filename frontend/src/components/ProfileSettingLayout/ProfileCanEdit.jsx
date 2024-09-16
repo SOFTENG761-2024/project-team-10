@@ -8,9 +8,31 @@ const ProfileCanEdit = ({ profile, onSave }) => {
   const handleInputChange = (field, value) => {
     setEditedProfile({ ...editedProfile, [field]: value });
   };
+  const handleSave = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/userprofile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editedProfile),
+      });
 
-  const handleSave = () => {
-    onSave(editedProfile);
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          alert('personal profile saved successfully');
+          onSave(editedProfile);
+        } else {
+          throw new Error('save failed');
+        }
+      } else {
+        throw new Error('save failed');
+      }
+    } catch (error) {
+      console.error('save personal failed', error);
+      alert('save personal failed');
+    }
   };
 
   const renderAboutTab = () => (
