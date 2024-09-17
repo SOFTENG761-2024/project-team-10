@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ContactForm } from "./ContactForm";
 import ProfileSidebar from "../SidebarAndHeader/ProfileSidebar";
 import ProfileHeader from "../SidebarAndHeader/ProfileHeader";
-import { getProfileByEmail } from "./api";
+import { useProfileAPI } from "./api";
 
 import {
   Box,
@@ -37,6 +37,7 @@ const tabs = [
 const ProfileVisitorView = () => {
   const [activeTab, setActiveTab] = useState("About");
   const [profileData, setProfileData] = useState(null);
+  const { getProfileByEmail, error } = useProfileAPI();
 
   useEffect(() => {
     if (useDummyData) {
@@ -88,9 +89,14 @@ const ProfileVisitorView = () => {
       //Simulate fetching data
       setProfileData(dummyProfileData);
     } else {
-      getProfileByEmail(userPrimaryEmailForTesting)
-        .then((data) => setProfileData(data))
-        .catch((err) => console.error("Error fetching profile data:", err));
+      // Fetch data from API if dummy data is false
+      const loadProfile = async () => {
+        const data = await getProfileByEmail(userPrimaryEmailForTesting);
+        if (data) {
+          setProfileData(data);
+        }
+      };
+      loadProfile();
     }
   }, []);
 
