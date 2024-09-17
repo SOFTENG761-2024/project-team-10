@@ -13,20 +13,6 @@ export const getProfileData = async () => {
   }
 };
 
-// send contact message
-export const sendContactMessage = async (messageData) => {
-  try {
-    const response = await axios.post(
-      "http://localhost:3000/api/contact", // Update the endpoint here when implemented
-      messageData,
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error sending contact message:", error);
-    throw error;
-  }
-};
-
 export const getProfileByEmail = async (email) => {
   try {
     const response = await axios.get(
