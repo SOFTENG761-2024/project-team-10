@@ -28,9 +28,9 @@ async function getUserProfileByPrimaryEmail(primaryEmail) {
 }
 
 //Get user profile by Id
-async function getUserProfileById(userId) {
-  logger.info(`Getting user profile for "Fellows" by userId: ${userId}`);
-  const userProfile = await userProfileDao.getUserProfileById(userId);
+async function getUserProfileById(id) {
+  logger.info(`Getting user profile for "Fellows" by id: ${id}`);
+  const userProfile = await userProfileDao.getUserProfileById(id);
   return userProfile;
 }
 

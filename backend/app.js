@@ -10,7 +10,7 @@ const env = require('dotenv');
 env.config();
 
 var userController = require("./controllers/userController");
-var profileController = require("./controllers/profileController");
+// var profileController = require("./controllers/profileController");
 var userProfileController = require("./controllers/userProfileController.js");
 var publicationController = require("./controllers/publicationsController.js");
 var authController = require('./controllers/authController.js');
@@ -39,7 +39,7 @@ app.use(passport.session());
 app.use(cors());
 
 app.use("/api/users", userController);
-app.use("/api/profiles", profileController);
+// app.use("/api/profiles", profileController);
 app.use("/api/userprofile", userProfileController);
 app.use("/api/publications", publicationController);
 app.use("/api/auth", authController);
