@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import { ContactForm } from "./ContactForm";
 import ProfileSidebar from "../SidebarAndHeader/ProfileSidebar";
 import ProfileHeader from "../SidebarAndHeader/ProfileHeader";
@@ -278,7 +278,7 @@ const ProfileVisitorView = () => {
     <>
       <GlobalStyles styles={styles.global} />
       <Box sx={styles.wrapperContainer}>
-        <ProfileSidebar />
+        <ProfileSidebar profileData={profileData} />
         <ProfileHeader profileData={profileData} />
         <Box sx={styles.profileViewContainer}>
           <Box sx={styles.basicInfo}>
@@ -288,7 +288,7 @@ const ProfileVisitorView = () => {
                   profileData?.first_name + " " + profileData?.last_name ||
                   "Profile"
                 }
-                src={profileData?.picture || "/default-profile.png"}
+                src={profileData?.profile_picture || "/default-profile.png"}
                 sx={styles.profilePic}
               />
               <Typography variant="h6" sx={styles.title}>
@@ -324,10 +324,10 @@ const ProfileVisitorView = () => {
                       {item}
                     </Typography>
                   )) || (
-                      <Typography sx={styles.contentText}>
-                        abcd, abcd, abcd
-                      </Typography>
-                    )}
+                    <Typography sx={styles.contentText}>
+                      abcd, abcd, abcd
+                    </Typography>
+                  )}
                 </Box>
               </Typography>
 
@@ -339,10 +339,10 @@ const ProfileVisitorView = () => {
                       {item}
                     </Typography>
                   )) || (
-                      <Typography sx={styles.contentText}>
-                        abcd, abcd, abcd
-                      </Typography>
-                    )}
+                    <Typography sx={styles.contentText}>
+                      abcd, abcd, abcd
+                    </Typography>
+                  )}
                 </Box>
               </Typography>
 
@@ -356,10 +356,10 @@ const ProfileVisitorView = () => {
                       {item}
                     </Typography>
                   )) || (
-                      <Typography sx={styles.contentText}>
-                        abcd, abcd, abcd
-                      </Typography>
-                    )}
+                    <Typography sx={styles.contentText}>
+                      abcd, abcd, abcd
+                    </Typography>
+                  )}
                 </Box>
               </Typography>
             </Box>
@@ -439,6 +439,8 @@ const styles = {
     margin: "1px 0",
     borderRadius: "8px",
     boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+    minHeight: "500px",
+    height: "auto",
   },
   basicInfoTopBottom: {
     flexShrink: 0,
@@ -526,7 +528,7 @@ const styles = {
     borderRadius: "10px",
     width: "950px",
     overflowY: "auto",
-    maxHeight: "calc(100vh - 180px)",
+    maxHeight: "calc(100vh - 160px)",
   },
   tabs: {
     display: "flex",
