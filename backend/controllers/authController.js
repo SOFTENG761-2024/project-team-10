@@ -13,6 +13,7 @@ const {
   createUserProfile,
   getUserProfileByPrimaryEmail,
 } = require("../daos/userProfileDao");
+const { get } = require("http");
 env.config({ path: path.resolve(__dirname, "../.env") });
 
 // auth login
@@ -29,16 +30,10 @@ router.get("/signout", async (req, res) => {
 //Linkdein SignIn
 router.get(
   "/linkedin",
-  passport.authenticate("linkedin", { state: "123", passReqToCallback: true }),
-  async (req, res) => {
-    console.log(req.body);
-    res.send("linkedin");
-  }
-);
+  passport.authenticate("linkedin", { state: "123", passReqToCallback: true }));
 
-//callback route for google to redirect to
+//callback route for linkedin to redirect to
 router.get("/linkedin/redirect", async (req, res) => {
-  res.redirect(process.env.FRONT_END_BASE_URL);
   // res.send('you reached the redirect URI');
   try {
     const grant_type = "authorization_code";
@@ -56,10 +51,12 @@ router.get("/linkedin/redirect", async (req, res) => {
       redirect_uri,
       url
     );
-    getUserProfileByPrimaryEmail(tokenData.email).then((currentUser) => {
-      if (currentUser) {
+    let currentUser = null;
+    getUserProfileByPrimaryEmail(tokenData.email).then((user) => {
+      if (user) {
         // already have this user
-        console.log("user is: ", currentUser);
+        console.log("user is: ", user);
+        currentUser = user;
         //done(null, currentUser);
         //res.redirect('/api/test');
       } else {
@@ -79,7 +76,7 @@ router.get("/linkedin/redirect", async (req, res) => {
           linkedin_url: "",
           secondary_email: "",
           mobile_phone: "",
-          bio: "Test bio",
+          bio: "",
           research_area: "",
           skills: "",
           research_tags: "",
@@ -89,24 +86,36 @@ router.get("/linkedin/redirect", async (req, res) => {
           profile_picture: tokenData.picture,
           is_scraped: false,
           is_verified: false,
-          signup_datetime: "2024-09-13T10:11:58.021Z",
+          signup_datetime: new Date(),
         };
-
-        const response = createUserProfile(userProfile);
-        if (response) {
+        currentUser = createUserProfile(userProfile);
+        if (currentUser) {
           console.log("Saving Successfully");
         } else {
           console.log("failed to create user");
+          throw new Error("Failed to create user");
         }
       }
     });
-    passport.serializeUser(tokenData.email);
+
+    if (currentUser.is_verified) {
+      res.redirect(process.env.FRONT_END_BASE_URL);
+    } else {
+      console.log("User not verified");
+      res.redirect(process.env.FRONT_END_BASE_URL + "/account-screen");
+    }
   } catch (error) {
     console.error("Error during test:", error);
   }
 });
 
-router.get("current-user", async () => {});
+router.get("current-user", async () => {
+  return passport.deserializeUser(function (id) {
+    return getUserProfileByPrimaryEmail(id);
+  });
+});
+
+
 
 //router.get('/linkedin')
 

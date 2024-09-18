@@ -73,8 +73,8 @@ const RouteProvider = () => {
           <Route path="/terms" component={TermsAndConditions} />
 
           <Route path="/signin" element={<SigninPageProvider />} />
-
           <Route path="/signup" element={<SignupPageProvider />} />
+          <Route path="/account-screen" element={<SignupPageProvider />} />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>

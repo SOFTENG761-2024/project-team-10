@@ -5,6 +5,10 @@ const path = require('path');
 const env = require('dotenv');
 env.config({ path: path.resolve(__dirname, '../.env') });
 
+passport.serializeUser((user, done) => {
+    done(null, user.primaryEmail);
+});
+
 passport.deserializeUser((email, done) => {
     getUserProfileByPrimaryEmail(email).then((user) => {
         done(null, user);
@@ -15,8 +19,8 @@ passport.use(new linkedInStrategy({
     clientID: process.env.LINKEDIN_CLIENT_ID,
     clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
     callbackURL: "http://localhost:3000/api/auth/linkedin/redirect",
-    scope: ['email','profile','openid'],
-}, function(done) {
+    scope: ['email', 'profile', 'openid'],
+}, function (done) {
     //passport call back function
     console.log('passport fucntion fired');
     console.log(done);
