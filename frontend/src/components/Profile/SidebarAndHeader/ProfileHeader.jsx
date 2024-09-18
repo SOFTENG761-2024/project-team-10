@@ -1,8 +1,30 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { color } from "@mui/system";
+import { useNavigate } from "react-router-dom";
 
 const ProfileHeader = ({ profileData }) => {
+  const navigate = useNavigate();
+
+  //get the current date in a readable format
+  const getCurrentDate = () => {
+    const today = new Date();
+    const options = {
+      weekday: "short",
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    };
+    return today.toLocaleDateString("en-GB", options);
+  };
+
+  const handleMenuClick = () => {
+    navigate("/");
+  };
+
+  const handleThemeSwitchClick = () => {
+    // Logic to handle theme toggle
+  };
+
   return (
     <Box sx={styles.header}>
       <Box sx={styles.nameAndDate}>
@@ -12,12 +34,24 @@ const ProfileHeader = ({ profileData }) => {
             "Alexa Rawus"}
         </Typography>
         <Typography variant="body2" sx={styles.headerDate}>
-          Date: {profileData?.date || "Tue, 07 June 2024"}
+          {getCurrentDate()}
         </Typography>
       </Box>
-      <Box sx={styles.colourThemeAndMenuIcon}>
-        <Box sx={styles.colourTheme}></Box>
-        <Box sx={styles.menuIcon}></Box>
+      <Box sx={styles.iconContainer}>
+        <button onClick={handleThemeSwitchClick} style={styles.themeIcon}>
+          <img
+            src="/landing/theme.png"
+            style={styles.iconImage}
+            alt="Theme Icon"
+          />
+        </button>
+        <button onClick={handleMenuClick} style={styles.menuIcon}>
+          <img
+            src="/landing/outline-1.png"
+            style={styles.iconImage}
+            alt="Menu Icon"
+          />
+        </button>
       </Box>
     </Box>
   );
@@ -31,28 +65,60 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     width: "calc(100% - 135px)",
-    height: 118,
+    height: "118px",
     position: "fixed",
-    left: 135,
+    left: "135px",
     bgcolor: "background.paper",
   },
   nameAndDate: {
-    width: 300,
+    width: "400px",
     textAlign: "left",
-    pl: 2.5,
-    mb: 1.25,
+    pl: "2.5rem",
+    mb: "1.25rem",
     color: "#4b5a68",
   },
   headerTitle: {
     fontSize: "20px",
-    fontWeight: 500,
+    fontWeight: "500",
     color: "#4b5a68",
-    mb: 0.5,
+    mb: "0.5rem",
   },
   headerDate: {
     fontSize: "1rem",
-    fontWeight: 300,
+    fontWeight: "300",
     color: "#ada7a7",
-    m: 0,
+    margin: "0",
+  },
+  iconContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    mr: "50px",
+    gap: "10px",
+  },
+  themeIcon: {
+    width: "42px",
+    height: "33px",
+    border: "2px solid black",
+    borderRadius: "4px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+  },
+  menuIcon: {
+    width: "42px",
+    height: "33px",
+    border: "2px solid black",
+    borderRadius: "4px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+  },
+  iconImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
   },
 };
