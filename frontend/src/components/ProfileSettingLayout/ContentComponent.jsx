@@ -73,9 +73,6 @@ const styles = {
         height: "100%"
     },
     container: {
-        //display: flex;
-        //   flex-direction: column;
-        //   height: 100vh;
         display: 'flex',
         flexDirection: 'column',
         height: '80vh',

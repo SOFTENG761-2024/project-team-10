@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import './ProfileCantEdit.css';
+import styles from './ProfileCantEdit.module.css';
+import { TextField, Button, Avatar, Card, CardHeader, CardContent, Typography, Grid } from '@mui/material';
+import { Box } from '@mui/system';
+import EmailIcon from '@mui/icons-material/Email';
 
 const ProfileCantEdit = ({ profile }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -19,114 +22,137 @@ const ProfileCantEdit = ({ profile }) => {
   };
 
   return (
-    <div className="profile-cant-edit__container">
-      <div className="profile-cant-edit__card">
-        <div className="profile-cant-edit__card-header">
-          <img src={profile.photo} alt="Profile" className="profile-cant-edit__photo" />
-          <div className="profile-cant-edit__info">
-            <h2>Name: {profile.fullName}</h2>
-            <p>Title: {profile.title}</p>
-            <p>Affiliation: {profile.affiliation}</p>
-          </div>
-        </div>
-        <div className="profile-cant-edit__details">
-          <div className="profile-cant-edit__detail-row">
-            <div className="profile-cant-edit__detail-item">
-              <label>Full Name:</label>
-              <input
-                type="text" className='input-Name'
-                value={editedProfile.fullName}
-                readOnly={!isEditing}
-                onChange={(e) => handleInputChange('fullName', e.target.value)}
-              />
-            </div>
-            <div className="profile-cant-edit__detail-item">
-              <label>Last Name:</label>
-              <input
-                type="text" className='input-Name'
-                value={editedProfile.lastName}
-                readOnly={!isEditing}
-                onChange={(e) => handleInputChange('lastName', e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="profile-cant-edit__detail-row">
-            <div className="profile-cant-edit__detail-item">
-              <label>Preferred Name:</label>
-              <input
-                type="text" className='input-Name'
-                value={editedProfile.preferredName}
-                readOnly={!isEditing}
-                onChange={(e) => handleInputChange('preferredName', e.target.value)}
-              />
-            </div>
-            <div className="profile-cant-edit__detail-item">
-              <label>E-mail Address:</label>
-              <input
-                type="text" className='input-Name'
-                value={editedProfile.email}
-                readOnly={!isEditing}
-                onChange={(e) => handleInputChange('email', e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="profile-cant-edit__detail-row">
-            <div className="profile-cant-edit__detail-item">
-              <label>ORCID ID:</label>
-              <input
-                type="text"  className='input-Name'
-                value={editedProfile.orcid}
-                readOnly={!isEditing}
-                onChange={(e) => handleInputChange('orcid', e.target.value)}
-              />
-            </div>
-            <div className="profile-cant-edit__detail-item">
-              <label>Linkedin:</label>
-              <input
-                type="text" className='input-Name'
-                value={editedProfile.linkedin}
-                readOnly={!isEditing}
-                onChange={(e) => handleInputChange('linkedin', e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="profile-cant-edit__affiliations">
-            <h3>Affiliations:</h3>
-            <div className="profile-cant-edit__detail-row">
-              <div className="profile-cant-edit__detail-item">
-                <label>Name:</label>
-                <input
-                  type="text" className='input-Name'
+    <div className={styles.container}>
+      <Card className={styles.card}>
+        <CardHeader
+          avatar={<Avatar src={profile.photo} alt="Profile" className={styles.photo} />}
+          title={<Typography variant="h5">{profile.fullName}</Typography>}
+          subheader={
+            <>
+              <Typography variant="body2">Title: {profile.title}</Typography>
+              <Typography variant="body2">Affiliation: {profile.affiliation}</Typography>
+            </>
+          }
+        />
+        <CardContent>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <div className={styles.fieldContainer}>
+                <Typography variant="body2" className={styles.fieldLabel}>Full Name:</Typography>
+                <TextField
+                  value={editedProfile.fullName}
+                  onChange={(e) => handleInputChange('fullName', e.target.value)}
+                  InputProps={{ readOnly: !isEditing }}
+                  fullWidth
+                />
+              </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div className={styles.fieldContainer}>
+                <Typography variant="body2" className={styles.fieldLabel}>Last Name:</Typography>
+                <TextField
+                  value={editedProfile.lastName}
+                  onChange={(e) => handleInputChange('lastName', e.target.value)}
+                  InputProps={{ readOnly: !isEditing }}
+                  fullWidth
+                />
+              </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div className={styles.fieldContainer}>
+                <Typography variant="body2" className={styles.fieldLabel}>Preferred Name:</Typography>
+                <TextField
+                  value={editedProfile.preferredName}
+                  onChange={(e) => handleInputChange('preferredName', e.target.value)}
+                  InputProps={{ readOnly: !isEditing }}
+                  fullWidth
+                />
+              </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div className={styles.fieldContainer}>
+                <Typography variant="body2" className={styles.fieldLabel}>E-mail Address:</Typography>
+                <TextField
+                  value={editedProfile.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  disabled
+                  // fullWidth
+                />
+              </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div className={styles.fieldContainer}>
+                <Typography variant="body2" className={styles.fieldLabel}>ORCID ID:</Typography>
+                <TextField
+                  value={editedProfile.orcid}
+                  disabled
+                  onChange={(e) => handleInputChange('orcid', e.target.value)}
+                  fullWidth
+                />
+              </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div className={styles.fieldContainer}>
+                <Typography variant="body2" className={styles.fieldLabel}>Linkedin:</Typography>
+                <TextField
+                  value={editedProfile.linkedin}
+                  onChange={(e) => handleInputChange('linkedin', e.target.value)}
+                  disabled
+                  fullWidth
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6" className={styles.affiliationsHeader}>Affiliations:</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <div className={styles.fieldContainer}>
+                <Typography variant="body2" className={styles.fieldLabel}>Name:</Typography>
+                <TextField
                   value={editedProfile.affiliations}
-                  readOnly={!isEditing}
                   onChange={(e) => handleInputChange('affiliations', e.target.value)}
+                  InputProps={{ readOnly: !isEditing }}
+                  fullWidth
                 />
               </div>
-              <div className="profile-cant-edit__detail-item">
-                <label>Role and Title:</label>
-                <input
-                  type="text" className='input-Name'
+            </Grid>
+            <Grid item xs={6}>
+              <div className={styles.fieldContainer}>
+                <Typography variant="body2" className={styles.fieldLabel}>Role and Title:</Typography>
+                <TextField
                   value={editedProfile.role}
-                  readOnly={!isEditing}
                   onChange={(e) => handleInputChange('role', e.target.value)}
+                  InputProps={{ readOnly: !isEditing }}
+                  fullWidth
                 />
               </div>
-            </div>
+            </Grid>
+          </Grid>
+          <div className={styles.buttonRow}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', flex:1 }}>
+              <EmailIcon sx={{color: 'lightgray'}}/>
+              <Button variant="contained" disabled={!isEditing} className={styles.secondaryButton}>+Add Secondary Email Address</Button>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', flex:1 }}>
+              <EmailIcon sx={{color: 'lightgray'}}/>
+              <Button variant="contained" disabled={!isEditing} className={styles.secondaryButton}>+Add Secondary Affiliation</Button>
+            </Box>
+            
+            
           </div>
-          <div className="profile-cant-edit__button-row">
-            <button className="profile-cant-edit__add-button" disabled={!isEditing}>+Add Secondary Email Address</button>
-            <button className="profile-cant-edit__add-button" disabled={!isEditing}>+Add Secondary Affiliation</button>
-          </div>
-          <div className="profile-cant-edit__note">
-            <p>Please note! Most of the details are populated via Tuakiri and cannot be changed here.</p>
-          </div>
-          {isEditing ? (
-            <button className="profile-cant-edit__edit-button" onClick={handleSaveClick}>Save</button>
-          ) : (
-            <button className="profile-cant-edit__edit-button" onClick={handleEditClick}>Edit</button>
-          )}
-        </div>
-      </div>
+
+          <Box sx={{ display: 'flex', marginTop: '20px', gap: '20px' }}>
+            <Button variant="contained" color="primary" onClick={isEditing ? handleSaveClick : handleEditClick} className={styles.editButton}>
+              {isEditing ? 'Save' : 'Edit'}
+            </Button>
+            <Typography variant="body2" className={styles.note}>
+              Please note! Most of the details are populated via Tuakiri and cannot be changed here.
+            </Typography>
+          </Box>
+          
+          
+        </CardContent>
+      </Card>
     </div>
   );
 };

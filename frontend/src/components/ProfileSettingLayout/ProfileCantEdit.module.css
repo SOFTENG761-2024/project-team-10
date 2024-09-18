@@ -1,0 +1,58 @@
+.container {
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.fieldContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.fieldLabel {
+    margin-bottom: 5px;
+}
+
+.affiliationsHeader {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.buttonRow {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.secondaryButton {
+    margin: 0 5px;
+    color: black!important;
+}
+
+.note {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 4px;
+    color: #666;
+    text-align: center;
+}
+
+.editButton {
+    margin-top: 20px;
+    margin-right: 20px;
+}

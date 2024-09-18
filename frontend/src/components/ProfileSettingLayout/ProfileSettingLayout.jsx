@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { Button, Box } from '@mui/material';
 import Sidebar from "./Sidebar";
 import ProfileCantEdit from './ProfileCantEdit';
 import Career from './Career';
 import Header from './Header'; 
-import './ProfileSettingLayout.css';
 
 const profile = {
   fullName: "John Doe",
@@ -39,16 +39,16 @@ const ProfileSettingLayout = () => {
   };
 
   return (
-    <div className="profile-setting-layout">
+    <Box>
       <Sidebar />
-      <div className="main-content">
+      <Box sx={{ marginLeft: '80px', width: 'calc(100% - 80px)' }}>
         <Header />
         {page === 'profile' && <ProfileCantEdit profile={profileData} />}
         {page === 'career' && <Career profile={profileData} onSave={handleSave} />}
-      </div>
-      {page === 'profile' && <button className="button" onClick={() => setPage('career')}>Next</button>}
-      {page === 'career' && <button className="button" onClick={() => setPage('profile')}>Back</button>}
-    </div>
+      </Box>
+      {page === 'profile' && <Button sx={{ marginLeft: '90px', marginTop: '20px' }} variant='contained' onClick={() => setPage('career')}>Next</Button>}
+      {page === 'career' && <Button sx={{ marginLeft: '90px', marginTop: '20px' }} variant='contained' onClick={() => setPage('profile')}>Back</Button>}
+    </Box>
   );
 }
 
