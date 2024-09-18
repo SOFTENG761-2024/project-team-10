@@ -62,11 +62,11 @@ async function addInstitution(institutionName) {
 // }
 
 
-async function getUserProfileById(userId) {
+async function getUserProfileById(id) {
   try {
     const userProfile = await prismaClient.user_profile.findFirst({
       where: {
-        id: userId,
+        id: parseInt(id),
       },
     });
     return userProfile;
@@ -83,9 +83,9 @@ async function getUserProfileByPrimaryEmail(primaryEmail) {
       where: {
         primary_email: primaryEmail,
       },
-      include: 
+      include:
       {
-        institution:true,
+        institution: true,
         faculty: true,
         publication: true,
       }

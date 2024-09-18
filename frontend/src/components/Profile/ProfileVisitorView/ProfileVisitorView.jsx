@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import { ContactForm } from "./ContactForm";
 import ProfileSidebar from "../SidebarAndHeader/ProfileSidebar";
 import ProfileHeader from "../SidebarAndHeader/ProfileHeader";
@@ -37,7 +38,8 @@ const tabs = [
 const ProfileVisitorView = () => {
   const [activeTab, setActiveTab] = useState("About");
   const [profileData, setProfileData] = useState(null);
-  const { getProfileByEmail, error } = useProfileAPI();
+  const { getProfileByid, error } = useProfileAPI();
+  const { id } = useParams();
 
   useEffect(() => {
     if (useDummyData) {
@@ -91,7 +93,7 @@ const ProfileVisitorView = () => {
     } else {
       // Fetch data from API if dummy data is false
       const loadProfile = async () => {
-        const data = await getProfileByEmail(userPrimaryEmailForTesting);
+        const data = await getProfileByid(id);
         if (data) {
           setProfileData(data);
         }
@@ -322,10 +324,10 @@ const ProfileVisitorView = () => {
                       {item}
                     </Typography>
                   )) || (
-                    <Typography sx={styles.contentText}>
-                      abcd, abcd, abcd
-                    </Typography>
-                  )}
+                      <Typography sx={styles.contentText}>
+                        abcd, abcd, abcd
+                      </Typography>
+                    )}
                 </Box>
               </Typography>
 
@@ -337,10 +339,10 @@ const ProfileVisitorView = () => {
                       {item}
                     </Typography>
                   )) || (
-                    <Typography sx={styles.contentText}>
-                      abcd, abcd, abcd
-                    </Typography>
-                  )}
+                      <Typography sx={styles.contentText}>
+                        abcd, abcd, abcd
+                      </Typography>
+                    )}
                 </Box>
               </Typography>
 
@@ -354,17 +356,17 @@ const ProfileVisitorView = () => {
                       {item}
                     </Typography>
                   )) || (
-                    <Typography sx={styles.contentText}>
-                      abcd, abcd, abcd
-                    </Typography>
-                  )}
+                      <Typography sx={styles.contentText}>
+                        abcd, abcd, abcd
+                      </Typography>
+                    )}
                 </Box>
               </Typography>
             </Box>
 
             <Box sx={styles.basicInfoTopBottom}>
               <Box sx={styles.university}>
-                {profileData?.institution.name || "Dummy Data University"}
+                {profileData?.institution?.name || "Dummy Data University"}
               </Box>
             </Box>
           </Box>

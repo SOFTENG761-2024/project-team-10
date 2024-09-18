@@ -69,7 +69,7 @@ const RouteProvider = () => {
           {/* Optionally, you can keep the /auth route if needed */}
           <Route path="/auth" element={<AuthPageProvider />} />
           <Route path="/profile-setting" element={<ProfileSettingLayout />} />
-          <Route path="/profile-visitor" element={<ProfileVisitorView />} />
+          <Route path="/profile-visitor/:id" element={<ProfileVisitorView />} />
           <Route path="/terms" component={TermsAndConditions} />
 
           <Route path="/signin" element={<SigninPageProvider />} />

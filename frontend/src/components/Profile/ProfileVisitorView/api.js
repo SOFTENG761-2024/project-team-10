@@ -16,6 +16,19 @@ export const useProfileAPI = () => {
     }
   };
 
+  // fetch profile by id
+  const getProfileByid = async (id) => {
+    try {
+      const response = await get(
+        `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/userprofile/${id}`,
+      );
+      return response?.data;
+    } catch (error) {
+      console.error("Error fetching profile by email:", error);
+      throw error;
+    }
+  };
+
   // Fetch profile by email
   const getProfileByEmail = async (email) => {
     try {
@@ -29,5 +42,5 @@ export const useProfileAPI = () => {
     }
   };
 
-  return { getProfileData, getProfileByEmail, error };
+  return { getProfileData, getProfileByEmail, getProfileByid, error };
 };
