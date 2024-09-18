@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Box, Container, IconButton, TextField, Typography } from "@mui/material";
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
 import style from './Landing.module.css';
@@ -21,6 +19,7 @@ export const Landing = () => {
   const [activeSection, setActiveSection] = useState('search');
   const [positions, setPositions] = useState({ networkTop: 0, memberTop: 0 });
   const { toggleLightDarkTheme, theme } = useMuiTheme();
+  const [navTop, setNavTop] = useState('33vh');
 
   const handleThemeSwitchClick = () => {
     toggleLightDarkTheme();
@@ -30,6 +29,7 @@ export const Landing = () => {
   };
   const handleScroll = () => {
     const sections = document.querySelectorAll('section');
+    const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
     let currentSection = '';
     const searchBar = searchBarRef.current;
     if (!searchBar) return;
@@ -47,8 +47,17 @@ export const Landing = () => {
     if (currentSection && currentSection !== activeSection) {
       setActiveSection(currentSection);
     }
+    const searchSection = document.getElementById('search');
+    if (searchSection) {
+      const searchSectionBottom = searchSection.offsetTop + searchSection.offsetHeight;
+      if (currentScrollPosition < searchSectionBottom - 50) {
+        setNavTop('33vh');
+      } else {
+        setNavTop('13vh');
+      }
+    }
 
-   
+
     const networkSection = document.getElementById('network');
     const memberSection = document.getElementById('member');
 
@@ -56,8 +65,6 @@ export const Landing = () => {
       const networkTop = networkSection ? networkSection.offsetTop : 0;
       const memberTop = memberSection ? memberSection.offsetTop : 0;
       setPositions({ networkTop, memberTop });
-    } else {
-      console.error('Sections not found');
     }
 
     setPositions({
@@ -65,25 +72,19 @@ export const Landing = () => {
       memberTop: memberSection.offsetTop,
     });
 
-    console.log(`networkTop: ${networkSection.offsetTop}, memberTop: ${memberSection.offsetTop}`);
-
     const scrollPosition = window.scrollY || window.pageYOffset;
     // const buffer = 25;
     const { networkTop, memberTop } = positions;
 
-    console.log(`ScrollPosition: ${scrollPosition}, networkTop: ${networkTop}, memberTop: ${memberTop}`);
-
-    const buffer = 120;
+    const buffer = 30;
     // Add or remove sticky class based on scroll position
     if (scrollPosition >= networkTop - buffer && scrollPosition <= memberTop + buffer) {
       if (!searchBarRef.current.classList.contains(style.sticky)) {
         searchBarRef.current.classList.add(style.sticky);
-        console.log(`${scrollPosition}: Sticky added`);
       }
     } else {
       if (searchBarRef.current.classList.contains(style.sticky)) {
         searchBarRef.current.classList.remove(style.sticky);
-        console.log(`${scrollPosition}: Sticky removed`);
       }
     }
   };
@@ -96,57 +97,167 @@ export const Landing = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [activeSection, theme]);
+  }, [activeSection, theme, handleScroll]);
+
+  const styles = {
+    navContainer: {
+      position: 'fixed',
+      right: '21px',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      zIndex: 1000,
+    },
+    verticalLine: {
+      width: '2px',
+      backgroundColor: 'rgb(205 199 199)',
+      position: 'relative',
+      top: '0px',
+      bottom: '0px',
+      left: '-10px',
+      height: '260px', // Adjust height to cover "Join Today" and "About Us"
+      alignSelf: 'flex-start',
+    },
+    nav: {
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: 'transparent',
+      padding: '10px',
+      alignItems: 'flex-start',
+      position: 'relative',
+      top: navTop,
+      transition: 'top 0.1s',
+    },
+    navLink: {
+      color: 'var(--body_color)',
+      textDecoration: 'none',
+      padding: '5px 0px',
+      textAlign: 'left',
+      position: 'relative',
+      cursor: 'pointer',
+    },
+    activeNavLink: {
+      color: 'var(--body_color)',
+      textDecoration: 'none',
+      padding: '5px 0px 30px 0px',
+      marginBottom: '10px',
+      textAlign: 'left',
+      borderRadius: '4px',
+      fontWeight: 'bolder',
+      position: 'relative',
+    },
+    section: {
+      height: '100vh',
+      padding: '20px',
+      marginTop: '50px',
+      border: '1px solid #ccc',
+    },
+  };
+
+  // Adding the pseudo-elements through CSS
+  const css = `
+   nav a.active::before {
+    content: '';
+    position: absolute;
+    left: 83px; /* Adjust this to position the dot closer or further */
+    top: 31%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: var(--body_color); /* Active dot color */
+    border-radius: 50%;
+  }
+  .new {
+    margin-bottom: 129px !important;
+  }
+  .active {
+    color: var(--body_color);
+    font-weight: normal;
+    background-color: transparent;
+  }
+  .new::after {
+    content: '';
+    position: absolute;
+    left: 86px;
+    top: 30%;
+    height: 24vh;
+    width: 2px;
+    z-index: 0;
+    background-color: gray; /* Line color */
+  }
+  .new.about-active::after {
+    height: 24vh; /* Height change when About Us is active */
+  }
+  nav a::before {
+    content: '';
+    position: absolute;
+    left: 83px; /* Adjust this to position the dot */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: gray; /* Default dot color */
+    border-radius: 50%;
+  }
+  `;
+
+  // Injecting the CSS into the page
+  const styleNew = document.createElement('style');
+  styleNew.innerHTML = css;
+  document.head.appendChild(styleNew);
 
   return (
-    <Box sx={{ position: 'relative', minHeight: '100%',  }}>      
+    <Box sx={{ position: 'relative', minHeight: '100%', }}>
+
       {/* Vertical Lines */}
       <Box sx={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
         {/* Leftmost Line */}
         <Box sx={{ position: 'absolute', left: '8%', width: '1px', backgroundColor: 'gray', height: '100%', opacity: 0.2 }} />
-        
+
         {/* Custom spacing between center lines */}
         <Box sx={{ position: 'absolute', left: '29%', width: '1px', backgroundColor: 'gray', height: '100%', opacity: 0.2 }} />
         <Box sx={{ position: 'absolute', left: '51%', width: '1px', backgroundColor: 'gray', height: '100%', opacity: 0.2 }} />
         <Box sx={{ position: 'absolute', left: '73%', width: '1px', backgroundColor: 'gray', height: '100%', opacity: 0.2 }} />
-        
+
         {/* Rightmost Line */}
         <Box sx={{ position: 'absolute', right: '8%', width: '1px', backgroundColor: 'gray', height: '100%', opacity: 0.2 }} />
       </Box>
+
       {/* Header with Theme Toggle and Menu */}
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', padding: 2, height: '18vh' }}>
-          <button onClick={handleThemeSwitchClick} className={style.themeIcon}>
-            <img src='./landing/theme.png' className={style.themeStyle} alt="themeicon" />
-          </button>
-          <button className={style.menuIcon} onClick={handleMenuClick}>
-            <img src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
-          </button>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', padding: 2, height: '18vh', position: 'fixed', width: '100%' }}>
+        <button onClick={handleThemeSwitchClick} className={style.themeIcon}>
+          <img src='./landing/theme.png' className={style.themeStyle} alt="themeicon" />
+        </button>
+        <button className={style.menuIcon} onClick={handleMenuClick}>
+          <img src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
+        </button>
       </Box>
-      {/* Main Content Area */}
-      <Container sx={{ position: 'relative', maxWidth: 'md', textAlign: 'center', mt: 4 }}>
-        <Box sx={{ maxWidth: '100vw' }} aria-label="connecting video">
-          <video className={style.topImage} autoPlay muted playsInline loop>
-            <source src="./landing/design.mp4" type="video/mp4" />
-          </video>
-        </Box>
-        {/* Search Bar */}
-        <Box sx={{ display: 'flex',alignItems: 'center', mt: 4 , marginLeft: '4px'}}>
-          <section id="search">
-            <div className={style.searchBar} ref={searchBarRef}>
-              <input
-                type="text"
-                placeholder="Search"
-                className={style.searchInput}
-              />
-              <button className={style.searchIconButton}>
-                <SearchIcon />
-              </button>
-            </div> 
-          </section>
-        </Box>
-        <Box sx={ {display: 'flex'}}>
-          <section id="network">
-            <div className={style.flexContainer}>
+      <Box>
+        {/* Main Content Area */}
+        <Container sx={{ maxWidth: 'md', textAlign: 'center', mt: 4, top: '16vh' }}>
+          <Box sx={{ position: 'relative', maxWidth: '100vw', top: '17vh' }} aria-label="connecting video">
+            <video className={style.topImage} autoPlay muted playsInline loop>
+              <source src="./landing/design.mp4" type="video/mp4" />
+            </video>
+          </Box>
+          {/* Search Bar */}
+          <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '4px', marginTop: '22vh' }}>
+            <section id="search">
+              <div className={style.searchBar} ref={searchBarRef}>
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className={style.searchInput}
+                />
+                <button className={style.searchIconButton}>
+                  <SearchIcon />
+                </button>
+              </div>
+            </section>
+          </Box>
+          <Box sx={{ display: 'flex' }}>
+            <section id="network">
+              <div className={style.flexContainer}>
                 {/* Circle Divs */}
                 <div className={style.circleContainer}>
                   <div className={`${style.circle} ${style.circle1}`}><span>AUT(3)</span></div>
@@ -160,26 +271,26 @@ export const Landing = () => {
                   <div className={`${style.circle} ${style.circle9}`}><span>UOA(2)</span></div>
                   <div className={`${style.circle} ${style.circle11}`}><span>UOA(2)</span></div>
                 </div>
-            </div>
-          </section>
-          
-        </Box>
-        <Box sx={{display: 'flex', width: '78%'}}>
-          <section id="member">
-            <div className={style.contentSections}>
-              <div className={`${style.sectId} ${style.search}`}>
-                <h5>Connecting</h5>
-                <h2>Unlock the Power of Collaboration and Networking</h2>
-                <p>Discover a vibrant community of researchers and fellows,where you
-                  can connect,collaborate, and grow together.Find experts based on
-                  subject, skill or expertise and promot interdisciplinary collaboration.
-                </p>
-                <div className={style.memberButtons}>
-                  <button className={style.learnMoreButton}>Learn More</button>
-                  <button className={style.signUp}>Sign Up <span className={style.arrowButton}>{'>'}</span></button>
-                </div>
               </div>
-              <div className={style.rightMemberDiv}>
+            </section>
+
+          </Box>
+          <Box sx={{ display: 'flex', width: '78%' }}>
+            <section id="member">
+              <div className={style.contentSections}>
+                <div className={`${style.sectId} ${style.search}`}>
+                  <h5>Connecting</h5>
+                  <h2>Unlock the Power of Collaboration and Networking</h2>
+                  <p>Discover a vibrant community of researchers and fellows,where you
+                    can connect,collaborate, and grow together.Find experts based on
+                    subject, skill or expertise and promot interdisciplinary collaboration.
+                  </p>
+                  <div className={style.memberButtons}>
+                    <button className={style.learnMoreButton}>Learn More</button>
+                    <button className={style.signUp}>Sign Up <span className={style.arrowButton}>{'>'}</span></button>
+                  </div>
+                </div>
+                <div className={style.rightMemberDiv}>
                   <div className={`${style.section} ${style.secMemberWidth}`}>
                     <img src='./landing/cube.png' className={style.cubeStyle} alt="icon" />
                     <h2>
@@ -191,81 +302,84 @@ export const Landing = () => {
                     <h2>Promote Interdisciplinary Collaboration</h2>
                     <p>Break down barriers and foster collaboration across disciplines.</p>
                   </div>
-              </div>
-              <div className={style.rightMemberDiv}>
-                <div className={`${style.section} ${style.secMemberWidth}`}>
-                  <img src='./landing/cube.png' className={style.cubeStyle} alt="icon" />
-                  <h2>Discover Expertise Across Disciplines</h2>
-                  <p>Find experts based on subject, skill, or expertise.</p>
                 </div>
-                <div className={`${style.section} ${style.secMargin}`}>
-                  <img src='./landing/cube.png' className={style.cubeStyle} alt="icon" />
-                  <h2>Discover Expertise Across Disciplines</h2>
-                  <p>Find experts based on subject, skill, or expertise.</p>
+                <div className={style.rightMemberDiv}>
+                  <div className={`${style.section} ${style.secMemberWidth}`}>
+                    <img src='./landing/cube.png' className={style.cubeStyle} alt="icon" />
+                    <h2>Discover Expertise Across Disciplines</h2>
+                    <p>Find experts based on subject, skill, or expertise.</p>
+                  </div>
+                  <div className={`${style.section} ${style.secMargin}`}>
+                    <img src='./landing/cube.png' className={style.cubeStyle} alt="icon" />
+                    <h2>Discover Expertise Across Disciplines</h2>
+                    <p>Find experts based on subject, skill, or expertise.</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-        </Box>
-        <Box>
-          <div className={style.joinDiv}>
-            <div className={`${style.leftJoin} ${style.left}`}>
-              <h2>Join Today!----------</h2>
-              <span>Discover the power of collaboration and innovation</span>
-            </div>
-            <div className={style.joinButtons}>
-              <button className={style.joinButton}>Join</button>
-              <button className={style.learnMoreButton}>Learn More</button>
-            </div>
-          </div>
-        </Box>
-        <Box sx={{width: '90%', maxWidth: '100%'}}>
-          <section id="about-us">
-            <div className={style.footerContainer}>
-              <div className={style.leftLogo}>
-                <h2>Logo</h2></div>
-              <div className={style.about}>
-                <ul className={style.aboutList}>
-                  <li>About us</li>
-                  <li>Link Two</li>
-                  <li>Link Three</li>
-                  <li>Contact</li>
-                </ul>
+            </section>
+          </Box>
+          <Box>
+            <div className={style.joinDiv}>
+              <div className={`${style.leftJoin} ${style.left}`}>
+                <h2>Join Today!----------</h2>
+                <span>Discover the power of collaboration and innovation</span>
+              </div>
+              <div className={style.joinButtons}>
+                <button className={style.joinButton}>Join</button>
+                <button className={style.learnMoreButton}>Learn More</button>
               </div>
             </div>
-            
-          </section>
-        </Box>
-        <Box sx={{width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column'}}>
-          <div className={style.borderLine}></div>
-          <footer className={style.foot}>
-            <div className={style.footerIconDiv}>
-              <LinkedInIcon className={style.iconMargin}></LinkedInIcon>
-              <XIcon className={style.iconMargin}></XIcon>
-            </div>
-            <div className={style.footerServices}>
-              <div className={style.padd}>
-                <span>
-                  &copy;2024.All rights reserved.
-                </span>
+          </Box>
+          <Box sx={{ width: '90%', maxWidth: '100%' }}>
+            <section id="about-us">
+              <div className={style.footerContainer}>
+                <div className={style.leftLogo}>
+                  <h2>Logo</h2></div>
+                <div className={style.about}>
+                  <ul className={style.aboutList}>
+                    <li>About us</li>
+                    <li>Link Two</li>
+                    <li>Link Three</li>
+                    <li>Contact</li>
+                  </ul>
+                </div>
               </div>
-              <div className={style.padd}>
-                <a href="">Privacy Policy</a>
+
+            </section>
+          </Box>
+          <Box sx={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column' }}>
+            <div className={style.borderLine}></div>
+            <footer className={style.foot}>
+              <div className={style.footerIconDiv}>
+                <LinkedInIcon className={style.iconMargin}></LinkedInIcon>
+                <XIcon className={style.iconMargin}></XIcon>
               </div>
-              <div className={style.padd}>
-                <a href="">Terms of Service</a>
+              <div className={style.footerServices}>
+                <div className={style.padd}>
+                  <span>
+                    &copy;2024.All rights reserved.
+                  </span>
+                </div>
+                <div className={style.padd}>
+                  <a href="">Privacy Policy</a>
+                </div>
+                <div className={style.padd}>
+                  <a href="">Terms of Service</a>
+                </div>
+                <div className={style.padd}>
+                  <a href="">Cookies Settings</a>
+                </div>
               </div>
-              <div className={style.padd}>
-                <a href="">Cookies Settings</a>
-              </div>
-            </div>
-          </footer>
-        </Box>
-      </Container>
+            </footer>
+          </Box>
+        </Container>
+      </Box>
+
+
       {/* Right Sidebar with Navigation */}
       <Box sx={{ position: 'fixed', right: '7%', top: '50%', transform: 'translateY(-50%)', width: '10%' }}>
         <nav style={styles.navContainer}>
-          <div style={styles.nav}>
+          <div style={{ ...styles.nav, top: navTop }}>
             <a
               href="#search"
               className={activeSection === 'search' ? 'active' : ''}
@@ -300,113 +414,4 @@ export const Landing = () => {
     </Box>
   );
 };
-
-const styles = {
-  navContainer: {
-    position: 'fixed',
-    right: '21px',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    zIndex: 1000,
-  },
-  verticalLine: {
-    width: '2px',
-    backgroundColor: 'rgb(205 199 199)',
-    position: 'relative',
-    top: '0px',
-    bottom: '0px',
-    left: '-10px',
-    height: '260px', // Adjust height to cover "Join Today" and "About Us"
-    alignSelf: 'flex-start',
-  },
-  nav: {
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: 'transparent',
-    padding: '10px',
-    alignItems: 'flex-start',
-    position: 'relative',
-    top: '11vh',
-  },
-  navLink: {
-    color: 'var(--body_color)',
-    textDecoration: 'none',
-    padding: '5px 0px',
-    // marginBottom: '7px',
-    textAlign: 'left',
-    position: 'relative',
-    cursor: 'pointer',
-  },
-  activeNavLink: {
-    color: 'var(--body_color)',
-    textDecoration: 'none',
-    padding: '5px 0px 30px 0px',
-    marginBottom: '10px',
-    // marginTop: '20px',
-    textAlign: 'left',
-    borderRadius: '4px',
-    fontWeight: 'bolder',
-    position: 'relative',
-  },
-  section: {
-    height: '100vh',
-    padding: '20px',
-    marginTop: '50px',
-    border: '1px solid #ccc',
-  },
-};
-
-// Adding the pseudo-elements through CSS
-const css = `
- nav a.active::before {
-  content: '';
-  position: absolute;
-  left: 83px; /* Adjust this to position the dot closer or further */
-  top: 31%;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  background-color: var(--body_color); /* Active dot color */
-  border-radius: 50%;
-}
-.new {
-  margin-bottom: 129px !important;
-}
-.active {
-  color: var(--body_color);
-  font-weight: normal;
-  background-color: transparent;
-}
-.new::after {
-  content: '';
-  position: absolute;
-  left: 86px;
-  top: 30%;
-  height: 24vh;
-  width: 2px;
-  z-index: 0;
-  background-color: gray; /* Line color */
-}
-.new.about-active::after {
-  height: 24vh; /* Height change when About Us is active */
-}
-nav a::before {
-  content: '';
-  position: absolute;
-  left: 83px; /* Adjust this to position the dot */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  background-color: gray; /* Default dot color */
-  border-radius: 50%;
-}
-`;
-
-// Injecting the CSS into the page
-const styleNew = document.createElement('style');
-styleNew.innerHTML = css;
-document.head.appendChild(styleNew);
-
 export default Landing;
