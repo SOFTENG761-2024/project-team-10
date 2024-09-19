@@ -10,7 +10,6 @@ const passport = require('passport');
 const env = require('dotenv');
 env.config();
 
-var userController = require("./controllers/userController");
 var userProfileController = require("./controllers/userProfileController.js");
 var publicationController = require("./controllers/publicationsController.js");
 var authController = require('./controllers/authController.js');
@@ -59,7 +58,6 @@ function ensureAuthenticated(req, res, next) {
     }
 }
 
-app.use("/api/users", userController);
 // app.use("/api/userprofile", ensureAuthenticated, userProfileController);
 app.use("/api/userprofile", userProfileController);
 app.use("/api/publications", publicationController);
