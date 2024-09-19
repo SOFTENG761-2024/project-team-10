@@ -6,13 +6,8 @@ const express = require("express");
 const passport = require("passport");
 const path = require("path");
 const router = express.Router();
-const getOpenIdToken = require("../services/openIDService");
 const env = require("dotenv");
-//const { route } = require("./userController");
-const {
-  createUserProfile,
-  getUserProfileByPrimaryEmail,
-} = require("../daos/userProfileDao");
+
 const { get } = require("http");
 env.config({ path: path.resolve(__dirname, "../.env") });
 
@@ -113,10 +108,13 @@ router.get('/linkedin/redirect', passport.authenticate('linkedinOpenId', {
 //   }
 // });
 
-router.get("current-user", async () => {
-  return passport.deserializeUser(function (id) {
-    return getUserProfileByPrimaryEmail(id);
-  });
+router.get("/current-user", async (req, res) => {
+  console.log("current user: ", req.user);
+  try {
+    return res.json(req.user);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
 });
 
 //router.get('/linkedin')
