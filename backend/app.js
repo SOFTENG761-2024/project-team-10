@@ -1,10 +1,11 @@
 var express = require("express");
+const session = require('express-session');
 //var cookieParser = require("cookie-parser");
-const cookieSession = require('cookie-session');
+// const cookieSession = require('cookie-session');
 var morgan = require("morgan");
 const cors = require("cors");
 const logger = require("./utils/logger.js");
-const passportService = require("./services/passportService.js"); 
+const passportService = require("./services/passportService.js");
 const passport = require('passport');
 const env = require('dotenv');
 env.config();
@@ -27,10 +28,19 @@ app.use(express.urlencoded({ extended: false }));
 //app.use(cookieParser());
 
 //Encrypt the cookie
-app.use(cookieSession({
-    maxAge: 24 * 60 * 60 * 1000,
-    keys: [env.COOKIE_KEY]
-}))
+// app.use(cookieSession({
+//     maxAge: 24 * 60 * 60 * 1000,
+//     keys: [env.COOKIE_KEY]
+// }))
+
+
+// Set up session middleware
+app.use(session({
+    secret: 'fellows-secret-key',  // Replace with a strong secret in production
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
 
 //Initialize passport
 app.use(passport.initialize());
