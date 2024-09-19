@@ -4,28 +4,7 @@
   background-color: #f5f5f5;
 }
 
-.career__header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.career__tab-navigation {
-  display: flex;
-  gap: 10px;
-  /* justify-content: center; */
-  margin-bottom: 20px;
-}
-
-.career__tab {
-  padding: 10px 20px;
-  background-color: #e0e0e0;
-  border: none;
-  margin-right: 5px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.career__tab--active {
+.career__tab_active {
   background-color: #a0a0a0;
   color: white;
 }
@@ -37,27 +16,22 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.career__detail-row {
+.career__detail_row {
+  flex: 1;
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
 }
 
-.career__detail-item {
+.career__detail_item {
   width: 48%;
 }
 
-.career__detail-item--full-width {
+.career__detail_item_full_width {
   width: 100%;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-textarea, .input-research {
+.input_research {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -67,12 +41,7 @@ textarea, .input-research {
   color: #333;
 }
 
-textarea {
-  height: 100px;
-  resize: vertical;
-}
-
-.career__edit-button {
+.career__edit_button {
   background-color: #666;
   color: white;
   border: none;
@@ -81,5 +50,4 @@ textarea {
   cursor: pointer;
   margin-top: 20px;
   display: block;
-  width: 100%;
 }
