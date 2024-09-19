@@ -16,6 +16,7 @@ var publicationController = require("./controllers/publicationsController.js");
 var authController = require('./controllers/authController.js');
 var testController = require('./controllers/testController.js')
 const swaggerController = require("./controllers/swaggerController");
+const { loadESLint } = require("eslint");
 
 var app = express();
 
@@ -46,12 +47,16 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Middleware to protect routes
+// Middleware to protect routes, check if user is authenticated and verified
 function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next(); // Proceed to the next middleware/controller if authenticated
+    if (!req.isAuthenticated())
+        res.status(401).json({ message: 'Unauthorized access' });
+    else {
+        if (req.user.is_verified)
+            return next(); // Proceed to the next middleware/controller if authenticated
+        else
+            res.redirect(process.env.FRONT_END_BASE_URL + '/account-screen'); // Redirect to screen if not verified
     }
-    res.status(401).json({ message: 'Unauthorized access' });
 }
 
 app.use("/api/users", userController);

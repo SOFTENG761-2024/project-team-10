@@ -39,7 +39,7 @@ passport.use(new linkedinOpenIdStrategy({
         // }
 
     } catch (error) {
-        console.error("Error during test:", error);
+        console.error("Error:", error);
     }
 }));
 

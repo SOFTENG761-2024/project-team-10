@@ -29,9 +29,15 @@ router.get(
 
 //callback route for linkedin to redirect to
 router.get('/linkedin/redirect', passport.authenticate('linkedinOpenId', {
-  successRedirect: process.env.FRONT_END_BASE_URL + "/account-screen",
-  failureRedirect: process.env.FRONT_END_BASE_URL + '/signin'
-}));
+  // successRedirect: process.env.FRONT_END_BASE_URL + "/account-screen",
+  failureRedirect: process.env.FRONT_END_BASE_URL + '/signin', failureMessage: true
+}), (req, res) => {
+  if (req.user.is_verified) {
+    res.redirect(process.env.FRONT_END_BASE_URL); // Redirect to home if verified
+  } else {
+    res.redirect(process.env.FRONT_END_BASE_URL + '/account-screen'); // Redirect to screen if not verified
+  }
+});
 
 // router.get("/linkedin/redirect", async (req, res) => {
 //   try {
