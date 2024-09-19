@@ -136,32 +136,34 @@ const ProfileVisitorView = () => {
                     title: "Showcase Work",
                     link: "/showcase-work",
                     description: "One line summary",
-                    icon: "./landing/cube.png",
+                    icon: null,
                   },
                   {
                     title: "Unlock the Power of Collaboration and Networking",
                     link: "/collaboration",
                     description:
                       "Connect with a diverse community of researchers and experts.",
-                    icon: "./landing/cube.png",
+                    icon: "/landing/cube.png",
                   },
                   {
                     title: "Discover Expertise Across Disciplines",
                     link: "/expertise",
                     description:
                       "Find experts based on subject, skill, or expertise.",
-                    icon: "./landing/cube.png",
+                    icon: "/landing/cube.png",
                   },
                 ].map((item, index) => (
                   <Grid item xs={12} sm={4} key={index}>
                     <Link to={item.link} style={{ textDecoration: "none" }}>
                       <Card sx={styles.showcaseCard}>
-                        <CardMedia
-                          component="img"
-                          sx={styles.cubeIcon}
-                          image={item.icon}
-                          alt={item.title}
-                        />
+                        {item.icon && (
+                          <CardMedia
+                            component="img"
+                            sx={styles.cubeIcon}
+                            image={item.icon}
+                            alt={item.title}
+                          />
+                        )}
                         <CardContent>
                           <Typography
                             variant="h5"
@@ -413,19 +415,18 @@ const styles = {
     width: "100%",
     height: "100vh",
     margin: "0 auto",
-    backgroundColor: "#fff",
+    background: "#F9F9F9",
     position: "relative",
   },
   profileViewContainer: {
     display: "flex",
     width: "calc(100% - 130px)",
-    padding: "30px",
-    paddingLeft: "40px",
-    marginTop: "90px",
-    marginLeft: "115px",
-    marginBottom: "10px",
-    marginRight: "5px",
-    backgroundColor: "white",
+    padding: "15px",
+    marginTop: "120px",
+    marginLeft: "155px",
+    marginBottom: "25px",
+    marginRight: "25px",
+    background: "#ffffff",
     borderRadius: "8px",
   },
   basicInfo: {
@@ -656,10 +657,10 @@ const styles = {
 
   cubeIcon: {
     padding: "5px",
-    width: 40, // maintain uniform size across all cards
+    width: 40,
     height: 40,
-    objectFit: "cover", // ensures the image covers the designated space well
-    marginBottom: 2, // adds space below the icon
+    objectFit: "cover",
+    marginBottom: 2,
   },
 
   mediaQueries: {
