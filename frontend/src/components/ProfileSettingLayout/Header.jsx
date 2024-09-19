@@ -3,7 +3,6 @@ import { AppBar, Toolbar, Typography, IconButton, Box } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';  // Picture icon1
 import MenuIcon from '@mui/icons-material/Menu';  // Picture icon2
 import { useMuiTheme } from '../GlobalProviders';
-import { width } from '@mui/system';
 
 const Header = () => {
   const currentDate = new Date();

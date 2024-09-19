@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './Sidebar.css';
+import styles from './Sidebar.module.css';
+import { Avatar, IconButton } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import GroupIcon from '@mui/icons-material/Group';
 import AppsIcon from '@mui/icons-material/Apps';
@@ -16,54 +17,54 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar">
-      <div className="profile-container">
-        <img 
+    <div className={styles.sidebar}>
+      <div className={styles.profileContainer}>
+        <Avatar 
           src="https://example.com/your-profile-pic.jpg" 
           alt="Profile" 
-          className="profile-pic"
+          className={styles.profilePic}
         />
       </div>
-      <div className="icon-container">
-        <div 
-          className={`sidebar-icon ${selected === 'dashboard' ? 'active' : ''}`}
+      <div className={styles.iconContainer}>
+        <IconButton 
+          className={`${styles.sidebarIcon} ${selected === 'dashboard' ? styles.active : ''}`}
           onClick={() => handleIconClick('dashboard')}
         >
           <DashboardIcon />
-        </div>
-        <div 
-          className={`sidebar-icon ${selected === 'group' ? 'active' : ''}`}
+        </IconButton>
+        <IconButton 
+          className={`${styles.sidebarIcon} ${selected === 'group' ? styles.active : ''}`}
           onClick={() => handleIconClick('group')}
         >
           <GroupIcon />
-        </div>
-        <div 
-          className={`sidebar-icon ${selected === 'apps' ? 'active' : ''}`}
+        </IconButton>
+        <IconButton 
+          className={`${styles.sidebarIcon} ${selected === 'apps' ? styles.active : ''}`}
           onClick={() => handleIconClick('apps')}
         >
           <AppsIcon />
-        </div>
-        <div 
-          className={`sidebar-icon ${selected === 'calendar' ? 'active' : ''}`}
+        </IconButton>
+        <IconButton 
+          className={`${styles.sidebarIcon} ${selected === 'calendar' ? styles.active : ''}`}
           onClick={() => handleIconClick('calendar')}
         >
           <CalendarTodayIcon />
-        </div>
-        <div 
-          className={`sidebar-icon ${selected === 'time' ? 'active' : ''}`}
+        </IconButton>
+        <IconButton 
+          className={`${styles.sidebarIcon} ${selected === 'time' ? styles.active : ''}`}
           onClick={() => handleIconClick('time')}
         >
           <AccessTimeIcon />
-        </div>
-        <div 
-          className={`sidebar-icon ${selected === 'chat' ? 'active' : ''}`}
+        </IconButton>
+        <IconButton 
+          className={`${styles.sidebarIcon} ${selected === 'chat' ? styles.active : ''}`}
           onClick={() => handleIconClick('chat')}
         >
           <ChatIcon />
-        </div>
+        </IconButton>
       </div>
       <div 
-        className={`settings-container sidebar-icon ${selected === 'settings' ? 'active' : ''}`}
+        className={`${styles.settingsContainer} ${styles.sidebarIcon} ${selected === 'settings' ? styles.active : ''}`}
         onClick={() => handleIconClick('settings')}
       >
         <SettingsIcon />
