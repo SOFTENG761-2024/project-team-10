@@ -46,7 +46,7 @@ const AccountCreation = () => {
             variant="body2"
             sx={{ ...styles.typographyBody, mt: "1px" }}
           >
-            Once your account is approved, you'll receive a confirmation email
+            Once your account is approved, you\'ll receive a confirmation email
             where you can set your password or log in using your LinkedIn ID.
           </Typography>
           <Typography variant="body2" sx={styles.supportText}>
@@ -161,7 +161,6 @@ const styles = {
     borderRadius: "30px 30px 0 0",
     mr: "0",
     padding: 2,
-    width: "100%",
     textAlign: "center",
     color: "white",
   },
