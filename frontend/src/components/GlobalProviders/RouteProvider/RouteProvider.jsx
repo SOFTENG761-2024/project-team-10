@@ -18,6 +18,7 @@ import { HeaderProvider } from "@frontend-ui/components/Header";
 import ProfileSettingLayout from "@frontend-ui/components/ProfileSettingLayout";
 import ProfileVisitorView from "@frontend-ui/components/Profile/ProfileVisitorView";
 import { TermsAndConditions } from "@frontend-ui/components/Profile/ProfileVisitorView/TermsAndConditions";
+import AccountScreenPageProvider from "@frontend-ui/components/AuthPage/AccountScreenProvider";
 const RouteContext = createContext({});
 
 export const useRoute = () => useContext(RouteContext);
@@ -73,8 +74,8 @@ const RouteProvider = () => {
           <Route path="/terms" component={TermsAndConditions} />
 
           <Route path="/signin" element={<SigninPageProvider />} />
-
           <Route path="/signup" element={<SignupPageProvider />} />
+          <Route path="/account-screen" element={<AccountScreenPageProvider />} />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>
