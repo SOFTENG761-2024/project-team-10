@@ -34,20 +34,15 @@ const AccountCreation = () => {
       <GlobalStyles styles={styles.global} />
       <Container component="main" minWidth="xs" sx={styles.container}>
         <Box sx={styles.welcomeBoxContainer}>
-          <Typography
-            variant="body2"
-            sx={{ ...styles.typographyBody, mb: "1px" }}
-          >
+          <Typography variant="body2" sx={{ ...styles.typographyBody, mb: 1 }}>
             Welcome! Since this is your first time accessing the platform,
             please create an account by providing your organization name and
             official email address.
           </Typography>
-          <Typography
-            variant="body2"
-            sx={{ ...styles.typographyBody, mt: "1px" }}
-          >
-            Once your account is approved, you\'ll receive a confirmation email
-            where you can set your password or log in using your LinkedIn ID.
+          <Typography variant="body2" sx={{ ...styles.typographyBody, mt: 1 }}>
+            Once your account is approved, you&apos;ll receive a confirmation
+            email where you can set your password or log in using your LinkedIn
+            ID.
           </Typography>
           <Typography variant="body2" sx={styles.supportText}>
             For any questions, reach out to us at Support@academicfellows.com.
@@ -128,7 +123,6 @@ const AccountCreation = () => {
 
 export default AccountCreation;
 
-const commonFieldStyle = {};
 const styles = {
   global: {
     html: {
