@@ -6,6 +6,30 @@ info:
 servers:
   - url: "__SWAGGER_API_BASE_URL__"
 paths:
+  /api/auth/account-screen:
+    post:
+      tags:
+        - Auth Controller
+      summary: Create a new account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                organization_name:
+                  type: string
+      responses:
+        '200':
+          description: Account info create successfully
+        '500':
+          description: Internal server error
+
   /api/userprofile:
    get:
       tags:

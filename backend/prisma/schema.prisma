@@ -64,14 +64,14 @@ model institution {
 }
 
 model faculty {
-  id           Int            @id @unique
+  id           Int            @id @default(autoincrement())
   name         String?        @test.VarChar
   user_profile user_profile[]
 }
 
 model organization {
-  id           Int            @id @unique
-  name         String?        @test.VarChar
+  id           Int            @id @default(autoincrement())
+  name         String?        @test.VarChar @unique
   address      String?        @test.VarChar
   user_profile user_profile[]
 }

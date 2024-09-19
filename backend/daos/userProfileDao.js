@@ -110,19 +110,50 @@ async function getAllUserProfiles() {
 
 async function updateUserProfile(userProfileData) {
   try {
-    const userProfile = await prismaClient.user_profile.update({
-      where: {
-        id: userProfileData.id,
-      },
-      data: userProfileData,
+    const userProfile = await prismaClient.$transaction(async (tx) => {
+      let organizationData = {};
+
+      if (userProfileData.organization) {
+        const organization = await tx.organization.upsert({
+          where: {
+            name: userProfileData.organization.name,
+          },
+          update: userProfileData.organization,
+          create: userProfileData.organization,
+        });
+
+        // Prepare the nested write operation
+        organizationData = {
+          connect: { id: organization.id },
+        };
+
+        // Remove the organization property from userProfileData
+        delete userProfileData.organization;
+      }
+
+      // Exclude 'id' from userProfileData
+      const { id, ...updateData } = userProfileData;
+
+      const updatedUserProfile = await tx.user_profile.update({
+        where: {
+          id: id,
+        },
+        data: {
+          ...updateData,
+          ...(organizationData && { organization: organizationData }),
+        },
+      });
+
+      // Return the updated user profile from the transaction
+      return updatedUserProfile;
     });
+
+    // Return the user profile from the function
     return userProfile;
-  }
-  finally {
+  } finally {
     await disconnect();
   }
 }
-
 
 module.exports = {
   createUserProfile,
