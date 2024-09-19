@@ -18,7 +18,7 @@ import { HeaderProvider } from "@frontend-ui/components/Header";
 import ProfileSettingLayout from "@frontend-ui/components/ProfileSettingLayout";
 import ProfileVisitorView from "@frontend-ui/components/Profile/ProfileVisitorView";
 import { TermsAndConditions } from "@frontend-ui/components/Profile/ProfileVisitorView/TermsAndConditions";
-import AccountCreation from "@frontend-ui/components/AuthPage/LinkedInAccountCreation";
+import AccountCreation from "@frontend-ui/components/LinkedInAccountCreation/LinkedInAccountCreation";
 
 const RouteContext = createContext({});
 
