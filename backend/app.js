@@ -60,7 +60,8 @@ function ensureAuthenticated(req, res, next) {
 }
 
 app.use("/api/users", userController);
-app.use("/api/userprofile", ensureAuthenticated, userProfileController);
+// app.use("/api/userprofile", ensureAuthenticated, userProfileController);
+app.use("/api/userprofile", userProfileController);
 app.use("/api/publications", publicationController);
 app.use("/api/auth", authController);
 app.use("/api/test", testController);
