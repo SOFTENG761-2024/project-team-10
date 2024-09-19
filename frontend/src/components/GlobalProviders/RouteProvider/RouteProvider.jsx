@@ -16,6 +16,8 @@ import SignupPageProvider from "@frontend-ui/components/AuthPage/SignupPageProvi
 import { Box } from "@mui/system";
 import { HeaderProvider } from "@frontend-ui/components/Header";
 import ProfileSettingLayout from "@frontend-ui/components/ProfileSettingLayout";
+import AccountCreation from "@frontend-ui/components/AuthPage/LinkedInAccountCreation";
+
 const RouteContext = createContext({});
 
 export const useRoute = () => useContext(RouteContext);
@@ -71,6 +73,7 @@ const RouteProvider = () => {
           <Route path="/signin" element={<SigninPageProvider />} />
 
           <Route path="/signup" element={<SignupPageProvider />} />
+          <Route path="/create-account" element={<AccountCreation />} />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>
