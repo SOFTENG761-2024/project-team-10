@@ -31,7 +31,6 @@ services:
       - "8888:80"
     networks:
       - DATABASE
-
 networks:
   DATABASE:
     name: DATABASE

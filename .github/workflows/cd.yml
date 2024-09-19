@@ -31,6 +31,7 @@ jobs:
           echo "POSTGRES_DB=$POSTGRES_DB" >> .env
           echo "PGADMIN_DEFAULT_EMAIL=$PGADMIN_DEFAULT_EMAIL" >> .env
           echo "PGADMIN_DEFAULT_PASSWORD=$PGADMIN_DEFAULT_PASSWORD" >> .env
+          echo "NGINX_SERVER_NAME=$EC2_INSTANCE_PUBLIC_DNS" >> .env
         env:
           #postgres
           POSTGRES_USER: postgres
@@ -59,7 +60,7 @@ jobs:
           rm .env
           echo "VITE_BACKEND_API_BASE_URL=http://$EC2_INSTANCE_PUBLIC_DNS:3000" >> .env
           cat .env
-          npm ci
+          npm install
           npm run build
       - name: Write docker-compose prod env vars
         working-directory: "./backend"
@@ -108,7 +109,7 @@ jobs:
         working-directory: "./infrastructure"
         run: |
           npm install -g aws-cdk
-          npm ci
+          npm install
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@b8c74de753fbcb4868bf2011fb2e15826ce973af
         with:
@@ -151,9 +152,9 @@ jobs:
           ssh_cmd 'ls'
           ssh_cmd 'pwd'
           ssh_cmd 'sudo rm -rf ~/give-it-a-good-name'
-          # ssh_cmd 'docker image prune -f'
+          ssh_cmd 'docker system prune -f'
           # ssh_cmd 'echo "Checking disk space"; df -h;'
-          # ssh_cmd 'echo Checking disk space usage breakdown; du -x / | sort -n | tail -40;'
+          # ssh_cmd 'echo Checking disk space usage breakdown; sudo du -x -h / | sort -h | tail -40;'
 
           # copy zipped source code over.
           scp -i mykey.pem -o StrictHostKeyChecking=no -pr ./give-it-a-good-name ec2-user@$EC2_INSTANCE_PUBLIC_DNS:~/give-it-a-good-name
