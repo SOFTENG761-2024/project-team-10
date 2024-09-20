@@ -89,7 +89,7 @@ router.get("/verify/:is_verified", async function getAllVerifiedUserProfiles(req
           last_name: userProfile.last_name,
           email: userProfile.primary_email,
           is_verified: userProfile.is_verified,
-          organization: userProfile.organization.name,
+          organization: userProfile.organization?.name,
         };
       });
       return res.json(resultobj);
@@ -107,7 +107,7 @@ router.post("/verify/:id", async function verifyUserProfile(req, res) {
     const id = req.params.id;
     const userprofileObject = { id: id, is_verified: true };
     const result = await userProfileService.updateUserProfile(userprofileObject);
-    return res.json(result);
+    return res.json(result.is_verified);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
