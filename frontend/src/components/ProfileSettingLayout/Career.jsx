@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import './Career.css';
+import styles from './Career.module.css';
+import { Button, TextField, Tabs, Tab, Box, Typography } from '@mui/material';
 import ContentComponent from './ContentComponent';
 
 const Career = ({ profile, onSave }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedProfile, setEditedProfile] = useState(profile);
-
   const [tab, setTab] = useState('about');
 
   const handleInputChange = (field, value) => {
@@ -18,128 +18,207 @@ const Career = ({ profile, onSave }) => {
   };
 
   return (
-    <div className="career">
-      <div className="career__tab-navigation">
-        <button className={`career__tab ${tab === 'about' ? 'career__tab--active' : ''}`} onClick={() => setTab('about')}>About</button>
-        <button className={`career__tab ${tab === 'publications' ? 'career__tab--active' : ''}`} onClick={() => setTab('publications')}>Publications</button>
-        <button className={`career__tab ${tab === 'professional' ? 'career__tab--active' : ''}`} onClick={() => setTab('professional')}>Professional</button>
-        <button className={`career__tab ${tab === 'teaching' ? 'career__tab--active' : ''}`} onClick={() => setTab('teaching')}>Teaching /Research</button>
-      </div>
-      {tab === 'about' && <div className="career__content">
-        <div className="career__detail-row">
-          <div className="career__detail-item career__detail-item--full-width">
-            <label>Bio</label>
-            <textarea
-              readOnly={!isEditing}
+    <div className={styles.career}>
+      <Box className={styles.career__tab_navigation}>
+        <Button
+          sx={{
+            padding: '10px 20px',
+            backgroundColor: tab === 'about' ? '#a0a0a0' : '#e0e0e0',
+            color: tab === 'about' ? 'white' : '#333',
+            borderRadius: '4px',
+            marginRight: '5px',
+            cursor: 'pointer',
+            '&:hover': {
+              backgroundColor: tab === 'about' ? '#909090' : '#d0d0d0',
+            },
+          }}
+          onClick={() => setTab('about')}
+        >
+          About
+        </Button>
+        <Button
+          sx={{
+            padding: '10px 20px',
+            backgroundColor: tab === 'publications' ? '#a0a0a0' : '#e0e0e0',
+            color: tab === 'publications' ? 'white' : '#333',
+            borderRadius: '4px',
+            marginRight: '5px',
+            cursor: 'pointer',
+            '&:hover': {
+              backgroundColor: tab === 'publications' ? '#909090' : '#d0d0d0',
+            },
+          }}
+          onClick={() => setTab('publications')}
+        >
+          Publications
+        </Button>
+        <Button
+          sx={{
+            padding: '10px 20px',
+            backgroundColor: tab === 'professional' ? '#a0a0a0' : '#e0e0e0',
+            color: tab === 'professional' ? 'white' : '#333',
+            borderRadius: '4px',
+            marginRight: '5px',
+            cursor: 'pointer',
+            '&:hover': {
+              backgroundColor: tab === 'professional' ? '#909090' : '#d0d0d0',
+            },
+          }}
+          onClick={() => setTab('professional')}
+        >
+          Professional
+        </Button>
+        <Button
+          sx={{
+            padding: '10px 20px',
+            backgroundColor: tab === 'teaching' ? '#a0a0a0' : '#e0e0e0',
+            color: tab === 'teaching' ? 'white' : '#333',
+            borderRadius: '4px',
+            marginRight: '5px',
+            cursor: 'pointer',
+            '&:hover': {
+              backgroundColor: tab === 'teaching' ? '#909090' : '#d0d0d0',
+            },
+          }}
+          onClick={() => setTab('teaching')}
+        >
+          Teaching /Research
+        </Button>
+      </Box>
+      {tab === 'about' && <Box className={styles.career__content}>
+        <Box className={styles.career__detail_row}>
+          <Box className={`${styles.career__detail_item} ${styles.career__detail_item_full_width}`}>
+            <Typography component="label">Bio</Typography>
+            <TextField
+              multiline
+              rows={4}
+              disabled={!isEditing}
               value={editedProfile.bio}
               onChange={(e) => handleInputChange('bio', e.target.value)}
+              fullWidth
             />
-          </div>
-        </div>
-        <div className="career__detail-row">
-          <div className="career__detail-item">
-            <label>Research area</label>
-            <input
+          </Box>
+        </Box>
+        <Box className={styles.career__detail_row}>
+          <Box className={styles.career__detail_item}>
+            <Typography component="label">Research area</Typography>
+            <TextField
               type="text"
-              readOnly={!isEditing}
+              disabled={!isEditing}
               value={editedProfile.researchArea}
               onChange={(e) => handleInputChange('researchArea', e.target.value)}
+              fullWidth
             />
-          </div>
-          <div className="career__detail-item">
-            <label>Skills:</label>
-            <input
+          </Box>
+          <Box className={styles.career__detail_item}>
+            <Typography component="label">Skills:</Typography>
+            <TextField
               type="text"
-              readOnly={!isEditing}
+              disabled={!isEditing}
               value={editedProfile.skills}
               onChange={(e) => handleInputChange('skills', e.target.value)}
+              fullWidth
             />
-          </div>
-        </div>
-        <div className="career__detail-row">
-          <div className="career__detail-item">
-            <label>Expertise</label>
-            <input
+          </Box>
+        </Box>
+        <Box className={styles.career__detail_row}>
+          <Box className={styles.career__detail_item}>
+            <Typography component="label">Expertise</Typography>
+            <TextField
               type="text"
-              readOnly={!isEditing}
+              disabled={!isEditing}
               value={editedProfile.expertise}
               onChange={(e) => handleInputChange('expertise', e.target.value)}
+              fullWidth
             />
-          </div>
-          <div className="career__detail-item">
-            <label>Research Keywords</label>
-            <input
+          </Box>
+          <Box className={styles.career__detail_item}>
+            <Typography component="label">Research Keywords</Typography>
+            <TextField
               type="text"
-              readOnly={!isEditing}
+              disabled={!isEditing}
               value={editedProfile.researchKeywords}
               onChange={(e) => handleInputChange('researchKeywords', e.target.value)}
+              fullWidth
             />
-          </div>
-        </div>
-        <div className="career__detail-row">
-          <div className="career__detail-item">
-            <label>Research Tags</label>
-            <input
+          </Box>
+        </Box>
+        <Box className={styles.career__detail_row}>
+          <Box className={styles.career__detail_item}>
+            <Typography component="label">Research Tags</Typography>
+            <TextField
               type="text"
-              readOnly={!isEditing}
+              disabled={!isEditing}
               value={editedProfile.researchTags}
               onChange={(e) => handleInputChange('researchTags', e.target.value)}
+              fullWidth
             />
-          </div>
-          <div className="career__detail-item">
-            <label>Tools:</label>
-            <input
+          </Box>
+          <Box className={styles.career__detail_item}>
+            <Typography component="label">Tools:</Typography>
+            <TextField
               type="text"
-              readOnly={!isEditing}
+              disabled={!isEditing}
               value={editedProfile.tools}
               onChange={(e) => handleInputChange('tools', e.target.value)}
+              fullWidth
             />
-          </div>
-        </div>
-        <div className="career__detail-row">
-          <div className="career__detail-item">
-            <label>Custom</label>
-            <input
+          </Box>
+        </Box>
+        <Box className={styles.career__detail_row}>
+          <Box className={styles.career__detail_item}>
+            <Typography component="label">Custom</Typography>
+            <TextField
               type="text"
-              readOnly={!isEditing}
+              disabled={!isEditing}
               value={editedProfile.custom1}
               onChange={(e) => handleInputChange('custom1', e.target.value)}
+              fullWidth
             />
-          </div>
-          <div className="career__detail-item">
-            <label>Custom</label>
-            <input
+          </Box>
+          <Box className={styles.career__detail_item}>
+            <Typography component="label">Custom</Typography>
+            <TextField
               type="text"
-              readOnly={!isEditing}
+              disabled={!isEditing}
               value={editedProfile.custom2}
               onChange={(e) => handleInputChange('custom2', e.target.value)}
+              fullWidth
             />
-          </div>
-        </div>
-        <div className="career__detail-row">
-          <div className="career__detail-item career__detail-item--full-width">
-            <label>Media File Thumbnail</label>
-            <textarea
-              readOnly={!isEditing}
-              value={editedProfile.mediaFileThumbnail}
-              onChange={(e) => handleInputChange('mediaFileThumbnail', e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="career__detail-row">
-          <div className="career__detail-item career__detail-item--full-width">
-            <label>Doc File Thumbnail</label>
-            <textarea
-              readOnly={!isEditing}
-              value={editedProfile.docFileThumbnail}
-              onChange={(e) => handleInputChange('docFileThumbnail', e.target.value)}
-            />
-          </div>
-        </div>
-        <button className="career__edit-button" onClick={isEditing ? handleSave : () => setIsEditing(true)}>
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', gap: '40px'}}>
+          <Box className={styles.career__detail_row}>
+            <Box className={`${styles.career__detail_item} ${styles.career__detail_item_full_width}`}>
+              <Typography component="label">Media File Thumbnail</Typography>
+              <TextField
+                multiline
+                rows={4}
+                disabled={!isEditing}
+                value={editedProfile.mediaFileThumbnail}
+                onChange={(e) => handleInputChange('mediaFileThumbnail', e.target.value)}
+                fullWidth
+              />
+            </Box>
+          </Box>
+          <Box className={styles.career__detail_row}>
+            <Box className={`${styles.career__detail_item} ${styles.career__detail_item_full_width}`}>
+              <Typography component="label">Doc File Thumbnail</Typography>
+              <TextField
+                multiline
+                rows={4}
+                disabled={!isEditing}
+                value={editedProfile.docFileThumbnail}
+                onChange={(e) => handleInputChange('docFileThumbnail', e.target.value)}
+                fullWidth
+              />
+            </Box>
+          </Box>
+        </Box>
+        <Button variant='contained' className={styles.career__edit_button} onClick={isEditing ? handleSave : () => setIsEditing(true)}>
           {isEditing ? 'Save' : 'Edit'}
-        </button>
-      </div>}
+        </Button>
+      </Box>}
       {tab !== 'about' && <ContentComponent />}
     </div>
   );

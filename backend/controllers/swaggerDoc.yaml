@@ -6,6 +6,70 @@ info:
 servers:
   - url: "__SWAGGER_API_BASE_URL__"
 paths:
+  /api/userprofile/verify/{id}:
+    post:
+      tags:
+        - User Profile Controller - Verify
+      summary: Verify user profile by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: User profile ID
+      responses:
+        '200':
+          description: Profile verified
+        '404':
+          description: Profile not found
+        '500':
+          description: Internal server error
+
+  /api/userprofile/verify/{isVerified}:
+    get:
+      tags:
+        - User Profile Controller - get business user profiles for verification 
+      summary: get business user profiles for verification 
+      parameters:
+        - name: isVerified
+          in: path
+          required: true
+          schema:
+            type: boolean
+          description: Profile verification status
+      responses:
+        '200':
+          description: Profiles found
+        '404':
+          description: Profiles not found
+        '500':
+          description: Internal server error
+
+  /api/auth/account-screen:
+    post:
+      tags:
+        - Auth Controller
+      summary: Create a new account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                organization_name:
+                  type: string
+      responses:
+        '200':
+          description: Account info create successfully
+        '500':
+          description: Internal server error
+
   /api/userprofile:
    get:
       tags:
@@ -51,6 +115,8 @@ paths:
                 primary_email:
                   type: string
                   format: email
+                department:
+                  type: string
                 orcid_identifier:
                   type: string
                 linkedin_url:
@@ -69,11 +135,15 @@ paths:
                   type: string
                 expertise:
                   type: string
+                positions:
+                  type: string
                 tools:
                   type: string
                 profile_picture:
                   type: string
-                isscrapped:
+                is_scraped:
+                  type: boolean
+                is_verified:
                   type: boolean
                 signup_datetime:
                   type: string
@@ -85,6 +155,159 @@ paths:
           description: Bad request
         '500':
           description: Internal server error
+
+   put:
+      tags:
+      summary: update a user profile with id in the request body
+      description: update user profile, put the profile id in the request body
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                usertypeid:
+                  type: integer
+                institution_id:
+                  type: integer
+                faculty_id:
+                  type: integer
+                organization_id:
+                  type: integer
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                preferred_name:
+                  type: string
+                title:
+                  type: string
+                primary_email:
+                  type: string
+                  format: email
+                department:
+                  type: string
+                orcid_identifier:
+                  type: string
+                linkedin_url:
+                  type: string
+                secondary_email:
+                  type: string
+                mobile_phone:
+                  type: string
+                bio:
+                  type: string
+                research_area:
+                  type: string
+                skills:
+                  type: string
+                research_tags:
+                  type: string
+                expertise:
+                  type: string
+                positions:
+                  type: string
+                tools:
+                  type: string
+                profile_picture:
+                  type: string
+                is_scraped:
+                  type: boolean
+                is_verified:
+                  type: boolean
+                signup_datetime:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: User profile updated successfully
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /api/userprofile/{id}:
+    put:
+      tags:
+        - User Profile Controller
+      summary: Update user profile by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: User profile ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                usertypeid:
+                  type: integer
+                institution_id:
+                  type: integer
+                faculty_id:
+                  type: integer
+                organization_id:
+                  type: integer
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                preferred_name:
+                  type: string
+                title:
+                  type: string
+                primary_email:
+                  type: string
+                  format: email
+                department:
+                  type: string
+                orcid_identifier:
+                  type: string
+                linkedin_url:
+                  type: string
+                secondary_email:
+                  type: string
+                mobile_phone:
+                  type: string
+                bio:
+                  type: string
+                research_area:
+                  type: string
+                skills:
+                  type: string
+                research_tags:
+                  type: string
+                expertise:
+                  type: string
+                positions:
+                  type: string
+                tools:
+                  type: string
+                profile_picture:
+                  type: string
+                is_scraped:
+                  type: boolean
+                is_verified:
+                  type: boolean
+                signup_datetime:
+                  type: string
+                  format: date-time
+      responses:
+        '200':
+          description: Profile updated
+        '404':
+          description: Profile not found
+        '500':
+          description: Internal server error
+
 
   /api/userprofile/primaryemail{primaryemail}:
     get:

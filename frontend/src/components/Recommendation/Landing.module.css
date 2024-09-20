@@ -1,45 +1,59 @@
 .searchBar {
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 7% auto;
-  width: 90vw;
-  max-width: 950px;
+  width: 63vw;
+  max-width: 100%;
+}
+
+.sticky {
+  position: fixed;
+  top: 4%;
+  width: 100%;
+  z-index: 1000;
+
+  .searchIconButton {
+    position: absolute;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
 }
 
 .flexContainer {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  margin: auto auto auto 96px;
   padding: 0 16px;
-  max-width: 70%;
+  max-width: 75%;
   align-items: center;
 }
 
 .searchInput {
-  width: 90%;
-  padding: 10px 0px 5px 25px;
+  width: 63vw;
+  padding: 5px 5px 5px 51px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 50px;
   outline: none;
-  height: 62px;
+  height: 52px;
 }
 
 .searchIconButton {
   position: absolute;
-  right: 90px;
   border: none;
   background: none;
   cursor: pointer;
+  float: left;
+  left: 19px;
+  padding-top: 8px;
 }
 
 .circleContainer {
   position: relative;
   width: 820px;
   height: 600px;
-  margin: 0 auto;
+  margin: 51px auto;
 }
 
 .circle {
@@ -141,13 +155,22 @@
 
 .contentSections {
   display: flex;
-  justify-content: center;
-  margin: 5% 2% 7% 5%;
+  text-align: left;
+  margin: 4% 1% 1% 1%;
+}
+
+.emptyDiv {
+  width: 3%;
 }
 
 .sectId {
-  width: 33%;
+  width: 32%;
   height: auto;
+  padding: 2% 3% 1% 0%;
+
+  h2 {
+    font-size: 23px;
+  }
 }
 
 .connecting {
@@ -157,8 +180,9 @@
 }
 
 .section h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 19px;
+  margin-bottom: 0px;
+  margin-top: 7%;
 }
 
 .section h3 {
@@ -179,14 +203,17 @@
   display: flex;
   gap: 10px;
   padding-top: 2%;
+  padding-right: 7%;
+  float: right;
 }
 
 .learnMoreButton,
 .joinButton {
-  padding: 16px 23px;
+  padding: 12px 17px;
   border: solid 2px;
   cursor: pointer;
   font-size: medium;
+  border-radius: 4px;
 }
 
 .learnMoreButton {
@@ -204,6 +231,7 @@
   font-size: medium;
   background: white;
   border: none;
+  border-radius: 4px;
 }
 
 .arrowButton {
@@ -213,7 +241,7 @@
 
 .borderLine {
   border: solid 1px;
-  margin: 0% 7% 2% 5%;
+  margin: 0% 0% 2% 0%;
 
 }
 
@@ -227,89 +255,110 @@
 
 .footerContainer {
   display: flex;
-  margin: 0 auto;
+  margin: 0% 1% 0% 1%;
   flex-direction: row;
-  height: 43vh;
-  width: 90vw;
-  max-width: 800px;
+  height: 30vh;
+  width: 68vw;
 }
 
 .topIcons {
   position: fixed;
-  top: 1%;
+  top: 2%;
   display: -webkit-box;
   float: right;
-  right: 10%;
+  right: 4%;
 }
 
 .cubeStyle {
-  height: 35px;
+  height: 30px;
+  width: 26px;
 }
 
 .themeStyle {
-  height: 30px;
+  height: 21px;
 }
 
 .menuIcon {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 33px;
   border: 2px solid black;
-  border-radius: 8px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 8px;
+  margin-right: 48px;
+  background-color: white;
+}
+
+.themeIcon {
+  width: 42px;
+  height: 33px;
+  border: 2px solid black;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  background-color: white;
 }
 
 .rightSectionDiv {
   display: grid;
   flex-flow: row wrap;
-  width: 62%;
+  width: 60%;
 }
 
 .rightMemberDiv {
   display: flex;
   flex-wrap: wrap;
-
-  flex-direction: row;
-  margin: 2% 0% 5% 0%;
+  width: 34%;
+  flex-direction: column;
+  padding: 0% 2% 2% 1%;
 }
 
+
 .secMemberWidth {
-  width: 50%;
+  margin: 13% 1% 0% 1%;
+}
+
+.secMargin {
+  margin: 23% 1% 0% 1%;
 }
 
 .menuIconStyle {
-  height: 20px;
+  height: 15px;
 }
 
 .leftJoin {
-  margin: 0% 10% 0% 7%;
+  /* margin: 0% 10% 0% 3%; */
 }
 
 .leftLogo {
-  width: 50%;
+  width: 18%;
   float: left;
-  margin-top: 20%;
+  margin: 12% 0% 0% 0%;
+  text-align: left;
 }
 
 .about {
-  width: 50%;
+  width: 83%;
   float: right;
-  margin-top: 20%;
+  text-align: right;
+  margin: 13% 0% 0% 0%;
 }
 
 .aboutList {
   list-style: none;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: right;
   align-items: flex-end;
+  gap: 19px;
 }
 
 .joinDiv {
-  margin: 0% 1% 0% 1%;
-  width: 90vw;
-  max-width: 800px;
+  margin: 6% 2% 0% 1%;
+  text-align: left;
+  width: 67vw;
 }
 
 .padd {
@@ -318,18 +367,21 @@
 
 .footerServices {
   float: right;
-  width: 50%;
+  width: 48%;
   display: flex;
   flex-direction: row;
+  gap: 9px;
+  font-size: 14px;
 }
 
 .foot {
-  margin: 1% 4% 0% 15%;
+  margin: 0% 0% 1% 1%;
 }
 
 .footerIconDiv {
   float: left;
-  width: 50%;
+  width: 30%;
+  text-align: left;
 }
 
 .iconMargin {
@@ -337,8 +389,10 @@
 }
 
 .topImage {
-  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  margin: auto auto auto 5px;
+  height: 58vh;
   object-fit: none;
-  width: 90vw;
-  max-width: 800px;
+  width: 63vw;
 }

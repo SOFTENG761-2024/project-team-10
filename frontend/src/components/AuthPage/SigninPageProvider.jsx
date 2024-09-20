@@ -1,8 +1,7 @@
-import React, { useState, createContext } from 'react';
-import axios from 'axios';
+import React, { useState, createContext, useContext, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import { useLinkedIn } from 'react-linkedin-login-oauth2';
 import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
+import { useAPI } from "../GlobalProviders/APIProvider";
 import {
   Box,
   Typography,
@@ -12,6 +11,7 @@ import {
   Paper,
   Grid,
   Container,
+  CircularProgress
 } from '@mui/material';
 
 const mainColor = "#4b5a68";
@@ -43,7 +43,7 @@ const StyledPaperTop = styled(Paper)(({ theme }) => ({
   justifyContent: 'center',
   borderTopLeftRadius: theme.spacing(2),
   borderTopRightRadius: theme.spacing(2),
-  minHeight: '50vh',
+  minHeight: '30vh',
 }));
 
 const StyledPaperBottom = styled(Paper)(({ theme }) => ({
@@ -84,12 +84,20 @@ const LinkedInButton = styled(Button)(({ theme }) => ({
   borderRadius: theme.spacing(2),
 }));
 
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  borderRadius: theme.spacing(5),
+}));
+
+
+const SigninPageContext = createContext({});
+
+export const useSigninPage = () => useContext(SigninPageContext);
+
 const SigninPageProvider = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [organization, setOrganization] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { get, post, setError } = useAPI();
 
   const handleCreateProfessionalAccount = () => {
     window.location.href = 'https://www.reannz.co.nz';
@@ -98,11 +106,8 @@ const SigninPageProvider = () => {
   const handleCreateBusinessAccount = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/create-business-account', {
-        firstName,
-        lastName,
-        organization,
-        email,
+      post('/api/create-business-account', {
+        email
       });
       alert('Business account created successfully!');
     } catch (error) {
@@ -115,127 +120,129 @@ const SigninPageProvider = () => {
     console.log('Creating account with LinkedIn');
   };
 
-  const { linkedInLogin } = useLinkedIn({
-    clientId: '86yqr14akub4tu',
-    redirectUri: `http://localhost:5173/signin`,
-    scope: 'profile email openid',
+  const linkedInLogin = async () => {
+    let loginState = null;
+    // loginState = get(import.meta.env.VITE_BACKEND_API_BASE_URL + '/api/auth/linkedin').then((response) => {
+    //   console.log('response', response);
+    // });
 
-    onSuccess: (code) => {
-      console.log('LinkedIn login successful, code:', code);
-    },
-    onError: (error) => {
-      console.error('LinkedIn login failed:', error);
-    },
-  });
+    window.location.href = `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/auth/linkedin`;
+  };
+
+  useEffect(() => {
+
+  }, []);
+
 
   console.log('linkedInLogin function:', linkedInLogin);
 
   return (
     <Container maxWidth="md">
-      <StyledPaperTop elevation={3} sx={{ backgroundColor: mainColor, color: primaryColor }}>
-        <Box mt="1">
-          <Typography variant="h6" gutterBottom>
-            Sign in with professional account
-          </Typography>
-        </Box>
-        <Box sx={{
-          flexGrow: 1, display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-
-          <Typography variant="body1" paragraph align="center">
-            Institutional members can sign in with their institutional ID through www.reannz.co.nz
-          </Typography>
-          <StyledButton
-            variant="contained"
-            onClick={handleCreateProfessionalAccount}
-          >
-            Sign in with Reannz
-          </StyledButton>
-        </Box>
-        {/* <Box mt={2}>
-          <Typography variant="body2" >
-            {`Don't have an account?`} <Link sx={{ color: primaryColor }} href="signup">Create account</Link>
-          </Typography>
-        </Box> */}
-      </StyledPaperTop>
-
-      <StyledPaperBottom elevation={3} sx={{ backgroundColor: 'grey.200' }}>
-        <Typography variant="h6" gutterBottom>
-          Sign in with business account
-        </Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={5}>
-            <Typography variant="body1" paragraph align="center">
-              Sign in with Email
-            </Typography>
-
-            <form onSubmit={handleCreateBusinessAccount}>
-              <TextField
-                fullWidth
-                label="Email"
-                variant="outlined"
-                margin="normal"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-
-              <TextField
-                fullWidth
-                label="Password"
-                variant="outlined"
-                margin="normal"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-
-              <Box display="flex" justifyContent="center">
-                <SubmitButton type="submit" variant="contained">
-                  Sign in
-                </SubmitButton>
-              </Box>
-            </form>
-
-          </Grid>
-
-          <Grid item xs={12} md={1}>
-            <OrDivider variant="body2">
-            </OrDivider>
-          </Grid>
-
-          <Grid item xs={12} md={5}>
-
-            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%">
-              <img
-                onClick={linkedInLogin}
-                src={linkedin}
-                alt="Sign in with Linked In"
-                style={{ maxWidth: '180px', cursor: 'pointer' }}
-              />
-
-              {/* <LinkedInButton
-                variant="contained"
-                color="primary"
-                onClick={handleCreateLinkedInAccount}
-              >
-                Sign in with LinkedIn
-              </LinkedInButton> */}
+      {
+        loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+            <CircularProgress />
+          </Box>
+        ) : (
+          <><StyledPaperTop elevation={3} sx={{ backgroundColor: mainColor, color: primaryColor }}>
+            <Box mt="1">
+              <Typography variant="h6" gutterBottom>
+                Sign in with professional account
+              </Typography>
             </Box>
+            <Box sx={{
+              flexGrow: 1, display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
 
-          </Grid>
-        </Grid>
-        <Box mt={2}>
-          <Typography variant="body2" align="center">
-            {`Don't have an account?`} <Link href="signup">Create account</Link>
-          </Typography>
-        </Box>
-      </StyledPaperBottom>
+              <Typography variant="body1" paragraph align="center">
+                Institutional members can sign in with their institutional ID through www.reannz.co.nz
+              </Typography>
+              <StyledButton
+                variant="contained"
+                onClick={handleCreateProfessionalAccount}
+              >
+                Sign in with Reannz
+              </StyledButton>
+            </Box>
+          </StyledPaperTop>
+            <StyledPaperBottom elevation={3} sx={{ backgroundColor: 'grey.200' }}>
+              <Typography variant="h6" gutterBottom>
+                Sign in with business account
+              </Typography>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={5}>
+                  <Typography variant="body1" paragraph align="center">
+                    Sign in with Email
+                  </Typography>
+
+                  <form onSubmit={handleCreateBusinessAccount}>
+                    <StyledTextField
+                      fullWidth
+                      label="Email"
+                      variant="filled"
+                      margin="normal"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      size='small'
+                    />
+
+                    <StyledTextField
+                      fullWidth
+                      label="Password"
+                      variant="filled"
+                      margin="normal"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      size='small'
+                      required />
+
+                    <Box display="flex" justifyContent="center">
+                      <SubmitButton type="submit" variant="contained">
+                        Sign in
+                      </SubmitButton>
+                    </Box>
+                  </form>
+
+                </Grid>
+
+                <Grid item xs={12} md={1}>
+                  <OrDivider variant="body2">
+                  </OrDivider>
+                </Grid>
+
+                <Grid item xs={12} md={5}>
+
+                  <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100%">
+                    <img
+                      onClick={linkedInLogin}
+                      src={linkedin}
+                      alt="Sign in with Linked In"
+                      style={{ maxWidth: '200px', cursor: 'pointer' }} />
+
+                    {/* <LinkedInButton
+      variant="contained"
+      color="primary"
+      onClick={handleCreateLinkedInAccount}
+    >
+      Sign in with LinkedIn
+    </LinkedInButton> */}
+                  </Box>
+
+                </Grid>
+              </Grid>
+              <Box mt={2}>
+                <Typography variant="body2" align="center">
+                  {`Don't have an account?`} <Link href="signup">Create account</Link>
+                </Typography>
+              </Box>
+            </StyledPaperBottom></>
+        )}
     </Container>
   );
 };

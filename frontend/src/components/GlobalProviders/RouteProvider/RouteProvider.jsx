@@ -16,6 +16,11 @@ import SignupPageProvider from "@frontend-ui/components/AuthPage/SignupPageProvi
 import { Box } from "@mui/system";
 import { HeaderProvider } from "@frontend-ui/components/Header";
 import ProfileSettingLayout from "@frontend-ui/components/ProfileSettingLayout";
+import ProfileVisitorView from "@frontend-ui/components/Profile/ProfileVisitorView";
+import { TermsAndConditions } from "@frontend-ui/components/Profile/ProfileVisitorView/TermsAndConditions";
+import AccountScreenPageProvider from "@frontend-ui/components/AuthPage/AccountScreenProvider";
+import AccountCreation from "@frontend-ui/components/LinkedInAccountCreation/LinkedInAccountCreation";
+
 const RouteContext = createContext({});
 
 export const useRoute = () => useContext(RouteContext);
@@ -67,10 +72,16 @@ const RouteProvider = () => {
           {/* Optionally, you can keep the /auth route if needed */}
           <Route path="/auth" element={<AuthPageProvider />} />
           <Route path="/profile-setting" element={<ProfileSettingLayout />} />
+          <Route path="/profile-visitor/:id" element={<ProfileVisitorView />} />
+          <Route path="/terms" component={TermsAndConditions} />
 
           <Route path="/signin" element={<SigninPageProvider />} />
-
           <Route path="/signup" element={<SignupPageProvider />} />
+          <Route
+            path="/account-screen"
+            element={<AccountScreenPageProvider />}
+          />
+          <Route path="/create-account" element={<AccountCreation />} />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>

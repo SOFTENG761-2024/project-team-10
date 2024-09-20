@@ -27,11 +27,9 @@ async function createUserProfile(userProfileData) {
   }
 }
 
-async function addInstitution(institutionName)
-{
-  try
-  {
-    const institute= await prismaClient.institution.create({
+async function addInstitution(institutionName) {
+  try {
+    const institute = await prismaClient.institution.create({
       data: {
         name: institutionName,
       },
@@ -64,11 +62,11 @@ async function addInstitution(institutionName)
 // }
 
 
-async function getUserProfileById(userId) {
+async function getUserProfileById(id) {
   try {
     const userProfile = await prismaClient.user_profile.findFirst({
       where: {
-        id: userId,
+        id: parseInt(id),
       },
     });
     return userProfile;
@@ -80,11 +78,17 @@ async function getUserProfileById(userId) {
 
 async function getUserProfileByPrimaryEmail(primaryEmail) {
   try {
-  
+
     const profile = await prismaClient.user_profile.findUnique({
       where: {
         primary_email: primaryEmail,
       },
+      include:
+      {
+        institution: true,
+        faculty: true,
+        publication: true,
+      }
     });
     return profile;
   }
@@ -94,20 +98,93 @@ async function getUserProfileByPrimaryEmail(primaryEmail) {
   }
 }
 
-async function getAllUserProfiles()
-{
-    try{
-        const userProfiles = await prismaClient.user_profile.findMany();
-        return userProfiles;
-    }
-        finally {
-            await disconnect();
-          }
+async function getAllUserProfiles() {
+  try {
+    const userProfiles = await prismaClient.user_profile.findMany();
+    return userProfiles;
+  }
+  finally {
+    await disconnect();
+  }
 }
 
+async function getAllVerifiedUserProfiles(is_verified) {
+  try {
+    const userProfiles = await prismaClient.user_profile.findMany({
+      include: {
+        organization: true,
+        usertype: true
+      },
+      where: {
+        is_verified: { equals: is_verified },
+        usertypeid: { equals: 2 } // only business users need to be verified
+      },
+      orderBy: [
+        {
+          id: 'desc',
+        },
+      ],
+    });
+    return userProfiles;
+  }
+  finally {
+    await disconnect();
+  }
+}
 
-module.exports = { createUserProfile, 
-                  getUserProfileById, 
-                  getAllUserProfiles,
-                  getUserProfileByPrimaryEmail,
-                  addInstitution };
+async function updateUserProfile(userProfileData) {
+  try {
+    const userProfile = await prismaClient.$transaction(async (tx) => {
+      let organizationData = {};
+
+      if (userProfileData.organization) {
+        const organization = await tx.organization.upsert({
+          where: {
+            name: userProfileData.organization.name,
+          },
+          update: userProfileData.organization,
+          create: userProfileData.organization,
+        });
+
+        // Prepare the nested write operation
+        organizationData = {
+          connect: { id: organization.id },
+        };
+
+        // Remove the organization property from userProfileData
+        delete userProfileData.organization;
+      }
+
+      // Exclude 'id' from userProfileData
+      const { id, ...updateData } = userProfileData;
+
+      const updatedUserProfile = await tx.user_profile.update({
+        where: {
+          id: parseInt(id),
+        },
+        data: {
+          ...updateData,
+          ...(organizationData && { organization: organizationData }),
+        },
+      });
+
+      // Return the updated user profile from the transaction
+      return updatedUserProfile;
+    });
+
+    // Return the user profile from the function
+    return userProfile;
+  } finally {
+    await disconnect();
+  }
+}
+
+module.exports = {
+  createUserProfile,
+  getUserProfileById,
+  getAllUserProfiles,
+  getUserProfileByPrimaryEmail,
+  addInstitution,
+  updateUserProfile,
+  getAllVerifiedUserProfiles
+};
