@@ -40,22 +40,16 @@ async function getAllUserProfiles() {
   return userProfiles;
 }
 
+async function getAllVerifiedUserProfiles(is_verified) {
+  logger.info('Getting all verified user profiles', is_verified);
+  const userProfiles = await userProfileDao.getAllVerifiedUserProfiles(is_verified);
+  return userProfiles;
+}
+
 async function updateUserProfileById(id, userProfileObject) {
-  if (id == undefined || id == null) {
-    throw new Error(
-      `User Profile id is required.`
-    );
-  }
   let pid = parseInt(id);
-  if (!(await getUserProfileById(pid))) {
-    throw new Error(
-      `User Profile with id ${id} does not exist.`
-    );
-  }
   userProfileObject.id = pid;
-  logger.info(`Updating user profile for id ${id}.`);
-  const userProfile = await userProfileDao.updateUserProfile(userProfileObject);
-  return userProfile;
+  return await updateUserProfile(userProfileObject);
 }
 
 async function updateUserProfile(userProfileObject) {
@@ -81,5 +75,6 @@ module.exports = {
   getUserProfileByPrimaryEmail,
   getAllUserProfiles,
   updateUserProfile,
-  updateUserProfileById
+  updateUserProfileById,
+  getAllVerifiedUserProfiles
 };

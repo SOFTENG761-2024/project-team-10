@@ -49,6 +49,49 @@ router.get("/", async function getAllUserProfiles(req, res) {
   }
 });
 
+router.get("/verify/:is_verified", async function getAllVerifiedUserProfiles(req, res) {
+  try {
+    let is_verified = req.params.is_verified ?
+      (req.params.is_verified.toLowerCase() === 'true' ? true : false) :
+      false;
+    const userProfiles = await userProfileService.getAllVerifiedUserProfiles(is_verified);
+    if (userProfiles.length === 0)
+      return res.status(404).json("No users profiles found");
+    else {
+      let resultobj = userProfiles.map((userProfile) => {
+        return {
+          id: userProfile.id,
+          usertype: userProfile.usertype.name,
+          first_name: userProfile.first_name,
+          last_name: userProfile.last_name,
+          email: userProfile.primary_email,
+          is_verified: userProfile.is_verified,
+          organization: userProfile.organization.name,
+        };
+      });
+      return res.json(resultobj);
+    }
+
+  }
+  catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
+
+router.post("/verify/:id", async function verifyUserProfile(req, res) {
+  try {
+    const id = req.params.id;
+    const userprofileObject = { id: id, is_verified: true };
+    const result = await userProfileService.updateUserProfile(userprofileObject);
+    return res.json(result);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
+
+
 router.get("/:id", async function getUserProfileById(req, res) {
   try {
     const id = req.params.id;
@@ -66,7 +109,7 @@ router.put("/:id", async function updateUserProfile(req, res) {
     console.log(userProfile);
     console.log(req.params.id);
     const updatedUserProfile = await userProfileService.updateUserProfileById(req.params.id, userProfile);
-    res.json(updatedUserProfile);
+    return res.json(updatedUserProfile);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
@@ -78,7 +121,7 @@ router.put("/", async function updateUserProfile(req, res) {
     const userProfile = req.body;
     console.log(userProfile);
     const updatedUserProfile = await userProfileService.updateUserProfile(userProfile);
-    res.json(updatedUserProfile);
+    return res.json(updatedUserProfile);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
