@@ -108,6 +108,30 @@ async function getAllUserProfiles() {
   }
 }
 
+async function getAllVerifiedUserProfiles(is_verified) {
+  try {
+    const userProfiles = await prismaClient.user_profile.findMany({
+      include: {
+        organization: true,
+        usertype: true
+      },
+      where: {
+        is_verified: { equals: is_verified },
+        usertypeid: { equals: 2 } // only business users need to be verified
+      },
+      orderBy: [
+        {
+          id: 'desc',
+        },
+      ],
+    });
+    return userProfiles;
+  }
+  finally {
+    await disconnect();
+  }
+}
+
 async function updateUserProfile(userProfileData) {
   try {
     const userProfile = await prismaClient.$transaction(async (tx) => {
@@ -136,7 +160,7 @@ async function updateUserProfile(userProfileData) {
 
       const updatedUserProfile = await tx.user_profile.update({
         where: {
-          id: id,
+          id: parseInt(id),
         },
         data: {
           ...updateData,
@@ -161,5 +185,6 @@ module.exports = {
   getAllUserProfiles,
   getUserProfileByPrimaryEmail,
   addInstitution,
-  updateUserProfile
+  updateUserProfile,
+  getAllVerifiedUserProfiles
 };

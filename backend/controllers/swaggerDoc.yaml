@@ -6,6 +6,46 @@ info:
 servers:
   - url: "__SWAGGER_API_BASE_URL__"
 paths:
+  /api/userprofile/verify/{id}:
+    post:
+      tags:
+        - User Profile Controller - Verify
+      summary: Verify user profile by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: User profile ID
+      responses:
+        '200':
+          description: Profile verified
+        '404':
+          description: Profile not found
+        '500':
+          description: Internal server error
+
+  /api/userprofile/verify/{isVerified}:
+    get:
+      tags:
+        - User Profile Controller - get business user profiles for verification 
+      summary: get business user profiles for verification 
+      parameters:
+        - name: isVerified
+          in: path
+          required: true
+          schema:
+            type: boolean
+          description: Profile verification status
+      responses:
+        '200':
+          description: Profiles found
+        '404':
+          description: Profiles not found
+        '500':
+          description: Internal server error
+
   /api/auth/account-screen:
     post:
       tags:
