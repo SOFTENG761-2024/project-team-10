@@ -60,6 +60,9 @@ router.post("/account-screen", async (req, res) => {
     if (user.last_name && user.last_name.trim() != '') {
       dbUser.last_name = user.last_name.trim();
     }
+    if (user.email && user.email.trim() != '') {
+      dbUser.primary_email = user.email.trim();
+    }
     if (user.organization_name && user.organization_name.trim() != '') {
       dbUser.organization = { name: user.organization_name.trim() };
     }
@@ -71,5 +74,48 @@ router.post("/account-screen", async (req, res) => {
     return res.status(500).json(error);
   }
 });
+
+router.get("/verify/:is_verified", async function getAllVerifiedUserProfiles(req, res) {
+  try {
+    let is_verified = req.params.is_verified ?
+      (req.params.is_verified.toLowerCase() === 'true' ? true : false) :
+      false;
+    const userProfiles = await userProfileService.getAllVerifiedUserProfiles(is_verified);
+    if (userProfiles.length === 0)
+      return res.status(404).json("No users profiles found");
+    else {
+      let resultobj = userProfiles.map((userProfile) => {
+        return {
+          id: userProfile.id,
+          usertype: userProfile.usertype.name,
+          first_name: userProfile.first_name,
+          last_name: userProfile.last_name,
+          email: userProfile.primary_email,
+          is_verified: userProfile.is_verified,
+          organization: userProfile.organization?.name,
+        };
+      });
+      return res.json(resultobj);
+    }
+
+  }
+  catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
+
+router.post("/verify/:id", async function verifyUserProfile(req, res) {
+  try {
+    const id = req.params.id;
+    const userprofileObject = { id: id, is_verified: true };
+    const result = await userProfileService.updateUserProfile(userprofileObject);
+    return res.json(result.is_verified);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
+
 
 module.exports = router;
