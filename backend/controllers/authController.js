@@ -60,6 +60,9 @@ router.post("/account-screen", async (req, res) => {
     if (user.last_name && user.last_name.trim() != '') {
       dbUser.last_name = user.last_name.trim();
     }
+    if (user.email && user.email.trim() != '') {
+      dbUser.primary_email = user.email.trim();
+    }
     if (user.organization_name && user.organization_name.trim() != '') {
       dbUser.organization = { name: user.organization_name.trim() };
     }
