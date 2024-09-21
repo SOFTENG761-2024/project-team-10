@@ -68,6 +68,12 @@ async function getUserProfileById(id) {
       where: {
         id: parseInt(id),
       },
+      include:
+      {
+        institution: true,
+        faculty: true,
+        publication: true,
+      }
     });
     return userProfile;
   }
@@ -108,21 +114,76 @@ async function getAllUserProfiles() {
   }
 }
 
-async function updateUserProfile(userProfileData) {
+async function getAllVerifiedUserProfiles(is_verified) {
   try {
-    const userProfile = await prismaClient.user_profile.update({
-      where: {
-        id: userProfileData.id,
+    const userProfiles = await prismaClient.user_profile.findMany({
+      include: {
+        organization: true,
+        usertype: true
       },
-      data: userProfileData,
+      where: {
+        is_verified: { equals: is_verified },
+        usertypeid: { equals: 2 } // only business users need to be verified
+      },
+      orderBy: [
+        {
+          id: 'desc',
+        },
+      ],
     });
-    return userProfile;
+    return userProfiles;
   }
   finally {
     await disconnect();
   }
 }
 
+async function updateUserProfile(userProfileData) {
+  try {
+    const userProfile = await prismaClient.$transaction(async (tx) => {
+      let organizationData = {};
+
+      if (userProfileData.organization) {
+        const organization = await tx.organization.upsert({
+          where: {
+            name: userProfileData.organization.name,
+          },
+          update: userProfileData.organization,
+          create: userProfileData.organization,
+        });
+
+        // Prepare the nested write operation
+        organizationData = {
+          connect: { id: organization.id },
+        };
+
+        // Remove the organization property from userProfileData
+        delete userProfileData.organization;
+      }
+
+      // Exclude 'id' from userProfileData
+      const { id, ...updateData } = userProfileData;
+
+      const updatedUserProfile = await tx.user_profile.update({
+        where: {
+          id: parseInt(id),
+        },
+        data: {
+          ...updateData,
+          ...(organizationData && { organization: organizationData }),
+        },
+      });
+
+      // Return the updated user profile from the transaction
+      return updatedUserProfile;
+    });
+
+    // Return the user profile from the function
+    return userProfile;
+  } finally {
+    await disconnect();
+  }
+}
 
 module.exports = {
   createUserProfile,
@@ -130,5 +191,6 @@ module.exports = {
   getAllUserProfiles,
   getUserProfileByPrimaryEmail,
   addInstitution,
-  updateUserProfile
+  updateUserProfile,
+  getAllVerifiedUserProfiles
 };

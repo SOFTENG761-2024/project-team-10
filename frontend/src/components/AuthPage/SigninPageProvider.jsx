@@ -1,7 +1,5 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
-import axios from 'axios';
 import { styled } from '@mui/material/styles';
-import { useLinkedIn } from 'react-linkedin-login-oauth2';
 import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
 import { useAPI } from "../GlobalProviders/APIProvider";
 import {

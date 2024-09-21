@@ -18,7 +18,9 @@ import { HeaderProvider } from "@frontend-ui/components/Header";
 import ProfileSettingLayout from "@frontend-ui/components/ProfileSettingLayout";
 import ProfileVisitorView from "@frontend-ui/components/Profile/ProfileVisitorView";
 import { TermsAndConditions } from "@frontend-ui/components/Profile/ProfileVisitorView/TermsAndConditions";
-import LinkedinAdminVerification from "@frontend-ui/components/LinkedinAdminVerification";
+import AccountScreenPageProvider from "@frontend-ui/components/AuthPage/AccountScreenProvider";
+import AccountCreation from "@frontend-ui/components/LinkedInAccountCreation/LinkedInAccountCreation";
+
 const RouteContext = createContext({});
 
 export const useRoute = () => useContext(RouteContext);
@@ -74,12 +76,12 @@ const RouteProvider = () => {
           <Route path="/terms" component={TermsAndConditions} />
 
           <Route path="/signin" element={<SigninPageProvider />} />
-
           <Route path="/signup" element={<SignupPageProvider />} />
           <Route
-            path="/admin-verification"
-            element={<LinkedinAdminVerification />}
+            path="/account-screen"
+            element={<AccountScreenPageProvider />}
           />
+          <Route path="/create-account" element={<AccountCreation />} />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>

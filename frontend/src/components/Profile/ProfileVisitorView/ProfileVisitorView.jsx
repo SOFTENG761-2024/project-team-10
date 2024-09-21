@@ -23,9 +23,7 @@ import { BorderAll } from "@mui/icons-material";
 
 //TEMPORARY VARIABLE TO CHOOSE BETWEEN DUMMY DATA OR DATA FROM THE API - REMOVE LATER - HI
 let useDummyData = false;
-//Hard coded email address - this will later be provided by the sign-in/sign up module - HI
-let userPrimaryEmailForTesting = "natalie.baird@canterbury.ac.nz";
-//TODO: REMOVE THE ABOVE LINES LATER
+//TODO: Remove later
 
 const tabs = [
   "About",
@@ -38,8 +36,8 @@ const tabs = [
 const ProfileVisitorView = () => {
   const [activeTab, setActiveTab] = useState("About");
   const [profileData, setProfileData] = useState(null);
-  const { getProfileByid, error } = useProfileAPI();
   const { id } = useParams();
+  const { getProfileByid, error } = useProfileAPI();
 
   useEffect(() => {
     if (useDummyData) {

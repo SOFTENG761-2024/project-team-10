@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import style from './Landing.module.css';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import XIcon from '@mui/icons-material/X';
+import { useMediaQuery } from '@mui/material';
 import {
   MuiTheme,
   useAuth,
@@ -20,7 +21,7 @@ export const Landing = () => {
   const [positions, setPositions] = useState({ networkTop: 0, memberTop: 0 });
   const { toggleLightDarkTheme, theme } = useMuiTheme();
   const [navTop, setNavTop] = useState('33vh');
-
+  const isTablet = useMediaQuery('(max-width:1024px)'); 
   const handleThemeSwitchClick = () => {
     toggleLightDarkTheme();
   };
@@ -53,11 +54,34 @@ export const Landing = () => {
       if (currentScrollPosition < searchSectionBottom - 50) {
         setNavTop('33vh');
       } else {
-        setNavTop('13vh');
+        setNavTop('16vh');
       }
     }
 
+    // if (searchSection) {
+    //   const searchSectionBottom = searchSection.offsetTop + searchSection.offsetHeight;
 
+    //   const screenWidth = window.innerWidth;
+
+    //   let topValue;
+      
+    //   if (screenWidth <= 768) {
+   
+    //     topValue = window.innerHeight * 0.20;
+    //   } else if (screenWidth <= 1024) {
+     
+    //     topValue = window.innerHeight * 0.34; 
+    //   } else {
+
+    //     topValue = window.innerHeight * 0.33; 
+    //   }
+    //   if (currentScrollPosition < searchSectionBottom - 50) {
+    //     setNavTop(`${topValue}px`); 
+    //   } else {
+    //     setNavTop('11vh'); 
+    //   }
+    // }
+  
     const networkSection = document.getElementById('network');
     const memberSection = document.getElementById('member');
 
@@ -208,7 +232,6 @@ export const Landing = () => {
 
   return (
     <Box sx={{ position: 'relative', minHeight: '100%', }}>
-
       {/* Vertical Lines */}
       <Box sx={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
         {/* Leftmost Line */}
@@ -218,11 +241,9 @@ export const Landing = () => {
         <Box sx={{ position: 'absolute', left: '29%', width: '1px', backgroundColor: 'gray', height: '100%', opacity: 0.2 }} />
         <Box sx={{ position: 'absolute', left: '51%', width: '1px', backgroundColor: 'gray', height: '100%', opacity: 0.2 }} />
         <Box sx={{ position: 'absolute', left: '73%', width: '1px', backgroundColor: 'gray', height: '100%', opacity: 0.2 }} />
-
         {/* Rightmost Line */}
         <Box sx={{ position: 'absolute', right: '8%', width: '1px', backgroundColor: 'gray', height: '100%', opacity: 0.2 }} />
       </Box>
-
       {/* Header with Theme Toggle and Menu */}
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', padding: 2, height: '18vh', position: 'fixed', width: '100%' }}>
         <button onClick={handleThemeSwitchClick} className={style.themeIcon}>
@@ -232,16 +253,16 @@ export const Landing = () => {
           <img src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
         </button>
       </Box>
-      <Box>
+      <Box sx={{ display: 'flex'}}>
         {/* Main Content Area */}
-        <Container sx={{ maxWidth: 'md', textAlign: 'center', mt: 4, top: '16vh' }}>
-          <Box sx={{ position: 'relative', maxWidth: '100vw', top: '17vh' }} aria-label="connecting video">
+        <Container sx={{ maxWidth: 'md', textAlign: 'center', mt: 4, top: '16vh',marginLeft:'7%' }}>
+          <Box sx={{ position: 'relative', top: '17vh' }} aria-label="connecting video">
             <video className={style.topImage} autoPlay muted playsInline loop>
               <source src="./landing/design.mp4" type="video/mp4" />
             </video>
           </Box>
           {/* Search Bar */}
-          <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '4px', marginTop: '22vh' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '22vh' }}>
             <section id="search">
               <div className={style.searchBar} ref={searchBarRef}>
                 <input
@@ -255,7 +276,7 @@ export const Landing = () => {
               </div>
             </section>
           </Box>
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', width: isTablet? '61vw':''}}>
             <section id="network">
               <div className={style.flexContainer}>
                 {/* Circle Divs */}
@@ -273,9 +294,8 @@ export const Landing = () => {
                 </div>
               </div>
             </section>
-
           </Box>
-          <Box sx={{ display: 'flex', width: '78%' }}>
+          <Box sx={{ display: 'flex', width: isTablet? '77%':'85%'}}>
             <section id="member">
               <div className={style.contentSections}>
                 <div className={`${style.sectId} ${style.search}`}>
@@ -297,7 +317,7 @@ export const Landing = () => {
                       Unlock the Power of Collaboration and Networking</h2>
                     <p>Connect with a diverse community of researchers and experts.</p>
                   </div>
-                  <div className={`${style.section} ${style.secMemberWidth}`}>
+                  <div className={`${style.section} ${style.secMemberMargin}`}>
                     <img src='./landing/cube.png' className={style.cubeStyle} alt="icon" />
                     <h2>Promote Interdisciplinary Collaboration</h2>
                     <p>Break down barriers and foster collaboration across disciplines.</p>
@@ -318,20 +338,18 @@ export const Landing = () => {
               </div>
             </section>
           </Box>
-          <Box>
-            <div className={style.joinDiv}>
-              <div className={`${style.leftJoin} ${style.left}`}>
-                <h2>Join Today!----------</h2>
-                <span>Discover the power of collaboration and innovation</span>
-              </div>
-              <div className={style.joinButtons}>
-                <button className={style.joinButton}>Join</button>
-                <button className={style.learnMoreButton}>Learn More</button>
-              </div>
-            </div>
-          </Box>
-          <Box sx={{ width: '90%', maxWidth: '100%' }}>
+          <Box sx={{ display: 'flex'}}>
             <section id="about-us">
+              <div className={style.joinDiv}>
+                <div className={`${style.leftJoin} ${style.left}`}>
+                  <h2>Join Today!----------</h2>
+                  <span>Discover the power of collaboration and innovation</span>
+                </div>
+                <div className={style.joinButtons}>
+                  <button className={style.joinButton}>Join</button>
+                  <button className={style.learnMoreButton}>Learn More</button>
+                </div>
+              </div>
               <div className={style.footerContainer}>
                 <div className={style.leftLogo}>
                   <h2>Logo</h2></div>
@@ -344,8 +362,23 @@ export const Landing = () => {
                   </ul>
                 </div>
               </div>
-
             </section>
+          </Box>
+          <Box sx={{ width: '90%', maxWidth: '100%' }}>
+            {/* <section id="about-us"> */}
+              {/* <div className={style.footerContainer}>
+                <div className={style.leftLogo}>
+                  <h2>Logo</h2></div>
+                <div className={style.about}>
+                  <ul className={style.aboutList}>
+                    <li>About us</li>
+                    <li>Link Two</li>
+                    <li>Link Three</li>
+                    <li>Contact</li>
+                  </ul>
+                </div>
+              </div> */}
+            {/* </section> */}
           </Box>
           <Box sx={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column' }}>
             <div className={style.borderLine}></div>
@@ -374,8 +407,6 @@ export const Landing = () => {
           </Box>
         </Container>
       </Box>
-
-
       {/* Right Sidebar with Navigation */}
       <Box sx={{ position: 'fixed', right: '7%', top: '50%', transform: 'translateY(-50%)', width: '10%' }}>
         <nav style={styles.navContainer}>
