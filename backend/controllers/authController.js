@@ -8,6 +8,7 @@ const path = require("path");
 const router = express.Router();
 const env = require("dotenv");
 const createAccountEmailService = require("../services/createAccountEmailService.js");
+const passwordService = require("../services/passwordService.js");
 
 env.config({ path: path.resolve(__dirname, "../.env") });
 
@@ -20,6 +21,24 @@ env.config({ path: path.resolve(__dirname, "../.env") });
 router.get("/signout", async (req, res) => {
   //handle with passport
   res.send("signingout");
+});
+
+router.post('/email-signin', async (req, res) => {
+  passport.authenticate('local', { session: true }, (err, user, info) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+    if (!user) {
+      return res.status(401).json(info);
+    }
+    
+    req.logIn(user, (err) => {
+      if (err) {
+        return res.status(500).json(err);
+      }
+      return res.json(user);
+    });
+  })(req, res);
 });
 
 //Linkdein SignIn
@@ -109,12 +128,16 @@ router.get("/verify/:is_verified", async function getAllVerifiedUserProfiles(req
 router.post("/verify/:id", async function verifyUserProfile(req, res) {
   try {
     const id = req.params.id;
-    const userprofileObject = { id: id, is_verified: true };
+    // initiate password
+    const password = passwordService.generateRandomPassword();
+    const hashedPassword = await passwordService.hashPassword(password);
+
+    const userprofileObject = { id: id, is_verified: true, password: hashedPassword };
     const result = await userProfileService.updateUserProfile(userprofileObject);
     // Send email to user
     // Use a message queue to send emails in production
     const userProfile = await userProfileService.getUserProfileById(id);
-    await createAccountEmailService.sendBusinessAccountVerifiedEmail(userProfile.primary_email);
+    await createAccountEmailService.sendBusinessAccountVerifiedEmail(userProfile.primary_email, password);
     return res.json(result.is_verified);
   } catch (error) {
     console.log(error);
