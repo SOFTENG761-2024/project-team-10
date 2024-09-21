@@ -68,6 +68,12 @@ async function getUserProfileById(id) {
       where: {
         id: parseInt(id),
       },
+      include:
+      {
+        institution: true,
+        faculty: true,
+        publication: true,
+      }
     });
     return userProfile;
   }
