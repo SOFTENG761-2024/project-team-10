@@ -25,7 +25,7 @@
   flex-direction: column;
   margin: auto auto auto 96px;
   padding: 0 16px;
-  max-width: 75%;
+  /* max-width: 75%; */
   align-items: center;
 }
 
@@ -156,7 +156,7 @@
 .contentSections {
   display: flex;
   text-align: left;
-  margin: 4% 1% 1% 1%;
+  margin: 5% 1% 9% 1%;
 }
 
 .emptyDiv {
@@ -242,7 +242,7 @@
 .borderLine {
   border: solid 1px;
   margin: 0% 0% 2% 0%;
-
+  width: 82vw;
 }
 
 .left {
@@ -255,10 +255,10 @@
 
 .footerContainer {
   display: flex;
-  margin: 0% 1% 0% 1%;
+  /* margin: 0% 1% 0% 1%; */
   flex-direction: row;
-  height: 30vh;
-  width: 68vw;
+  /* height: 34vh; */
+  width: 75vw;
 }
 
 .topIcons {
@@ -286,7 +286,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 48px;
+  margin-right: 55px;
   background-color: white;
 }
 
@@ -298,7 +298,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 12px;
+  margin-right: 18px;
   background-color: white;
 }
 
@@ -320,6 +320,9 @@
 .secMemberWidth {
   margin: 13% 1% 0% 1%;
 }
+.secMemberMargin {
+  margin: 23% 0% 0% 0%;
+}
 
 .secMargin {
   margin: 23% 1% 0% 1%;
@@ -336,7 +339,7 @@
 .leftLogo {
   width: 18%;
   float: left;
-  margin: 12% 0% 0% 0%;
+  margin: 10% 0% 0% 0%;
   text-align: left;
 }
 
@@ -344,7 +347,7 @@
   width: 83%;
   float: right;
   text-align: right;
-  margin: 13% 0% 0% 0%;
+  margin: 11% 0% 0% 0%;
 }
 
 .aboutList {
@@ -356,7 +359,7 @@
 }
 
 .joinDiv {
-  margin: 6% 2% 0% 1%;
+  margin: 0% 2% 0% 1%;
   text-align: left;
   width: 67vw;
 }
@@ -375,7 +378,8 @@
 }
 
 .foot {
-  margin: 0% 0% 1% 1%;
+  margin: 0% 0% 1% 0%;
+  width: 90vw;
 }
 
 .footerIconDiv {
@@ -391,8 +395,92 @@
 .topImage {
   display: flex;
   flex-direction: column;
-  margin: auto auto auto 5px;
   height: 58vh;
   object-fit: none;
   width: 63vw;
+}
+
+/* Media Query */
+@media (max-width: 1024px) {  
+  .themeIcon {
+    margin-right: 14px;
+  }
+  .menuIcon {
+    margin-right: 17px;
+  }
+  .topImage {
+    height: 64vh;
+    width: 63vw;
+  }
+  .searchBar {
+    width: 62vw;
+    max-width: 100%;
+  }
+  .flexContainer {
+    width: 64vw;
+    margin: 0;
+  }
+  .circleContainer {
+    width: 64vw;
+  }
+  .footerServices {
+    width: 63%;
+    gap: 1px;
+    font-size: 14px;
+  }
+  .foot {
+    width: 83vw;
+    margin: 1% 0% 0% 0%;
+  }
+  .secMargin {
+    margin: 47% 1% 0% 1%;
+  }
+  .joinDiv {
+    height: 6vh;
+  }
+  .footerContainer {
+    height: 36vh;
+    width: 70vw;
+  }
+  .contentSections {
+    margin: 7% 1% 13% 1%;
+  }
+  .joinDiv {
+    width: 66vw;
+  }
+  .leftLogo {
+    margin: 29% 0% 0% 0%;
+  }
+  .about {
+    margin: 31% 0% 0% 0%;
+  }
+  .borderLine {
+    margin: 8% 0% 2% 0%;
+  }
+}
+
+@media (max-width: 820px) { 
+  .circleContainer {
+    width: 64vw;
+  }
+  .contentSections {
+    margin: 11% 1% 9% 1%;
+  }
+  .flexContainer {
+    margin: auto auto auto auto;
+    padding: 0;
+  }
+  .leftJoin {
+    width: 36vw;
+  }
+  .joinButtons {
+    padding-top: 4%;
+    width: 36vw;
+  }
+  .joinDiv {
+    width: 72vw;
+  }
+  .menuIcon {
+    margin-right: 0px;
+  }
 }
