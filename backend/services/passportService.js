@@ -34,13 +34,6 @@ passport.use(new linkedinOpenIdStrategy({
 }, function (user, done) {
     try {
         return done(null, done);
-        // if (currentUser.is_verified) {
-        //     res.redirect(process.env.FRONT_END_BASE_URL);
-        // } else {
-        //     console.log("User not verified");
-        //     res.redirect(process.env.FRONT_END_BASE_URL + "/account-screen");
-        // }
-
     } catch (error) {
         console.error("Error:", error);
     }

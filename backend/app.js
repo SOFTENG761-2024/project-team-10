@@ -55,7 +55,7 @@ function ensureAuthenticated(req, res, next) {
         if (req.user.is_verified)
             return next(); // Proceed to the next middleware/controller if authenticated
         else
-            res.redirect(process.env.FRONT_END_BASE_URL + '/account-screen'); // Redirect to screen if not verified
+            res.redirect(process.env.FRONT_END_BASE_URL + '/create-account'); // Redirect to screen if not verified
     }
 }
 
