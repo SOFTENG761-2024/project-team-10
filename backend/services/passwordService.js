@@ -2,6 +2,7 @@ const generator = require('generate-password');
 const bcrypt = require('bcryptjs');
 
 function generateRandomPassword() {
+    const customCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
     return generator.generate({
         length: 10,
         numbers: true,
@@ -10,6 +11,7 @@ function generateRandomPassword() {
         lowercase: true,
         strict: true,
         excludeSimilarCharacters: true,
+        characters: customCharacters,
     });
 }
 
