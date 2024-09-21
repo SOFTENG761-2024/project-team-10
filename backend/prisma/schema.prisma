@@ -19,6 +19,7 @@ model user_profile {
   preferred_name                                       String?                @test.VarChar
   title                                                String?                @test.VarChar
   primary_email                                        String                 @unique @test.VarChar
+  password                                             String?
   orcid_identifier                                     String?                @unique @test.VarChar
   linkedin_url                                         String?                @test.VarChar
   secondary_email                                      String?                @test.VarChar
