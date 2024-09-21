@@ -16,6 +16,7 @@
   "dependencies": {
     "@prisma/client": "^5.18.0",
     "axios": "^1.7.7",
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
@@ -24,6 +25,7 @@
     "env": "^0.0.2",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "generate-password": "^1.7.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
@@ -32,6 +34,7 @@
     "nodemon": "^3.1.0",
     "passport": "^0.7.0",
     "passport-linkedin-oauth2": "^2.0.0",
+    "passport-local": "^1.0.0",
     "qs": "^6.13.0",
     "sh": "^0.0.3",
     "swagger-jsdoc": "^6.2.8",

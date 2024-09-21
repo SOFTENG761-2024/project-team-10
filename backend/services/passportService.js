@@ -3,7 +3,10 @@ const linkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const path = require('path');
 const env = require('dotenv');
 const linkedinOpenIdStrategy = require("../services/linkedinOpenIdStrategy");
-const { getUserProfileById } = require('./userProfileService');
+const { getUserProfileById, getUserProfileByPrimaryEmail } = require('./userProfileService');
+const LocalStrategy = require('passport-local').Strategy;
+const passwordService = require('./passwordService');
+
 env.config({ path: path.resolve(__dirname, '../.env') });
 
 passport.serializeUser((user, done) => {
@@ -42,6 +45,27 @@ passport.use(new linkedinOpenIdStrategy({
         console.error("Error:", error);
     }
 }));
+
+// Define authenticateUser function
+const authenticateUser = async (email, password, done) => {
+    try {
+        const user = await getUserProfileByPrimaryEmail(email);
+        if (!user) {
+            return done(null, false, { message: 'Incorrect email.' });
+        }
+        const isValid = await passwordService.comparePassword(password, user.password); // Compare hashed passwords
+        if (isValid) {
+            return done(null, user);
+        } else {
+            return done(null, false, { message: 'Incorrect password.' });
+        }
+    } catch (err) {
+        return done(err);
+    }
+};
+
+
+passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser));
 
 
 module.exports = passport;
