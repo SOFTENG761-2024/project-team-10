@@ -36,6 +36,9 @@ router.post('/email-signin', async (req, res) => {
       if (err) {
         return res.status(500).json(err);
       }
+      if (!user.is_verified) {
+        return res.json(false); // not verified
+      }
       return res.json(true);
     });
   })(req, res);
@@ -48,13 +51,12 @@ router.get(
 
 //callback route for linkedin to redirect to
 router.get('/linkedin/redirect', passport.authenticate('linkedinOpenId', {
-  // successRedirect: process.env.FRONT_END_BASE_URL + "/account-screen",
   failureRedirect: process.env.FRONT_END_BASE_URL + '/signin', failureMessage: true
 }), (req, res) => {
   if (req.user.is_verified) {
     res.redirect(process.env.FRONT_END_BASE_URL + '/search-profile'); // Redirect to search page if verified
   } else {
-    res.redirect(process.env.FRONT_END_BASE_URL + '/account-screen'); // Redirect to screen if not verified
+    res.redirect(process.env.FRONT_END_BASE_URL + '/create-account'); // Redirect to screen if not verified
   }
 });
 

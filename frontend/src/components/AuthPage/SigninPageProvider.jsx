@@ -113,6 +113,8 @@ const SigninPageProvider = () => {
         console.log('response', response);
         if (response && response.data === true) {
           window.location.href = '/search-profile';
+        } else if (response && response.data === false) {
+          window.location.href = '/create-account';
         }
 
       });
