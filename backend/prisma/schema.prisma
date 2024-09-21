@@ -207,17 +207,4 @@ model user_message {
   user_profile_user_message_to_user_idTouser_profile   user_profile? @relation("user_message_to_user_idTouser_profile", fields: [to_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model User {
-  id      String    @id @default(uuid()) @test.VarChar
-  Profile Profile[]
-}
-
-model Profile {
-  id     String @id @default(uuid()) @test.VarChar
-  userId String @test.VarChar
-  bio    String @test.VarChar(500)
-  user   User   @relation(fields: [userId], references: [id])
-
-  @@index([userId])
-}
 
