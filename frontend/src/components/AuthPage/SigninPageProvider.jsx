@@ -103,15 +103,23 @@ const SigninPageProvider = () => {
     window.location.href = 'https://www.reannz.co.nz';
   };
 
-  const handleCreateBusinessAccount = async (e) => {
+  const handleEmailSignin = async (e) => {
     e.preventDefault();
     try {
-      post('/api/create-business-account', {
-        email
+      post(import.meta.env.VITE_BACKEND_API_BASE_URL + '/api/auth/email-signin', {
+        email: email,
+        password: password,
+      }).then((response) => {
+        console.log('response', response);
+        if (response && response.data === true) {
+          window.location.href = '/search-profile';
+        } else if (response && response.data === false) {
+          window.location.href = '/create-account';
+        }
+
       });
-      alert('Business account created successfully!');
     } catch (error) {
-      console.error('Error creating business account:', error);
+      console.error('Error:', error);
       alert('Failed to create business account. Please try again.');
     }
   };
@@ -125,8 +133,8 @@ const SigninPageProvider = () => {
     // loginState = get(import.meta.env.VITE_BACKEND_API_BASE_URL + '/api/auth/linkedin').then((response) => {
     //   console.log('response', response);
     // });
-    
-    window.location.href =`${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/auth/linkedin`;
+
+    window.location.href = `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/auth/linkedin`;
   };
 
   useEffect(() => {
@@ -176,7 +184,7 @@ const SigninPageProvider = () => {
                     Sign in with Email
                   </Typography>
 
-                  <form onSubmit={handleCreateBusinessAccount}>
+                  <form onSubmit={handleEmailSignin}>
                     <StyledTextField
                       fullWidth
                       label="Email"
@@ -222,14 +230,6 @@ const SigninPageProvider = () => {
                       src={linkedin}
                       alt="Sign in with Linked In"
                       style={{ maxWidth: '200px', cursor: 'pointer' }} />
-
-                    {/* <LinkedInButton
-      variant="contained"
-      color="primary"
-      onClick={handleCreateLinkedInAccount}
-    >
-      Sign in with LinkedIn
-    </LinkedInButton> */}
                   </Box>
 
                 </Grid>
