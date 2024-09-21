@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProfileSidebar from "../Profile/SidebarAndHeader/ProfileSidebar";
 import { ProfileHeader } from "../Profile/SidebarAndHeader";
 import {
@@ -12,12 +12,17 @@ import {
   GlobalStyles,
   Typography,
 } from "@mui/material";
+import { useAccountVerifyAPI } from "./api";
 
 const LinkedinAdminVerification = () => {
   const [value, setValue] = useState(0);
+  const [newRequests, setNewRequests] = useState([]);
+  const [approvedPeople, setApprovedPeople] = useState([]);
+  const { getAccountVerificationData, error } = useAccountVerifyAPI();
+  const [useDummyData, setUseDummyData] = useState(true); // I used this to toggle dummy data
 
   // Used Dummy data to check
-  const [newRequests, setNewRequests] = useState([
+  const dummyData = [
     {
       firstName: "John",
       lastName: "Doe",
@@ -72,9 +77,25 @@ const LinkedinAdminVerification = () => {
       email: "john.doe@example.com",
       organization: "Tech Corp",
     },
-  ]);
+  ];
 
-  const [approvedPeople, setApprovedPeople] = useState([]);
+  useEffect(() => {
+    const fetchDataToVerify = async () => {
+      if (!useDummyData) {
+        try {
+          const fetchData = await getAccountVerificationData();
+          if (fetchData) {
+            setNewRequests(fetchData || []);
+          }
+        } catch (error) {
+          console.error("Error fetching API data:", error);
+        }
+      } else {
+        setNewRequests(dummyData);
+      }
+    };
+    fetchDataToVerify();
+  }, [useDummyData]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
