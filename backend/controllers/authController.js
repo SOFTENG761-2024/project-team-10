@@ -36,7 +36,7 @@ router.post('/email-signin', async (req, res) => {
       if (err) {
         return res.status(500).json(err);
       }
-      return res.json(user);
+      return res.json(true);
     });
   })(req, res);
 });

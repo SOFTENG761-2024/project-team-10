@@ -33,10 +33,10 @@ const SnackbarProvider = () => {
     // So for 400 class errors you need to get your backend api to return meaningful error messages.
     if (error.code?.toString().startsWith("4")) {
       if (error.code?.toString() == "401") {
-        return <Typography>Please login.</Typography>;
+        return <Typography>Login failed, please check your email and password.</Typography>;
       }
       if (error.code?.toString() == "403") {
-        return <Typography>You are authorized.</Typography>;
+        return <Typography>You are unauthorized.</Typography>;
       }
       return <Typography>{error.message}</Typography>;
     }
