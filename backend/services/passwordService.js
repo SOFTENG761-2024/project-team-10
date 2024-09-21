@@ -9,6 +9,7 @@ function generateRandomPassword() {
         uppercase: true,
         lowercase: true,
         strict: true,
+        excludeSimilarCharacters: true,
     });
 }
 

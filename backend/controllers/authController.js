@@ -31,7 +31,7 @@ router.post('/email-signin', async (req, res) => {
     if (!user) {
       return res.status(401).json(info);
     }
-    
+
     req.logIn(user, (err) => {
       if (err) {
         return res.status(500).json(err);
@@ -52,7 +52,7 @@ router.get('/linkedin/redirect', passport.authenticate('linkedinOpenId', {
   failureRedirect: process.env.FRONT_END_BASE_URL + '/signin', failureMessage: true
 }), (req, res) => {
   if (req.user.is_verified) {
-    res.redirect(process.env.FRONT_END_BASE_URL); // Redirect to home if verified
+    res.redirect(process.env.FRONT_END_BASE_URL + '/search-profile'); // Redirect to search page if verified
   } else {
     res.redirect(process.env.FRONT_END_BASE_URL + '/account-screen'); // Redirect to screen if not verified
   }
