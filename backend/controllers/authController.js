@@ -7,6 +7,7 @@ const passport = require("passport");
 const path = require("path");
 const router = express.Router();
 const env = require("dotenv");
+const createAccountEmailService = require("../services/createAccountEmailService.js");
 
 env.config({ path: path.resolve(__dirname, "../.env") });
 
@@ -110,9 +111,23 @@ router.post("/verify/:id", async function verifyUserProfile(req, res) {
     const id = req.params.id;
     const userprofileObject = { id: id, is_verified: true };
     const result = await userProfileService.updateUserProfile(userprofileObject);
+    // Send email to user
+    // Use a message queue to send emails in production
+    const userProfile = await userProfileService.getUserProfileById(id);
+    await createAccountEmailService.sendBusinessAccountVerifiedEmail(userProfile.primary_email);
     return res.json(result.is_verified);
   } catch (error) {
     console.log(error);
+    return res.status(500).json(error);
+  }
+});
+
+router.post("/test", async (req, res) => {
+  try {
+    console.log("test");
+    await createAccountEmailService.sendBusinessAccountVerifiedEmail('tableliu@hotmail.com');
+    return res.json("test");
+  } catch (error) {
     return res.status(500).json(error);
   }
 });
