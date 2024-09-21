@@ -181,6 +181,7 @@ const SignupPageProvider = () => {
                         <Grid item xs={6}>
                           <TextField
                             fullWidth
+                            id="first-name"
                             label="First Name"
                             variant="filled"
                             margin="dense"
@@ -192,6 +193,7 @@ const SignupPageProvider = () => {
                         <Grid item xs={6}>
                           <TextField
                             fullWidth
+                            id="last-name"
                             label="Last Name"
                             variant="filled"
                             margin="dense"
@@ -203,6 +205,7 @@ const SignupPageProvider = () => {
                       </Grid>
                       <TextField
                         fullWidth
+                        id="organization"
                         label="Organization"
                         variant="filled"
                         margin="dense"

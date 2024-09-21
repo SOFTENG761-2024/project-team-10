@@ -66,7 +66,7 @@ npm install
 ## setup backend node project
 
 ```bash
-cd ../backend
+cd ./backend
 npm install
 ```
 

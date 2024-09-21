@@ -40,6 +40,7 @@ const ProfileCantEdit = ({ profile }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>Full Name:</Typography>
                 <TextField
+                  id="fname"
                   value={editedProfile.fullName}
                   onChange={(e) => handleInputChange('fullName', e.target.value)}
                   InputProps={{ readOnly: !isEditing }}
@@ -76,7 +77,7 @@ const ProfileCantEdit = ({ profile }) => {
                   value={editedProfile.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   disabled
-                  // fullWidth
+                // fullWidth
                 />
               </div>
             </Grid>
@@ -129,28 +130,28 @@ const ProfileCantEdit = ({ profile }) => {
             </Grid>
           </Grid>
           <div className={styles.buttonRow}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', flex:1 }}>
-              <EmailIcon sx={{color: 'lightgray'}}/>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
+              <EmailIcon sx={{ color: 'lightgray' }} />
               <Button variant="contained" disabled={!isEditing} className={styles.secondaryButton}>+Add Secondary Email Address</Button>
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', flex:1 }}>
-              <EmailIcon sx={{color: 'lightgray'}}/>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px', flex: 1 }}>
+              <EmailIcon sx={{ color: 'lightgray' }} />
               <Button variant="contained" disabled={!isEditing} className={styles.secondaryButton}>+Add Secondary Affiliation</Button>
             </Box>
-            
-            
+
+
           </div>
 
           <Box sx={{ display: 'flex', marginTop: '20px', gap: '20px' }}>
-            <Button variant="contained" color="primary" onClick={isEditing ? handleSaveClick : handleEditClick} className={styles.editButton}>
+            <Button id="edit-save-button" variant="contained" color="primary" onClick={isEditing ? handleSaveClick : handleEditClick} className={styles.editButton}>
               {isEditing ? 'Save' : 'Edit'}
             </Button>
             <Typography variant="body2" className={styles.note}>
               Please note! Most of the details are populated via Tuakiri and cannot be changed here.
             </Typography>
           </Box>
-          
-          
+
+
         </CardContent>
       </Card>
     </div>

@@ -18,8 +18,9 @@ const ProfileCanEdit = ({ profile, onSave }) => {
       <div className="detail-row">
         <div className="detail-item full-width">
           <label>Bio</label>
-          <textarea 
-            value={editedProfile.bio} 
+          <textarea
+            id="bio"
+            value={editedProfile.bio}
             onChange={(e) => handleInputChange('bio', e.target.value)}
           />
         </div>
@@ -27,17 +28,17 @@ const ProfileCanEdit = ({ profile, onSave }) => {
       <div className="detail-row">
         <div className="detail-item">
           <label>Research area</label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             value={editedProfile.researchArea} className='input-field'
             onChange={(e) => handleInputChange('researchArea', e.target.value)}
           />
         </div>
         <div className="detail-item">
           <label>Skills:</label>
-          <input 
+          <input
             type="text" className='input-field'
-            value={editedProfile.skills} 
+            value={editedProfile.skills}
             onChange={(e) => handleInputChange('skills', e.target.value)}
           />
         </div>
@@ -51,8 +52,8 @@ const ProfileCanEdit = ({ profile, onSave }) => {
       <div className="detail-row">
         <div className="detail-item full-width">
           <label>Publications</label>
-          <textarea 
-            value={editedProfile.publications} 
+          <textarea
+            value={editedProfile.publications}
             onChange={(e) => handleInputChange('publications', e.target.value)}
           />
         </div>
@@ -66,7 +67,7 @@ const ProfileCanEdit = ({ profile, onSave }) => {
     <div className="profile-container">
       <div className="tab-bar">
         {['About', 'Publications', 'Professional', 'Teaching /Research'].map(tab => (
-          <button 
+          <button
             key={tab}
             className={`tab ${activeTab === tab ? 'active' : ''}`}
             onClick={() => setActiveTab(tab)}

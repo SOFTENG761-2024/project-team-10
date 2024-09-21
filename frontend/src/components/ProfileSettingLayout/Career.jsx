@@ -187,7 +187,7 @@ const Career = ({ profile, onSave }) => {
             />
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', gap: '40px'}}>
+        <Box sx={{ display: 'flex', gap: '40px' }}>
           <Box className={styles.career__detail_row}>
             <Box className={`${styles.career__detail_item} ${styles.career__detail_item_full_width}`}>
               <Typography component="label">Media File Thumbnail</Typography>
@@ -215,7 +215,7 @@ const Career = ({ profile, onSave }) => {
             </Box>
           </Box>
         </Box>
-        <Button variant='contained' className={styles.career__edit_button} onClick={isEditing ? handleSave : () => setIsEditing(true)}>
+        <Button id="career-edit-button" variant='contained' className={styles.career__edit_button} onClick={isEditing ? handleSave : () => setIsEditing(true)}>
           {isEditing ? 'Save' : 'Edit'}
         </Button>
       </Box>}
