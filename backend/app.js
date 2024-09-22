@@ -52,6 +52,7 @@ app.use(passport.session());
 //TODO: Commented temporarily to stop build from failing - HI
 
 // Middleware to protect routes, check if user is authenticated and verified
+// eslint-disable-next-line no-unused-vars
 function ensureAuthenticated(req, res, next) {
     if (!req.isAuthenticated())
         res.status(401).json({ message: 'Unauthorized access' });
