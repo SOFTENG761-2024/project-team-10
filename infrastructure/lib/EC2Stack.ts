@@ -46,6 +46,7 @@ export class EC2Stack extends Stack {
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(3000));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(8080));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(8888));
+    securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(5000));
 
     const ec2Instance = new Instance(this, "EC2Instance-prod", {
       vpc,
