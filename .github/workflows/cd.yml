@@ -118,7 +118,6 @@ jobs:
           aws-region: ap-southeast-2
       - name: Deploy to aws cdk
         run: |
-          npm run synth-prod
           npm run deploy-prod
         working-directory: "./infrastructure"
   deploy-ec2:
