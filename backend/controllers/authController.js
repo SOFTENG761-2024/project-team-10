@@ -141,8 +141,12 @@ router.post("/verify/:id", async function verifyUserProfile(req, res) {
     const result = await userProfileService.updateUserProfile(userprofileObject);
     // Send email to user
     // Use a message queue to send emails in production
-    const userProfile = await userProfileService.getUserProfileById(id);
-    await createAccountEmailService.sendBusinessAccountVerifiedEmail(userProfile.primary_email, password);
+    if (process.env.SMTP_EMAIL_ENABLED === 'true') {
+      console.log("Sending email to user");
+      const userProfile = await userProfileService.getUserProfileById(id);
+      await createAccountEmailService.sendBusinessAccountVerifiedEmail(userProfile.primary_email, password);
+    }
+
     return res.json(result.is_verified);
   } catch (error) {
     console.log(error);
