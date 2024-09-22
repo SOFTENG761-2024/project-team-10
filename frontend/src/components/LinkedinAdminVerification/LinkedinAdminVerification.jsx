@@ -18,62 +18,65 @@ const LinkedinAdminVerification = () => {
   const [value, setValue] = useState(0);
   const [newRequests, setNewRequests] = useState([]);
   const [approvedPeople, setApprovedPeople] = useState([]);
-  const { getAccountVerificationData, error } = useAccountVerifyAPI();
-  const [useDummyData, setUseDummyData] = useState(true); // I used this to toggle dummy data
+  const { getAccountVerificationData, verifyAccount, error, } = useAccountVerifyAPI();
+  const [useDummyData, setUseDummyData] = useState(false); // I used this to toggle dummy data
 
   // Used Dummy data to check
   const dummyData = [
     {
-      firstName: "John",
-      lastName: "Doe",
+      id: 1,
+      first_name: "John",
+      last_name: "Doe",
       email: "john.doe@example.com",
       organization: "Tech Corp",
     },
     {
-      firstName: "Jane",
-      lastName: "Smith",
+      id: 2,
+      first_name: "Jane",
+      last_name: "Smith",
       email: "jane.smith@example.com",
       organization: "Innovate Inc",
     },
     {
-      firstName: "Sam",
-      lastName: "Wilson",
+      id: 3,
+      first_name: "Sam",
+      last_name: "Wilson",
       email: "sam.wilson@example.com",
       organization: "Design Co",
     },
     {
-      firstName: "Alice",
-      lastName: "Brown",
+      first_name: "Alice",
+      last_name: "Brown",
       email: "alice.brown@example.com",
       organization: "DevHub",
     },
     {
-      firstName: "John",
-      lastName: "Doe",
+      first_name: "John",
+      last_name: "Doe",
       email: "john.doe@example.com",
       organization: "Tech Corp",
     },
     {
-      firstName: "Jane",
-      lastName: "Smith",
+      first_name: "Jane",
+      last_name: "Smith",
       email: "jane.smith@example.com",
       organization: "Innovate Inc",
     },
     {
-      firstName: "Sam",
-      lastName: "Wilson",
+      first_name: "Sam",
+      last_name: "Wilson",
       email: "sam.wilson@example.com",
       organization: "Design Co",
     },
     {
-      firstName: "Alice",
-      lastName: "Brown",
+      first_name: "Alice",
+      last_name: "Brown",
       email: "alice.brown@example.com",
       organization: "DevHub",
     },
     {
-      firstName: "John",
-      lastName: "Doe",
+      first_name: "John",
+      last_name: "Doe",
       email: "john.doe@example.com",
       organization: "Tech Corp",
     },
@@ -83,9 +86,15 @@ const LinkedinAdminVerification = () => {
     const fetchDataToVerify = async () => {
       if (!useDummyData) {
         try {
-          const fetchData = await getAccountVerificationData();
+          console.log(value);
+          const fetchData = await getAccountVerificationData(value !== 0);
           if (fetchData) {
-            setNewRequests(fetchData || []);
+            if (value === 0) {
+              setNewRequests(fetchData || []);
+            } else {
+              setApprovedPeople(fetchData || []);
+            }
+
           }
         } catch (error) {
           console.error("Error fetching API data:", error);
@@ -95,23 +104,29 @@ const LinkedinAdminVerification = () => {
       }
     };
     fetchDataToVerify();
-  }, [useDummyData]);
+  }, [useDummyData, value]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   // handle approving a person
-  const handleApprove = (index) => {
-    const personToApprove = newRequests[index];
+  const handleApprove = async (index) => {
+    const result = await verifyAccount(newRequests[index].id);
+    if (result === true) {
+      const personToApprove = newRequests[index];
 
-    // remove the approved person
-    const updatedNewRequests = [...newRequests];
-    updatedNewRequests.splice(index, 1);
+      // remove the approved person
+      const updatedNewRequests = [...newRequests];
+      updatedNewRequests.splice(index, 1);
 
-    // add the approved person to the approved array
-    setApprovedPeople([...approvedPeople, personToApprove]);
-    setNewRequests(updatedNewRequests);
+      // add the approved person to the approved array
+      setApprovedPeople([...approvedPeople, personToApprove]);
+      setNewRequests(updatedNewRequests);
+    } else {
+      // alert a error message
+      console.error("Error approving account");
+    }
   };
 
   // decide that which data to show based on the selected tab
@@ -150,7 +165,7 @@ const LinkedinAdminVerification = () => {
                             fullWidth
                             variant="outlined"
                             size="small"
-                            value={item.firstName}
+                            value={item.first_name}
                             sx={{
                               ...styles.textFieldStyle,
                               mr: "20px",
@@ -164,7 +179,7 @@ const LinkedinAdminVerification = () => {
                             fullWidth
                             variant="outlined"
                             size="small"
-                            value={item.lastName}
+                            value={item.last_name}
                             sx={{
                               ...styles.textFieldStyle,
                               ml: "180px",
@@ -222,12 +237,12 @@ const LinkedinAdminVerification = () => {
                       <>
                         <Grid item xs={12} sm={3} md={3}>
                           <Typography sx={styles.typographyStyle}>
-                            {item.firstName}
+                            {item.first_name}
                           </Typography>
                         </Grid>
                         <Grid item xs={12} sm={3} md={3}>
                           <Typography sx={styles.typographyStyle}>
-                            {item.lastName}
+                            {item.last_name}
                           </Typography>
                         </Grid>
                         <Grid item xs={12} sm={3} md={3}>
