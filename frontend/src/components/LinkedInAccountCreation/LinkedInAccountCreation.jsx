@@ -8,8 +8,10 @@ import {
   GlobalStyles,
   Grid,
 } from "@mui/material";
+import { useAPI } from "../GlobalProviders/APIProvider";
 
 const AccountCreation = () => {
+  const { get, post, setError } = useAPI();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -27,6 +29,22 @@ const AccountCreation = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Form Data Submitted: ", formData);
+    let submitData = {
+      "first_name": formData.firstName,
+      "last_name": formData.lastName,
+      "organization_name": formData.organization,
+      "email": formData.email
+    };
+    post(import.meta.env.VITE_BACKEND_API_BASE_URL + '/api/auth/account-screen', submitData)
+      .then((response) => {
+        if (response && response.data === true) {
+          window.location.href = '/';
+        } else if (response && response.data === false) {
+          setError({ message: "Failed to create account. Please try again." });
+        } else {
+          setError({ message: "Failed to create account. Please go to the sign up page and try again." });
+        }
+      });
   };
 
   return (
