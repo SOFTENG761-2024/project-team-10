@@ -71,6 +71,7 @@ router.get("/current-user", async (req, res) => {
 
 router.post("/account-screen", async (req, res) => {
   try {
+    console.log("account-screen: ", req.user);
     if (!req.user) {
       return res.status(401).json({ message: "User not authenticated" });
     }
@@ -90,8 +91,10 @@ router.post("/account-screen", async (req, res) => {
     }
     dbUser.id = req.user.id;
     const profile = await userProfileService.updateUserProfile(dbUser);
-
-    return res.json(profile);
+    if (profile)
+      return res.json(true);
+    else
+      return res.json(false);
   } catch (error) {
     return res.status(500).json(error);
   }
