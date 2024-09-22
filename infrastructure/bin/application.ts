@@ -25,4 +25,14 @@ switch (paramsEnv) {
     });
     break;
   }
+  case "prod": {
+    new EC2Stack(app, "ProdStack", {
+      paramsEnv,
+      env: {
+        account: stackParams.deploymentAccount,
+        region: stackParams.deploymentRegion,
+      },
+    });
+    break;
+  }
 }
