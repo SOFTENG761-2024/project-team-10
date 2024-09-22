@@ -1,5 +1,7 @@
 const { prismaClient, disconnect } = require("../daos/prismaClient");
-
+const env = require("dotenv");
+const path = require("path");
+env.config({ path: path.resolve(__dirname, "../.env") });
 
 async function main() {
   if (await prismaClient.usertype.count() > 0) {
@@ -44,7 +46,7 @@ async function main() {
 
     await prismaClient.user_profile.createMany({
       data: [
-        { usertypeid: 3, first_name: 'Admin', last_name: 'Admin', title: 'Ms.', primary_email: 'fellows@fellows.com', is_scraped: true, is_verified: true, signup_datetime: new Date('2006-02-26T10:13:02Z')},
+        { usertypeid: 3, first_name: 'Admin', last_name: 'Admin', title: 'Ms.', primary_email: process.env.DB_ADMIN_EMAIL, is_scraped: true, is_verified: true, signup_datetime: new Date('2006-02-26T10:13:02Z'), password: process.env.DB_ADMIN_PASSWORD_ENCRYPTED },
         { usertypeid: 2, first_name: 'Jonathan', last_name: 'Phillips', title: 'Ms.', primary_email: 'jonphillips626@hotmail.com', is_scraped: true, is_verified: true, signup_datetime: new Date('2006-02-26T10:13:02Z'), organization_id: 1 },
         { usertypeid: 2, first_name: 'Theresa', last_name: 'Wright', title: 'Ms.', primary_email: 'theresawrigh@icloud.com', is_scraped: false, is_verified: false, signup_datetime: new Date('2021-07-13T10:36:48Z'), organization_id: 1 },
         { usertypeid: 1, first_name: 'Tina', last_name: 'Spencer', title: 'Prof.', primary_email: 'spentina@gmail.com', is_scraped: false, is_verified: false, signup_datetime: new Date('2012-10-07T15:44:00Z'), organization_id: 2 },
