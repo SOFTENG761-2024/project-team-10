@@ -10,7 +10,7 @@ import {
   MessageIcon,
 } from "./SidebarIcons";
 const ProfileSidebar = ({ profileData }) => {
-  const [activeIcon, setActiveIcon] = useState("");
+  const [activeIcon, setActiveIcon] = useState("Network");
 
   const handleIconClick = (iconName) => {
     setActiveIcon(iconName);
