@@ -19,7 +19,7 @@ const ProfileHeader = () => {
     };
 
     fetchProfileData();
-  }, [getOwnProfileData]);
+  }, [getOwnProfileData]); // This now only runs when `getOwnProfileData` actually changes
 
   //get the current date in a readable format
   const getCurrentDate = () => {
