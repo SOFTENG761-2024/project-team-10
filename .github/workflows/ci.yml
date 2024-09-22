@@ -68,9 +68,12 @@ jobs:
         run: |
           rm .env
           echo "VITE_BACKEND_API_BASE_URL=$VITE_BACKEND_API_BASE_URL" >> .env
+          echo "VITE_LINKEDIN_CLIENT_ID=$VITE_LINKEDIN_CLIENT_ID" >> .env
+          echo "VITE_LINKEDIN_AUTH_REDIRECTURI=http://give-it-a-good-name:5000/signin" >> .env
         env:
           # node creds
           VITE_BACKEND_API_BASE_URL: http://localhost:3000
+          VITE_LINKEDIN_CLIENT_ID: 86yqr14akub4tu
       - name: Set node configs
         working-directory: "./backend"
         run: |
