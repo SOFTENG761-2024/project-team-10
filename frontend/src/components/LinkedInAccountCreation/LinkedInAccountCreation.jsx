@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   TextField,
@@ -7,15 +8,26 @@ import {
   Container,
   GlobalStyles,
   Grid,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
+import { useAccountCreationAPI } from "./api";
 
 const AccountCreation = () => {
+  const navigate = useNavigate();
+  const { createAccount } = useAccountCreationAPI();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     organization: "",
     email: "",
   });
+  const [open, setOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({
@@ -24,9 +36,25 @@ const AccountCreation = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleClose = () => {
+    setOpen(false);
+    navigate("/");
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form Data Submitted: ", formData);
+    try {
+      const data = await createAccount(formData);
+      console.log("API Response Data:", data);
+      setDialogMessage(
+        "Your account is in the verification process. You can now navigate to the landing page.",
+      );
+      setOpen(true);
+    } catch (error) {
+      console.error("Error:", error);
+      setDialogMessage("Failed to create account. Please try again.");
+      setOpen(true);
+    }
   };
 
   return (
@@ -110,13 +138,61 @@ const AccountCreation = () => {
               xs={12}
               sx={{ display: "flex", justifyContent: "center" }}
             >
-              <Button sx={styles.submitButton} type="submit">
+              <Button
+                onSubmit={handleSubmit}
+                sx={styles.submitButton}
+                type="submit"
+              >
                 Submit
               </Button>
             </Grid>
           </Grid>
         </Box>
       </Container>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle
+          sx={{
+            fontSize: "1.25rem",
+            fontWeight: "bold",
+            color: "#333",
+          }}
+        >
+          {"Account Creation Status"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText
+            sx={{
+              fontSize: "1.25rem",
+              color: "#333",
+            }}
+            id="alert-dialog-description"
+          >
+            {dialogMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: "center", padding: "20px" }}>
+          <Button
+            onClick={handleClose}
+            color="primary"
+            autoFocus
+            sx={{
+              minWidth: "150px",
+              backgroundColor: "#4b5a68",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: "#5c6b7a",
+              },
+            }}
+          >
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
