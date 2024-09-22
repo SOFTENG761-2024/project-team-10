@@ -278,8 +278,8 @@ const ProfileVisitorView = () => {
     <>
       <GlobalStyles styles={styles.global} />
       <Box sx={styles.wrapperContainer}>
-        <ProfileSidebar profileData={profileData} />
-        <ProfileHeader profileData={profileData} />
+        <ProfileSidebar />
+        <ProfileHeader />
         <Box sx={styles.profileViewContainer}>
           <Box sx={styles.basicInfo}>
             <Box sx={styles.basicInfoTopBottom}>

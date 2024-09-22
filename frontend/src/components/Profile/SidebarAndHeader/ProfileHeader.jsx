@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useOwnProfileAPI } from "./api";
 
-const ProfileHeader = ({ profileData }) => {
+const ProfileHeader = () => {
   const navigate = useNavigate();
+  const { getOwnProfileData, error } = useOwnProfileAPI();
+  const [ownProfileData, setOwnProfileData] = useState(null);
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const profileData = await getOwnProfileData();
+        setOwnProfileData(profileData);
+      } catch (err) {
+        console.error("Error fetching profile data:", err);
+      }
+    };
+
+    fetchProfileData();
+  }, [getOwnProfileData]);
 
   //get the current date in a readable format
   const getCurrentDate = () => {
@@ -30,7 +46,7 @@ const ProfileHeader = ({ profileData }) => {
       <Box sx={styles.nameAndDate}>
         <Typography variant="h5" component="h2" sx={styles.headerTitle}>
           Welcome,{" "}
-          {profileData?.first_name + " " + profileData?.last_name ||
+          {ownProfileData?.first_name + " " + ownProfileData?.last_name ||
             "Alexa Rawus"}
         </Typography>
         <Typography variant="body2" sx={styles.headerDate}>
