@@ -70,11 +70,15 @@ jobs:
           echo "SWAGGER_API_BASE_URL=http://$EC2_INSTANCE_PUBLIC_DNS:3000" >> .env
           echo "DB_ADMIN_EMAIL=$DB_ADMIN_EMAIL" >> .env
           echo "DB_ADMIN_PASSWORD_ENCRYPTED=$DB_ADMIN_PASSWORD_ENCRYPTED" >> .env
+          echo "LINKEDIN_CLIENT_ID=$LINKEDIN_CLIENT_ID" >> .env
+          echo "LINKEDIN_CLIENT_SECRET=$LINKEDIN_CLIENT_SECRET" >> .env
         env:
           # node creds
           DATABASE_URL: postgresql://postgres:postgres@postgres:5432/test?schema=public
           DB_ADMIN_EMAIL: fellows@fellows.com
           DB_ADMIN_PASSWORD_ENCRYPTED: $2a$10$tRs1k3ar2cL5qY3XH2K8ZeOER2BIj1veqSoMDuFyAqafaAwoqadE
+          LINKEDIN_CLIENT_ID: 86yqr14akub4tu
+          LINKEDIN_CLIENT_SECRET: 3j80hVRkhdubWQWk
       - name: Archive src code
         run: |
           cat ".env"
