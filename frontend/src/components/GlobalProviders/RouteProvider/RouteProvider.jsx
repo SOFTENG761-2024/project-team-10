@@ -70,7 +70,7 @@ const RouteProvider = () => {
           <Route path="/authenticated" element={<Landing />} />
 
           {/* Optionally, you can keep the /auth route if needed */}
-          <Route path="/auth" element={<AuthPageProvider />} />
+          {/* <Route path="/auth" element={<AuthPageProvider />} /> */}
           <Route path="/profile-setting" element={<ProfileSettingLayout />} />
           <Route path="/profile-visitor/:id" element={<ProfileVisitorView />} />
           <Route path="/terms" component={TermsAndConditions} />
