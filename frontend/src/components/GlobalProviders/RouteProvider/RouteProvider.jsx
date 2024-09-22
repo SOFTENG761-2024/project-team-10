@@ -20,6 +20,7 @@ import ProfileVisitorView from "@frontend-ui/components/Profile/ProfileVisitorVi
 import { TermsAndConditions } from "@frontend-ui/components/Profile/ProfileVisitorView/TermsAndConditions";
 import AccountScreenPageProvider from "@frontend-ui/components/AuthPage/AccountScreenProvider";
 import AccountCreation from "@frontend-ui/components/LinkedInAccountCreation/LinkedInAccountCreation";
+import { SearchProfile } from '../../SearchProfile';
 
 const RouteContext = createContext({});
 
@@ -82,6 +83,7 @@ const RouteProvider = () => {
             element={<AccountScreenPageProvider />}
           />
           <Route path="/create-account" element={<AccountCreation />} />
+          <Route path="/search-profile" element={<SearchProfile />} />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>
