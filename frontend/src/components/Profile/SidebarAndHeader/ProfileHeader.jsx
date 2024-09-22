@@ -68,7 +68,7 @@ const styles = {
     height: "118px",
     position: "fixed",
     left: "135px",
-    bgcolor: "background.paper",
+    background: "#F9F9F9",
   },
   nameAndDate: {
     width: "400px",
