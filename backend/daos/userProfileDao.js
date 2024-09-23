@@ -185,6 +185,32 @@ async function updateUserProfile(userProfileData) {
   }
 }
 
+
+
+async function updatePassword(userId, userPassword)
+{
+    try
+    {
+        const userProfile = await prismaClient.user_profile.update(
+            {
+                where: {
+                  id: userId,
+                },
+                data: 
+                {
+                    password:userPassword,
+                    password_update_datetime: new Date(),
+                }
+            }
+        )
+        return userProfile.id;
+    }
+
+    finally {
+        disconnect();
+      }
+}
+
 module.exports = {
   createUserProfile,
   getUserProfileById,
@@ -192,5 +218,6 @@ module.exports = {
   getUserProfileByPrimaryEmail,
   addInstitution,
   updateUserProfile,
-  getAllVerifiedUserProfiles
+  getAllVerifiedUserProfiles,
+  updatePassword
 };

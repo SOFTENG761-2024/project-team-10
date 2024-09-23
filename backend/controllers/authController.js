@@ -60,6 +60,7 @@ router.get('/linkedin/redirect', passport.authenticate('linkedinOpenId', {
   }
 });
 
+
 router.get("/current-user", async (req, res) => {
   try {
     console.log("current user: ", req.user);
@@ -137,7 +138,7 @@ router.post("/verify/:id", async function verifyUserProfile(req, res) {
     const password = passwordService.generateRandomPassword();
     const hashedPassword = await passwordService.hashPassword(password);
 
-    const userprofileObject = { id: id, is_verified: true, password: hashedPassword };
+    const userprofileObject = { id: id, is_verified: true, password: hashedPassword, password_update_datetime: new Date() };
     const result = await userProfileService.updateUserProfile(userprofileObject);
     // Send email to user
     // Use a message queue to send emails in production
@@ -160,6 +161,22 @@ router.post("/test", async (req, res) => {
     await createAccountEmailService.sendBusinessAccountVerifiedEmail('tableliu@hotmail.com');
     return res.json("test");
   } catch (error) {
+    return res.status(500).json(error);
+  }
+});
+
+//end point to update user password
+router.put("/updatePassword/:id", async function updatePassword(req, res)  {
+  try
+  {
+    const id = req.params.id;
+    const hashedPassword = await passwordService.hashPassword(req.body.password);
+    const userprofileObject = { id: id, password: hashedPassword, password_update_datetime: new Date() };
+    const updatedUser = await userProfileService.updateUserProfile(userprofileObject);
+    return res.json(updatedUser);
+  } 
+  catch (error) {
+    console.log(error);
     return res.status(500).json(error);
   }
 });

@@ -46,17 +46,17 @@ async function main() {
 
     await prismaClient.user_profile.createMany({
       data: [
-        { usertypeid: 3, first_name: 'Admin', last_name: 'Admin', title: 'Ms.', primary_email: process.env.DB_ADMIN_EMAIL, is_scraped: true, is_verified: true, signup_datetime: new Date('2006-02-26T10:13:02Z'), password: process.env.DB_ADMIN_PASSWORD_ENCRYPTED },
-        { usertypeid: 2, first_name: 'Jonathan', last_name: 'Phillips', title: 'Ms.', primary_email: 'jonphillips626@hotmail.com', is_scraped: true, is_verified: true, signup_datetime: new Date('2006-02-26T10:13:02Z'), organization_id: 1 },
-        { usertypeid: 2, first_name: 'Theresa', last_name: 'Wright', title: 'Ms.', primary_email: 'theresawrigh@icloud.com', is_scraped: false, is_verified: false, signup_datetime: new Date('2021-07-13T10:36:48Z'), organization_id: 1 },
-        { usertypeid: 1, first_name: 'Tina', last_name: 'Spencer', title: 'Prof.', primary_email: 'spentina@gmail.com', is_scraped: false, is_verified: false, signup_datetime: new Date('2012-10-07T15:44:00Z'), organization_id: 2 },
-        { usertypeid: 1, first_name: 'Aaron', last_name: 'Hamilton', title: 'Prof.', primary_email: 'hamia@icloud.com', is_scraped: false, is_verified: false, signup_datetime: new Date('2002-07-08T17:21:16Z'), organization_id: 1 },
-        { usertypeid: 2, first_name: 'Katherine', last_name: '', title: 'Mrs.', primary_email: 'okat3@icloud.com', is_scraped: false, is_verified: false, signup_datetime: new Date('2003-09-12T21:01:50Z'), organization_id: 2 },
-        { usertypeid: 2, first_name: 'Theodore', last_name: '', title: 'Prof.', primary_email: 'sanderstheod6@outlook.com', is_scraped: false, is_verified: false, signup_datetime: new Date('2011-09-05T03:48:36Z'), organization_id: 1 },
-        { usertypeid: 2, first_name: 'Valerie', last_name: 'Davis', title: 'Mrs.', primary_email: 'davisv1025@outlook.com', is_scraped: false, is_verified: false, signup_datetime: new Date('2007-07-30T04:15:53Z'), organization_id: 3 },
-        { usertypeid: 2, first_name: 'Marie', last_name: 'Weaver', title: 'Miss.', primary_email: 'marweave@hotmail.com', is_scraped: true, is_verified: true, signup_datetime: new Date('2012-03-30T19:08:31Z'), organization_id: 1 },
-        { usertypeid: 2, first_name: 'Nicholas', last_name: 'Cole', title: 'Miss.', primary_email: 'colenicholas@gmail.com', is_scraped: false, is_verified: false, signup_datetime: new Date('2009-10-13T09:05:44Z'), organization_id: 3 },
-        { usertypeid: 2, first_name: 'Antoni', last_name: 'Lopez', title: 'Mr.', primary_email: 'antolopez4@gmail.com', is_scraped: true, is_verified: true, signup_datetime: new Date('2003-09-29T21:40:09Z'), organization_id: 1 },
+        { usertypeid: 3, first_name: 'Admin', last_name: 'Admin', title: 'Ms.', primary_email: process.env.DB_ADMIN_EMAIL, is_verified: true, signup_datetime: new Date('2006-02-26T10:13:02Z'), password: process.env.DB_ADMIN_PASSWORD_ENCRYPTED },
+        { usertypeid: 2, first_name: 'Jonathan', last_name: 'Phillips', title: 'Ms.', primary_email: 'jonphillips626@hotmail.com', is_verified: true, signup_datetime: new Date('2006-02-26T10:13:02Z'), organization_id: 1 },
+        { usertypeid: 2, first_name: 'Theresa', last_name: 'Wright', title: 'Ms.', primary_email: 'theresawrigh@icloud.com', is_verified: false, signup_datetime: new Date('2021-07-13T10:36:48Z'), organization_id: 1 },
+        { usertypeid: 1, first_name: 'Tina', last_name: 'Spencer', title: 'Prof.', primary_email: 'spentina@gmail.com', signup_datetime: new Date('2012-10-07T15:44:00Z'), organization_id: 2 },
+        { usertypeid: 1, first_name: 'Aaron', last_name: 'Hamilton', title: 'Prof.', primary_email: 'hamia@icloud.com', is_verified: false, signup_datetime: new Date('2002-07-08T17:21:16Z'), organization_id: 1 },
+        { usertypeid: 2, first_name: 'Katherine', last_name: '', title: 'Mrs.', primary_email: 'okat3@icloud.com', is_verified: false, signup_datetime: new Date('2003-09-12T21:01:50Z'), organization_id: 2 },
+        { usertypeid: 2, first_name: 'Theodore', last_name: '', title: 'Prof.', primary_email: 'sanderstheod6@outlook.com', is_verified: false, signup_datetime: new Date('2011-09-05T03:48:36Z'), organization_id: 1 },
+        { usertypeid: 2, first_name: 'Valerie', last_name: 'Davis', title: 'Mrs.', primary_email: 'davisv1025@outlook.com', is_verified: false, signup_datetime: new Date('2007-07-30T04:15:53Z'), organization_id: 3 },
+        { usertypeid: 2, first_name: 'Marie', last_name: 'Weaver', title: 'Miss.', primary_email: 'marweave@hotmail.com', is_verified: true, signup_datetime: new Date('2012-03-30T19:08:31Z'), organization_id: 1 },
+        { usertypeid: 2, first_name: 'Nicholas', last_name: 'Cole', title: 'Miss.', primary_email: 'colenicholas@gmail.com', is_verified: false, signup_datetime: new Date('2009-10-13T09:05:44Z'), organization_id: 3 },
+        { usertypeid: 2, first_name: 'Antoni', last_name: 'Lopez', title: 'Mr.', primary_email: 'antolopez4@gmail.com', is_verified: true, signup_datetime: new Date('2003-09-29T21:40:09Z'), organization_id: 1 },
       ],
     });
 
