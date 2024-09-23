@@ -18,7 +18,8 @@ const LinkedinAdminVerification = () => {
   const [value, setValue] = useState(0);
   const [newRequests, setNewRequests] = useState([]);
   const [approvedPeople, setApprovedPeople] = useState([]);
-  const { getAccountVerificationData, verifyAccount, error, } = useAccountVerifyAPI();
+  const { getAccountVerificationData, verifyAccount, error } =
+    useAccountVerifyAPI();
   const [useDummyData, setUseDummyData] = useState(false); // I used this to toggle dummy data
 
   // Used Dummy data to check
@@ -94,7 +95,6 @@ const LinkedinAdminVerification = () => {
             } else {
               setApprovedPeople(fetchData || []);
             }
-
           }
         } catch (error) {
           console.error("Error fetching API data:", error);

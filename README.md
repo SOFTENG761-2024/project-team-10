@@ -147,6 +147,7 @@ You need to reachout to Mark(mzhu929) for giving you permission to access AWS co
 
 ```bash
 cd ./infrastructure
+npm run synth-dev
 npm run deploy-dev
 ```
 
