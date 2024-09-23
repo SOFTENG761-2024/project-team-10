@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userProfileService = require("../services/userProfileService.js");
+const passwordService = require("../services/passwordService.js");
 
 //swagger documentation in swaggerDoc.yaml with path: /api/userprofile
 
@@ -33,7 +34,7 @@ router.get("/primaryEmail:primaryEmail", async function getUserProfileByPrimaryE
   }
 });
 
-
+//Get a list of all user profiles
 router.get("/", async function getAllUserProfiles(req, res) {
   try {
 
@@ -49,6 +50,7 @@ router.get("/", async function getAllUserProfiles(req, res) {
   }
 });
 
+//Get a user profile by Id
 router.get("/:id", async function getUserProfileById(req, res) {
   try {
     const id = req.params.id;
@@ -60,10 +62,17 @@ router.get("/:id", async function getUserProfileById(req, res) {
   }
 });
 
+//Update user profile by id
 router.put("/:id", async function updateUserProfile(req, res) {
   try {
-    const userProfile = req.body;
+    let userProfile = req.body;
     console.log(userProfile);
+    const userPassword = userProfile.password;
+    if(userPassword && userPassword.trim().length > 0)
+    {
+      const hashedPassword = await passwordService.hashPassword(userPassword);
+      userProfile.password = hashedPassword;
+    }
     console.log(req.params.id);
     const updatedUserProfile = await userProfileService.updateUserProfileById(req.params.id, userProfile);
     return res.json(updatedUserProfile);
@@ -73,10 +82,17 @@ router.put("/:id", async function updateUserProfile(req, res) {
   }
 });
 
+//Is this needed?
 router.put("/", async function updateUserProfile(req, res) {
   try {
     const userProfile = req.body;
     console.log(userProfile);
+    const userPassword = userProfile.password;
+    if(userPassword && userPassword.trim().length > 0)
+    {
+      const hashedPassword = await passwordService.hashPassword(userPassword);
+      userProfile.password = hashedPassword;
+    }
     const updatedUserProfile = await userProfileService.updateUserProfile(userProfile);
     return res.json(updatedUserProfile);
   } catch (error) {

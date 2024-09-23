@@ -6,10 +6,10 @@ info:
 servers:
   - url: "__SWAGGER_API_BASE_URL__"
 paths:
-  /api/userprofile/verify/{id}:
+  /api/auth/verify/{id}:
     post:
       tags:
-        - User Profile Controller - Verify
+        - Auth Controller
       summary: Verify user profile by id
       parameters:
         - name: id
@@ -26,10 +26,40 @@ paths:
         '500':
           description: Internal server error
 
-  /api/userprofile/verify/{isVerified}:
+  /api/auth/updatePassword/{id}:
+    put:
+      tags:
+        - Auth Controller
+      summary: update password
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: User profile ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  format: password
+      responses:
+        '200':
+          description: Password updated successfully
+        '404':
+          description: Password not found
+        '500':
+          description: Internal server error
+
+  /api/auth/verify/{isVerified}:
     get:
       tags:
-        - User Profile Controller - get business user profiles for verification 
+        - Auth Controller
       summary: get business user profiles for verification 
       parameters:
         - name: isVerified
@@ -98,8 +128,6 @@ paths:
                   type: integer
                 institution_id:
                   type: integer
-                #institution_name:
-                 # type:strimg
                 faculty_id:
                   type: integer
                 organization_id:
@@ -141,8 +169,6 @@ paths:
                   type: string
                 profile_picture:
                   type: string
-                is_scraped:
-                  type: boolean
                 is_verified:
                   type: boolean
                 signup_datetime:
@@ -155,7 +181,6 @@ paths:
           description: Bad request
         '500':
           description: Internal server error
-
    put:
       tags:
       summary: update a user profile with id in the request body
@@ -188,6 +213,9 @@ paths:
                 primary_email:
                   type: string
                   format: email
+                password:
+                  type: string
+                  format: password
                 department:
                   type: string
                 orcid_identifier:
@@ -214,8 +242,6 @@ paths:
                   type: string
                 profile_picture:
                   type: string
-                is_scraped:
-                  type: boolean
                 is_verified:
                   type: boolean
                 signup_datetime:
@@ -267,6 +293,9 @@ paths:
                 primary_email:
                   type: string
                   format: email
+                password:
+                  type: string
+                  format: password
                 department:
                   type: string
                 orcid_identifier:
@@ -293,8 +322,6 @@ paths:
                   type: string
                 profile_picture:
                   type: string
-                is_scraped:
-                  type: boolean
                 is_verified:
                   type: boolean
                 signup_datetime:
