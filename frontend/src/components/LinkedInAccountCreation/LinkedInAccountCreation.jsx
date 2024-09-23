@@ -26,6 +26,7 @@ const AccountCreation = () => {
     email: "",
   });
   const [open, setOpen] = useState(false);
+  const [navToLandinPage, setNavToLandingPage] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
 
   const handleChange = (event) => {
@@ -38,18 +39,33 @@ const AccountCreation = () => {
 
   const handleClose = () => {
     setOpen(false);
-    navigate("/");
+    if (navToLandinPage)
+      navigate("/");
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const data = await createAccount(formData);
-      console.log("API Response Data:", data);
-      setDialogMessage(
-        "Your account is in the verification process. You can now navigate to the landing page.",
-      );
-      setOpen(true);
+      const data = await createAccount(
+        {
+          'first_name': formData.firstName,
+          'last_name': formData.lastName,
+          'organization_name': formData.organization,
+          'email': formData.email,
+        }
+      ).then((response) => {
+        if (response === true) {
+          setDialogMessage("Your account is in the verification process. You can now navigate to the landing page.");
+          setNavToLandingPage(true);
+
+        } else if (response === false) {
+          setDialogMessage("Failed to create account. Please try again.");
+        } else {
+          setDialogMessage("Failed to create account. Please go to the sign up page and try again.");
+        }
+        setOpen(true);
+      });
+
     } catch (error) {
       console.error("Error:", error);
       setDialogMessage("Failed to create account. Please try again.");
