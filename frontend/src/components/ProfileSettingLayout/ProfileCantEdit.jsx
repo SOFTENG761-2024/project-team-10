@@ -4,15 +4,16 @@ import { TextField, Button, Avatar, Card, CardHeader, CardContent, Typography, G
 import { Box } from '@mui/system';
 import EmailIcon from '@mui/icons-material/Email';
 
-const ProfileCantEdit = ({ profile, onSave }) => {
+const ProfileCantEdit = ({ profile }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [editedProfile, setEditedProfile] = useState(profile);
 
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
   const handleInputChange = (field, value) => {
-    onSave({ ...profile, [field]: value });
+    setEditedProfile({ ...editedProfile, [field]: value });
   };
 
   const handleSaveClick = () => {
@@ -39,7 +40,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>Full Name:</Typography>
                 <TextField
-                  value={profile.fullName}
+                  value={editedProfile.fullName}
                   onChange={(e) => handleInputChange('fullName', e.target.value)}
                   InputProps={{ readOnly: !isEditing }}
                   fullWidth
@@ -50,7 +51,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>Last Name:</Typography>
                 <TextField
-                  value={profile.lastName}
+                  value={editedProfile.lastName}
                   onChange={(e) => handleInputChange('lastName', e.target.value)}
                   InputProps={{ readOnly: !isEditing }}
                   fullWidth
@@ -61,7 +62,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>Preferred Name:</Typography>
                 <TextField
-                  value={profile.preferredName}
+                  value={editedProfile.preferredName}
                   onChange={(e) => handleInputChange('preferredName', e.target.value)}
                   InputProps={{ readOnly: !isEditing }}
                   fullWidth
@@ -72,7 +73,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>E-mail Address:</Typography>
                 <TextField
-                  value={profile.email}
+                  value={editedProfile.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   disabled
                   // fullWidth
@@ -83,7 +84,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>ORCID ID:</Typography>
                 <TextField
-                  value={profile.orcid}
+                  value={editedProfile.orcid}
                   disabled
                   onChange={(e) => handleInputChange('orcid', e.target.value)}
                   fullWidth
@@ -94,7 +95,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>Linkedin:</Typography>
                 <TextField
-                  value={profile.linkedin}
+                  value={editedProfile.linkedin}
                   onChange={(e) => handleInputChange('linkedin', e.target.value)}
                   disabled
                   fullWidth
@@ -108,7 +109,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>Name:</Typography>
                 <TextField
-                  value={profile.affiliations}
+                  value={editedProfile.affiliations}
                   onChange={(e) => handleInputChange('affiliations', e.target.value)}
                   InputProps={{ readOnly: !isEditing }}
                   fullWidth
@@ -119,7 +120,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>Role and Title:</Typography>
                 <TextField
-                  value={profile.role}
+                  value={editedProfile.role}
                   onChange={(e) => handleInputChange('role', e.target.value)}
                   InputProps={{ readOnly: !isEditing }}
                   fullWidth
