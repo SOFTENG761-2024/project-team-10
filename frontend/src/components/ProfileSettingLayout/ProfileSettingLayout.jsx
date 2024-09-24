@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Box } from '@mui/material';
-import Sidebar from "./Sidebar";
+import ProfileSidebar from '../Profile/SidebarAndHeader/ProfileSidebar';
+import { ProfileHeader } from '../Profile/SidebarAndHeader';
 import ProfileCantEdit from './ProfileCantEdit';
 import Career from './Career';
-import Header from './Header'; 
+import { useOwnProfileAPI } from "../Profile/SidebarAndHeader/api";
+import { useAPI } from "@frontend-ui/components/GlobalProviders";
 
 const transformProfileData = (data) => {
   return {
+    id: data.id,
     fullName: `${data.first_name} ${data.last_name}`,
     lastName: data.last_name,
     preferredName: data.preferred_name || data.first_name,
@@ -54,37 +57,38 @@ const ProfileSettingLayout = () => {
   const [page, setPage] = useState('profile');
   const [profileData, setProfileData] = useState({});
 
+  const { getOwnProfileData } = useOwnProfileAPI();
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const data = await getOwnProfileData();
+        setProfileData(transformProfileData(data));
+      } catch (err) {
+        console.error("Error fetching profile data:", err);
+      }
+    };
+    fetchProfileData();
+  }, []);
+
+  const { put } = useAPI()
+
   const handleSave = (updatedProfile) => {
     setProfileData(updatedProfile);
-    fetch("http://localhost:3000/api/userprofile/1", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(transformProfileToBackend(updatedProfile))
-    })
+    put(`${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/userprofile/${profileData.id}`,
+      transformProfileToBackend(updatedProfile))
   };
 
-  const fetchProfileData = async () => {
-    const data = await fetch("http://localhost:3000/api/userprofile/primaryemailsheldoncaiy%40outlook.com", {
-      method: "GET",
-    });
-    const body = await data.json()
-    setProfileData(transformProfileData(body))
-  }
-  useEffect(() => {
-    fetchProfileData();
-  }, [])
   return (
     <Box>
-      <Sidebar />
-      <Box sx={{ marginLeft: '80px', width: 'calc(100% - 80px)' }}>
-        <Header />
+      <ProfileSidebar />
+      <Box sx={{ marginLeft: '135px', width: 'calc(100% - 135px)' }}>
+        <ProfileHeader />
         {page === 'profile' && <ProfileCantEdit profile={profileData} onSave={handleSave} />}
         {page === 'career' && <Career profile={profileData} onSave={handleSave} />}
       </Box>
-      {page === 'profile' && <Button sx={{ marginLeft: '90px', marginTop: '20px' }} variant='contained' onClick={() => setPage('career')}>Next</Button>}
-      {page === 'career' && <Button sx={{ marginLeft: '90px', marginTop: '20px' }} variant='contained' onClick={() => setPage('profile')}>Back</Button>}
+      {page === 'profile' && <Button sx={{ marginLeft: '145px', marginTop: '20px' }} variant='contained' onClick={() => setPage('career')}>Next</Button>}
+      {page === 'career' && <Button sx={{ marginLeft: '145px', marginTop: '20px' }} variant='contained' onClick={() => setPage('profile')}>Back</Button>}
     </Box>
   );
 }
