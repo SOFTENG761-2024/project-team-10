@@ -23,7 +23,7 @@ export class EC2Stack extends Stack {
     super(scope, id, props);
 
     // use default vpc as it is free of charge
-    const vpc = new Vpc(this, "give-it-a-good-name-vpc", {
+    const vpc = new Vpc(this, "give-it-a-good-name-vpc-prod", {
       maxAzs: 1,
       // nat gateways are not covered by free tier
       // so we cannot put our ec2 under private subnet and exposed to public via NAT Gateways
@@ -33,31 +33,29 @@ export class EC2Stack extends Stack {
       ],
     });
 
-    const securityGroup = new SecurityGroup(this, "AppSG", {
+    const securityGroup = new SecurityGroup(this, "AppSG-prod", {
       vpc,
       description:
         "Allow inbound from ports 3000(node) and 80(react) and 8080(db admin) and 8888(pgadmin)",
       allowAllOutbound: true,
     });
     securityGroup.addEgressRule(Peer.anyIpv4(), Port.allTraffic());
-    // securityGroup.addIngressRule(Peer.anyIpv4(), Port.allTraffic());
 
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(443));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(22));
-    // securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(80));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(3000));
-    // securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(5000));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(8080));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(8888));
+    securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(5000));
 
-    const ec2Instance = new Instance(this, "EC2Instance", {
+    const ec2Instance = new Instance(this, "EC2Instance-prod", {
       vpc,
       // free tier t2.micro
       vpcSubnets: { subnetType: SubnetType.PUBLIC },
       instanceType: InstanceType.of(InstanceClass.T2, InstanceSize.MICRO),
       machineImage: MachineImage.latestAmazonLinux2023(),
       securityGroup,
-      instanceName: "give-it-a-good-name-ec2",
+      instanceName: "give-it-a-good-name-ec2-prod",
       keyPair: KeyPair.fromKeyPairName(this, "KeyPair", "mykey"),
     });
 

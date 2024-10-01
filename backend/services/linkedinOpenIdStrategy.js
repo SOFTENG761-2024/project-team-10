@@ -54,7 +54,6 @@ class linkedinOpenIdStrategy extends PassportStrategy {
                         positions: "",
                         tools: "",
                         profile_picture: tokenData.picture,
-                        is_scraped: false,
                         is_verified: false,
                         signup_datetime: new Date(),
                     };

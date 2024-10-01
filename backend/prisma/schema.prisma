@@ -19,6 +19,8 @@ model user_profile {
   preferred_name                                       String?                @test.VarChar
   title                                                String?                @test.VarChar
   primary_email                                        String                 @unique @test.VarChar
+  password                                             String?
+  password_update_datetime                             DateTime?              @test.Timestamp(6)
   orcid_identifier                                     String?                @unique @test.VarChar
   linkedin_url                                         String?                @test.VarChar
   secondary_email                                      String?                @test.VarChar
@@ -33,7 +35,7 @@ model user_profile {
   tools                                                String?
   profile_picture                                      String?                @test.VarChar
   is_scraped                                           Boolean                @default(false)
-  is_verified                                           Boolean                @default(false)
+  is_verified                                          Boolean                @default(false)
   signup_datetime                                      DateTime?              @test.Timestamp(6)
   event                                                event[]
   event_attendee                                       event_attendee[]
@@ -56,7 +58,7 @@ model user_profile {
 }
 
 model institution {
-  id    Int                 @id @unique
+  id                Int                 @id @unique
   name              String?             @test.VarChar
   address           String?             @test.VarChar
   user_affiliations user_affiliations[]
@@ -71,7 +73,7 @@ model faculty {
 
 model organization {
   id           Int            @id @default(autoincrement())
-  name         String?        @test.VarChar @unique
+  name         String?        @unique @test.VarChar
   address      String?        @test.VarChar
   user_profile user_profile[]
 }
@@ -204,19 +206,5 @@ model user_message {
   to_user_id                                           Int?
   user_profile_user_message_from_user_idTouser_profile user_profile? @relation("user_message_from_user_idTouser_profile", fields: [from_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   user_profile_user_message_to_user_idTouser_profile   user_profile? @relation("user_message_to_user_idTouser_profile", fields: [to_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-model User {
-  id      String    @id @default(uuid()) @test.VarChar
-  Profile Profile[]
-}
-
-model Profile {
-  id     String @id @default(uuid()) @test.VarChar
-  userId String @test.VarChar
-  bio    String @test.VarChar(500)
-  user   User   @relation(fields: [userId], references: [id])
-
-  @@index([userId])
 }
 

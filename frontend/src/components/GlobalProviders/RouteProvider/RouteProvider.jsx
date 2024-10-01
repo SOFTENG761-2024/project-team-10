@@ -20,6 +20,8 @@ import ProfileVisitorView from "@frontend-ui/components/Profile/ProfileVisitorVi
 import { TermsAndConditions } from "@frontend-ui/components/Profile/ProfileVisitorView/TermsAndConditions";
 import AccountScreenPageProvider from "@frontend-ui/components/AuthPage/AccountScreenProvider";
 import AccountCreation from "@frontend-ui/components/LinkedInAccountCreation/LinkedInAccountCreation";
+import { SearchProfile } from "../../SearchProfile";
+import LinkedinAdminVerification from "@frontend-ui/components/LinkedinAdminVerification";
 
 const RouteContext = createContext({});
 
@@ -70,7 +72,7 @@ const RouteProvider = () => {
           <Route path="/authenticated" element={<Landing />} />
 
           {/* Optionally, you can keep the /auth route if needed */}
-          <Route path="/auth" element={<AuthPageProvider />} />
+          {/* <Route path="/auth" element={<AuthPageProvider />} /> */}
           <Route path="/profile-setting" element={<ProfileSettingLayout />} />
           <Route path="/profile-visitor/:id" element={<ProfileVisitorView />} />
           <Route path="/terms" component={TermsAndConditions} />
@@ -82,6 +84,11 @@ const RouteProvider = () => {
             element={<AccountScreenPageProvider />}
           />
           <Route path="/create-account" element={<AccountCreation />} />
+          <Route path="/search-profile" element={<SearchProfile />} />
+          <Route
+            path="/admin-verification"
+            element={<LinkedinAdminVerification />}
+          />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>

@@ -7,6 +7,8 @@ const passport = require("passport");
 const path = require("path");
 const router = express.Router();
 const env = require("dotenv");
+const createAccountEmailService = require("../services/createAccountEmailService.js");
+const passwordService = require("../services/passwordService.js");
 
 env.config({ path: path.resolve(__dirname, "../.env") });
 
@@ -21,6 +23,27 @@ router.get("/signout", async (req, res) => {
   res.send("signingout");
 });
 
+router.post('/email-signin', async (req, res) => {
+  passport.authenticate('local', { session: true }, (err, user, info) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+    if (!user) {
+      return res.status(401).json(info);
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        return res.status(500).json(err);
+      }
+      if (!user.is_verified) {
+        return res.json(false); // not verified
+      }
+      return res.json(true);
+    });
+  })(req, res);
+});
+
 //Linkdein SignIn
 router.get(
   "/linkedin",
@@ -28,15 +51,15 @@ router.get(
 
 //callback route for linkedin to redirect to
 router.get('/linkedin/redirect', passport.authenticate('linkedinOpenId', {
-  // successRedirect: process.env.FRONT_END_BASE_URL + "/account-screen",
   failureRedirect: process.env.FRONT_END_BASE_URL + '/signin', failureMessage: true
 }), (req, res) => {
   if (req.user.is_verified) {
-    res.redirect(process.env.FRONT_END_BASE_URL); // Redirect to home if verified
+    res.redirect(process.env.FRONT_END_BASE_URL + '/search-profile'); // Redirect to search page if verified
   } else {
-    res.redirect(process.env.FRONT_END_BASE_URL + '/account-screen'); // Redirect to screen if not verified
+    res.redirect(process.env.FRONT_END_BASE_URL + '/create-account'); // Redirect to screen if not verified
   }
 });
+
 
 router.get("/current-user", async (req, res) => {
   try {
@@ -49,6 +72,7 @@ router.get("/current-user", async (req, res) => {
 
 router.post("/account-screen", async (req, res) => {
   try {
+    console.log("account-screen: ", req.user);
     if (!req.user) {
       return res.status(401).json({ message: "User not authenticated" });
     }
@@ -68,8 +92,10 @@ router.post("/account-screen", async (req, res) => {
     }
     dbUser.id = req.user.id;
     const profile = await userProfileService.updateUserProfile(dbUser);
-
-    return res.json(profile);
+    if (profile)
+      return res.json(true);
+    else
+      return res.json(false);
   } catch (error) {
     return res.status(500).json(error);
   }
@@ -108,10 +134,48 @@ router.get("/verify/:is_verified", async function getAllVerifiedUserProfiles(req
 router.post("/verify/:id", async function verifyUserProfile(req, res) {
   try {
     const id = req.params.id;
-    const userprofileObject = { id: id, is_verified: true };
+    // initiate password
+    const password = passwordService.generateRandomPassword();
+    const hashedPassword = await passwordService.hashPassword(password);
+
+    const userprofileObject = { id: id, is_verified: true, password: hashedPassword, password_update_datetime: new Date() };
     const result = await userProfileService.updateUserProfile(userprofileObject);
+    // Send email to user
+    // Use a message queue to send emails in production
+    if (process.env.SMTP_EMAIL_ENABLED === 'true') {
+      console.log("Sending email to user");
+      const userProfile = await userProfileService.getUserProfileById(id);
+      await createAccountEmailService.sendBusinessAccountVerifiedEmail(userProfile.primary_email, password);
+    }
+
     return res.json(result.is_verified);
   } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+});
+
+router.post("/test", async (req, res) => {
+  try {
+    console.log("test");
+    await createAccountEmailService.sendBusinessAccountVerifiedEmail('tableliu@hotmail.com');
+    return res.json("test");
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
+
+//end point to update user password
+router.put("/updatePassword/:id", async function updatePassword(req, res)  {
+  try
+  {
+    const id = req.params.id;
+    const hashedPassword = await passwordService.hashPassword(req.body.password);
+    const userprofileObject = { id: id, password: hashedPassword, password_update_datetime: new Date() };
+    const updatedUser = await userProfileService.updateUserProfile(userprofileObject);
+    return res.json(updatedUser);
+  } 
+  catch (error) {
     console.log(error);
     return res.status(500).json(error);
   }

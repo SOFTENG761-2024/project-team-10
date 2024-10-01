@@ -13,11 +13,9 @@ import {
   Paper,
   Grid,
   Container,
-  CircularProgress
+  CircularProgress,
+  GlobalStyles,
 } from '@mui/material';
-
-const mainColor = "#4b5a68";
-const primaryColor = "#d7d7d7";
 
 const OrDivider = styled(Typography)(({ theme }) => ({
   display: 'flex',
@@ -37,13 +35,12 @@ const OrDivider = styled(Typography)(({ theme }) => ({
 }));
 
 const StyledPaperTop = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(3),
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
+  backgroundColor: "#4b5a68",
   borderTopLeftRadius: theme.spacing(2),
   borderTopRightRadius: theme.spacing(2),
+  padding: theme.spacing(4),
+  textAlign: "center",
+  color: "white",
   minHeight: '30vh',
 }));
 
@@ -68,7 +65,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const SubmitButton = styled(Button)(({ theme }) => ({
-  backgroundColor: mainColor,
   color: theme.palette.common.white,
   '&:hover': {
     backgroundColor: theme.palette.grey[400],
@@ -77,12 +73,28 @@ const SubmitButton = styled(Button)(({ theme }) => ({
 }));
 
 const LinkedInButton = styled(Button)(({ theme }) => ({
-  backgroundColor: mainColor,
   color: theme.palette.common.white,
   '&:hover': {
     backgroundColor: theme.palette.grey[400],
   },
   borderRadius: theme.spacing(2),
+}));
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  background: "#D6D8D9",
+  borderRadius: theme.spacing(3),
+  outline: "none",
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      border: "none",
+    },
+    "&:hover fieldset": {
+      border: "none",
+    },
+    "&.Mui-focused fieldset": {
+      border: "none",
+    },
+  },
 }));
 
 const SignupPageContext = createContext({});
@@ -132,6 +144,7 @@ const SignupPageProvider = () => {
 
   return (
     <SignupPageContext.Provider value={{}}>
+      <GlobalStyles styles={styles.global} />
       <Container maxWidth="md">
         {
           loading ? (
@@ -139,7 +152,7 @@ const SignupPageProvider = () => {
               <CircularProgress />
             </Box>
           ) : (
-            <><StyledPaperTop elevation={3} sx={{ backgroundColor: mainColor, color: primaryColor }}>
+            <><StyledPaperTop elevation={3}>
               <Box mt="1">
                 <Typography variant="h6" gutterBottom>
                   Create a professional account
@@ -179,11 +192,10 @@ const SignupPageProvider = () => {
                     <form onSubmit={handleCreateBusinessAccount}>
                       <Grid container spacing={2}>
                         <Grid item xs={6}>
-                          <TextField
+                          <StyledTextField
                             fullWidth
                             id="first-name"
                             label="First Name"
-                            variant="filled"
                             margin="dense"
                             size='small'
                             value={firstName}
@@ -191,11 +203,10 @@ const SignupPageProvider = () => {
                             required />
                         </Grid>
                         <Grid item xs={6}>
-                          <TextField
+                          <StyledTextField
                             fullWidth
                             id="last-name"
                             label="Last Name"
-                            variant="filled"
                             margin="dense"
                             size='small'
                             value={lastName}
@@ -203,20 +214,21 @@ const SignupPageProvider = () => {
                             required />
                         </Grid>
                       </Grid>
-                      <TextField
+                      <StyledTextField
                         fullWidth
                         id="organization"
                         label="Organization"
-                        variant="filled"
                         margin="dense"
                         size='small'
                         value={organization}
                         onChange={(e) => setOrganization(e.target.value)}
                         required />
-                      <TextField
+
+                      <StyledTextField
+
+
                         fullWidth
                         label="Email"
-                        variant="filled"
                         margin="dense"
                         size='small'
                         type="email"
@@ -268,3 +280,80 @@ const SignupPageProvider = () => {
 };
 
 export default SignupPageProvider;
+
+const styles = {
+  global: {
+    html: {
+      height: "100%",
+      margin: 0,
+      padding: 0,
+    },
+    body: {
+      width: "100%",
+      height: "100vh",
+      margin: "0",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      overflow: "hidden",
+    },
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "960px",
+    height: "600px",
+  },
+  typographyBody: {
+    mt: "25px",
+    display: "flex",
+    fontFamily: "Ramaraja",
+    fontSize: "20px",
+    fontWeight: "400",
+    textAlign: "center",
+    padding: 2,
+  },
+
+  supportText: {
+    fontSize: "19px",
+    fontFamily: "Ramaraja",
+    mt: "30px",
+  },
+  form: {
+    width: "100%",
+    height: "45%",
+    backgroundColor: "#F1F4F6",
+    padding: 5,
+    boxSizing: "border-box",
+    borderRadius: "0 0 30px 30px",
+  },
+
+  submitButton: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    type: "submit",
+    fullWidth: true,
+    variant: "contained",
+    mt: 1,
+    mb: 2,
+    backgroundColor: "#4b5a68",
+    color: "#fff",
+    borderRadius: "25px",
+    width: "150px",
+    border: "1px solid transparent",
+
+    "&:hover": {
+      backgroundColor: "#F1F4F6",
+      color: "#4b5a68",
+      borderColor: "#4b5a68",
+    },
+    "&:active": {
+      backgroundColor: "#F1F4F6",
+      color: "#4b5a68",
+      borderColor: "#4b5a68",
+    },
+  },
+};

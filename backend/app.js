@@ -10,13 +10,12 @@ const passport = require('passport');
 const env = require('dotenv');
 env.config();
 
-var userController = require("./controllers/userController");
 var userProfileController = require("./controllers/userProfileController.js");
 var publicationController = require("./controllers/publicationsController.js");
 var authController = require('./controllers/authController.js');
 var testController = require('./controllers/testController.js')
 const swaggerController = require("./controllers/swaggerController");
-const { loadESLint } = require("eslint");
+//const { loadESLint } = require("eslint");
 
 var app = express();
 
@@ -25,7 +24,10 @@ passportService;
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors({
+    origin: process.env.FRONT_END_BASE_URL,
+    credentials: true
+}));
 
 //app.use(cookieParser());
 //Encrypt the cookie
@@ -47,7 +49,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//TODO: Commented temporarily to stop build from failing - HI
+
 // Middleware to protect routes, check if user is authenticated and verified
+// eslint-disable-next-line no-unused-vars
 function ensureAuthenticated(req, res, next) {
     if (!req.isAuthenticated())
         res.status(401).json({ message: 'Unauthorized access' });
@@ -55,11 +60,10 @@ function ensureAuthenticated(req, res, next) {
         if (req.user.is_verified)
             return next(); // Proceed to the next middleware/controller if authenticated
         else
-            res.redirect(process.env.FRONT_END_BASE_URL + '/account-screen'); // Redirect to screen if not verified
+            res.redirect(process.env.FRONT_END_BASE_URL + '/create-account'); // Redirect to screen if not verified
     }
 }
 
-app.use("/api/users", userController);
 // app.use("/api/userprofile", ensureAuthenticated, userProfileController);
 app.use("/api/userprofile", userProfileController);
 app.use("/api/publications", publicationController);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import {
   DashboardIcon,
@@ -9,8 +9,25 @@ import {
   CategoryIcon,
   MessageIcon,
 } from "./SidebarIcons";
-const ProfileSidebar = ({ profileData }) => {
-  const [activeIcon, setActiveIcon] = useState("");
+import { useOwnProfileAPI } from "./api";
+
+const ProfileSidebar = () => {
+  const [activeIcon, setActiveIcon] = useState("Network");
+  const { getOwnProfileData, error } = useOwnProfileAPI();
+  const [ownProfileData, setOwnProfileData] = useState(null);
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const profileData = await getOwnProfileData();
+        setOwnProfileData(profileData);
+      } catch (err) {
+        console.error("Error fetching profile data:", err);
+      }
+    };
+
+    fetchProfileData();
+  }, [getOwnProfileData]);
 
   const handleIconClick = (iconName) => {
     setActiveIcon(iconName);
@@ -20,8 +37,8 @@ const ProfileSidebar = ({ profileData }) => {
     <Box sx={styles.sidebar}>
       <Box sx={styles.profile}>
         <img
-          src={profileData?.profile_picture || "/default-profile.png"}
-          alt={`${profileData?.first_name} ${profileData?.last_name}`}
+          src={ownProfileData?.profile_picture || "/default-profile.png"}
+          alt={`${ownProfileData?.first_name} ${ownProfileData?.last_name}`}
           style={styles.profileImage}
         />
       </Box>

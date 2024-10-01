@@ -14,7 +14,7 @@ const APIProvider = ({ children }) => {
 
   const get = async (url) => {
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, { withCredentials: true });
       setError(null);
       return response;
     } catch (error) {
@@ -25,7 +25,7 @@ const APIProvider = ({ children }) => {
   };
   const post = async (url, body) => {
     try {
-      const response = await axios.post(url, body);
+      const response = await axios.post(url, body, { withCredentials: true });
       setError(null);
       return response;
     } catch (error) {
@@ -36,7 +36,7 @@ const APIProvider = ({ children }) => {
   };
   const del = async (url) => {
     try {
-      const response = await axios.delete(url);
+      const response = await axios.delete(url, { withCredentials: true });
       setError(null);
       return response;
     } catch (error) {
@@ -46,7 +46,7 @@ const APIProvider = ({ children }) => {
   };
   const put = async (url, body) => {
     try {
-      const response = await axios.put(url, body);
+      const response = await axios.put(url, body, { withCredentials: true });
       setError(null);
       return response;
     } catch (error) {
@@ -56,7 +56,7 @@ const APIProvider = ({ children }) => {
   };
   const patch = async (url, body) => {
     try {
-      const response = await axios.patch(url, body);
+      const response = await axios.patch(url, body, { withCredentials: true });
       setError(null);
       return response;
     } catch (error) {
