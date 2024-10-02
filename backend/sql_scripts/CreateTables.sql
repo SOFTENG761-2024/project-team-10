@@ -31,10 +31,14 @@ CREATE TABLE user_profile (
   preferred_name VARCHAR,
   title VARCHAR,
   primary_email VARCHAR UNIQUE,
+  "password" TEXT,
+  password_update_datetime TIMESTAMP,
   orcid_identifier VARCHAR UNIQUE,
   linkedIn_url VARCHAR,
   secondary_email VARCHAR,
   mobile_phone VARCHAR,
+  department VARCHAR,
+  positions TEXT,
   bio TEXT,
   research_area TEXT,
   skills TEXT,
@@ -42,7 +46,8 @@ CREATE TABLE user_profile (
   expertise TEXT,
   tools TEXT,
   profile_picture VARCHAR,
-  isScrapped BOOLEAN,
+  is_scraped boolean DEFAULT false,
+  is_verified boolean DEFAULT false,
   signup_datetime TIMESTAMP
 );
 

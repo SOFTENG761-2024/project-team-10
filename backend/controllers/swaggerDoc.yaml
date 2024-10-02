@@ -357,7 +357,7 @@ paths:
         '500':
           description: Internal server error
 
-  
+
 #swagger definition for the Publication Controller
   /api/publications:  
     post:             #Create new publication 
@@ -408,4 +408,23 @@ paths:
           description: Publications not found
         '500':
           description: Internal server error
-    
+  
+  /api/search:  
+    get:                           # Search for the users
+      tags:
+        - Search Controller
+      summary: Search for the user profiles based on the keywords
+      parameters:
+        - in: query
+          name: keyword
+          schema:
+            type: string
+          required: true
+          description: Keyword(s) to search for in user profile and related tables.
+      responses:
+        '200':
+          description: User profiles found
+        '404':
+          description: No user profiles found
+        '500':
+          description: Internal server error

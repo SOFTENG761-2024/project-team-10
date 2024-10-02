@@ -1,4 +1,6 @@
 const { prismaClient, disconnect } = require("../daos/prismaClient");
+//const USER_TYPE_ACADEMIC = 1;
+const USER_TYPE_BUSINESS = 2;
 
 //Create user profile - add university if it doesn't exist - would not work for now though
 //TODO: move to separate objects, add logic for faculty/organization -HI
@@ -123,7 +125,7 @@ async function getAllVerifiedUserProfiles(is_verified) {
       },
       where: {
         is_verified: { equals: is_verified },
-        usertypeid: { equals: 2 } // only business users need to be verified
+        usertypeid: { equals: USER_TYPE_BUSINESS } // only business users need to be verified
       },
       orderBy: [
         {
@@ -186,7 +188,7 @@ async function updateUserProfile(userProfileData) {
 }
 
 
-
+//Update the password for the user profile - only valid for user type 2 - Business account
 async function updatePassword(userId, userPassword)
 {
     try
@@ -195,6 +197,7 @@ async function updatePassword(userId, userPassword)
             {
                 where: {
                   id: userId,
+                  usertypeid : USER_TYPE_BUSINESS,
                 },
                 data: 
                 {
@@ -211,6 +214,44 @@ async function updatePassword(userId, userPassword)
       }
 }
 
+//Search against keywords
+async function searchKeywords(keywordList)
+{
+  try{
+  const keywords = keywordList.split(' ');
+  const orConditions = keywords.map(searchTerm => ({
+    OR: [
+      { first_name: { contains: searchTerm, mode: 'insensitive' } },
+      { last_name: { contains: searchTerm, mode: 'insensitive' } },
+      { title: { contains: searchTerm, mode: 'insensitive' } },
+      { positions: { contains: searchTerm, mode: 'insensitive' } },
+      { department: { contains: searchTerm, mode: 'insensitive' } },
+      { research_tags: { contains: searchTerm, mode: 'insensitive' } },
+      { skills: { contains: searchTerm, mode: 'insensitive' } },
+      { institution: { name: { contains: searchTerm, mode: 'insensitive' } } },
+      { organization: { name: { contains: searchTerm, mode: 'insensitive' } } }
+    ]
+  }));
+
+  const searchResults = await prismaClient.user_profile.findMany({
+    where: {
+      AND: orConditions,  // Combine all conditions with AND for each keyword
+    },
+    include: {
+      institution: true,
+      organization: true,
+    },
+  });
+
+    return searchResults;
+  }
+
+    finally {
+        disconnect();
+      }
+    }
+
+
 module.exports = {
   createUserProfile,
   getUserProfileById,
@@ -219,5 +260,6 @@ module.exports = {
   addInstitution,
   updateUserProfile,
   getAllVerifiedUserProfiles,
-  updatePassword
+  updatePassword,
+  searchKeywords
 };

@@ -15,6 +15,7 @@ var publicationController = require("./controllers/publicationsController.js");
 var authController = require('./controllers/authController.js');
 var testController = require('./controllers/testController.js')
 const swaggerController = require("./controllers/swaggerController");
+var searchController = require("./controllers/searchController.js")
 //const { loadESLint } = require("eslint");
 
 var app = express();
@@ -69,6 +70,7 @@ app.use("/api/userprofile", userProfileController);
 app.use("/api/publications", publicationController);
 app.use("/api/auth", authController);
 app.use("/api/test", testController);
+app.use("/api/search", searchController);
 
 // setup swagger ui
 swaggerController(app);
