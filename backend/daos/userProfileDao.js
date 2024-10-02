@@ -1,5 +1,5 @@
 const { prismaClient, disconnect } = require("../daos/prismaClient");
-//const USER_TYPE_ACADEMIC = 1;
+const USER_TYPE_ACADEMIC = 1;
 const USER_TYPE_BUSINESS = 2;
 
 //Create user profile - add university if it doesn't exist - would not work for now though
@@ -219,7 +219,7 @@ async function searchKeywords(keywordList)
 {
   try{
   const keywords = keywordList.split(' ');
-  const orConditions = keywords.map(searchTerm => ({
+  const searchConditions = keywords.map(searchTerm => ({
     OR: [
       { first_name: { contains: searchTerm, mode: 'insensitive' } },
       { last_name: { contains: searchTerm, mode: 'insensitive' } },
@@ -235,7 +235,10 @@ async function searchKeywords(keywordList)
 
   const searchResults = await prismaClient.user_profile.findMany({
     where: {
-      AND: orConditions,  // Combine all conditions with AND for each keyword
+      AND: [
+        ...searchConditionsConditions,  // Combine keyword search conditions
+        { usertypeid: { in: [USER_TYPE_ACADEMIC, USER_TYPE_BUSINESS] } }  // Only include usertypeid for academic and business
+      ],
     },
     include: {
       institution: true,
