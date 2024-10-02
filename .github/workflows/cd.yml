@@ -3,12 +3,12 @@ permissions:
   id-token: write
   contents: read
 # triggers on pull_request for ease of testing
-# on:
-#   push:
-#     branches:
-#       - main
 on:
-  pull_request:
+  push:
+    branches:
+      - main
+#on:
+#  pull_request:
   
 jobs:
   archive-src-code:
