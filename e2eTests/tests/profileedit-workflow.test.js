@@ -1,10 +1,15 @@
 const { test, expect, afterEach } = require("@playwright/test");
 require("dotenv").config();
 
+test.beforeEach(async ({ page }) => {
+  // Assuming there's a login function implemented
+
+  await page.goto('http://localhost:5173/profile-setting');
+});
 
 test('should allow editing some fields in ProfileCantEdit', async ({ page }) => {
   // Step 1: Visit the Profiledit page
-  await page.goto('http://localhost:5173/profile-setting');
+
   // Step 2: Check that the page is loaded and displays the initial profile data
   await page.waitForSelector('#fname'); // Confirm that the full name text box has loaded
   const initialFullName = await page.inputValue('#fname');
@@ -130,3 +135,13 @@ test('应该显示正确的当前日期', async ({ page }) => {
   const dateText = await page.locator('text=' + formattedDate);
   await expect(dateText).toBeVisible();
 });
+
+
+test('应该显示正确的欢迎文本', async ({ page }) => {
+  await page.goto('http://localhost:5173/profile-settings');  // 替换为实际 URL
+
+  // 检查页面上是否显示 "Welcome, Alzxa Rawlus"
+  const welcomeText = await page.locator('text=Welcome, Alzxa Rawlus');
+  await expect(welcomeText).toBeVisible();
+});
+

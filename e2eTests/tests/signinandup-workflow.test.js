@@ -17,7 +17,6 @@ test("test can load signin page and Click Sign in with Reannz button", async ({ 
   await expect(page).toHaveURL('https://www.reannz.co.nz');
 
   // Return to the login page
-  await page.goBack();
   await expect(page).toHaveURL('http://localhost:5173');
 });
 
