@@ -69,6 +69,13 @@ async function updateUserProfile(userProfileObject) {
   return userProfile;
 }
 
+async function searchUserProfilesByKeywords(keywords) {
+  logger.info(`Performing search for the keywords: ${keywords}`);
+  const userProfiles = await userProfileDao.searchKeywords(keywords);
+  logger.info(`Number of profiles found: ${userProfiles.length}`);
+  return userProfiles;
+}
+
 module.exports = {
   createUserProfile,
   getUserProfileById,
@@ -76,5 +83,6 @@ module.exports = {
   getAllUserProfiles,
   updateUserProfile,
   updateUserProfileById,
-  getAllVerifiedUserProfiles
+  getAllVerifiedUserProfiles,
+  searchUserProfilesByKeywords
 };
