@@ -236,7 +236,7 @@ async function searchKeywords(keywordList)
   const searchResults = await prismaClient.user_profile.findMany({
     where: {
       AND: [
-        ...searchConditionsConditions,  // Combine keyword search conditions
+        ...searchConditions,  // Combine keyword search conditions
         { usertypeid: { in: [USER_TYPE_ACADEMIC, USER_TYPE_BUSINESS] } }  // Only include usertypeid for academic and business
       ],
     },
