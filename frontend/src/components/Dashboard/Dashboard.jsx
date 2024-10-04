@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ProfileSidebar from "../Profile/SidebarAndHeader/ProfileSidebar";
 import { ProfileHeader } from "../Profile/SidebarAndHeader";
+import MiniDashboardCalendar from "./Calender";
+import EventManagementCalendar from "./EventManagementCalendar";
 
 import {
   Box,
@@ -98,6 +100,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("Groups");
   const [dashboardData, setDashboardData] = useState(dummyProfileData);
   const [selectedGroup, setSelectedGroup] = useState(null);
+
   const handleGroupClick = (group) => {
     setSelectedGroup(group);
   };
@@ -286,7 +289,7 @@ const Dashboard = () => {
           </Box>
         );
       case "Calendar":
-        return <ContactForm />;
+        return <EventManagementCalendar />;
 
       default:
         return <Box sx={styles.contentBox}>No data available</Box>;
@@ -321,7 +324,7 @@ const Dashboard = () => {
           </Box>
           <Box sx={styles.rightSectionContainer}>
             <Box sx={styles.notificationsContainer}>
-              <Typography variant="h5" sx={styles.sectionTitle}>
+              <Typography variant="h5" sx={styles.notificationTitle}>
                 Notifications
               </Typography>
               {dashboardData?.notifications?.length > 0 ? (
@@ -344,10 +347,7 @@ const Dashboard = () => {
 
             {/* Calendar Section */}
             <Box sx={styles.calendarContainer}>
-              <Box sx={styles.calendarWidget}>
-                {/* Replace this part with your actual calendar component */}
-                <Typography>January 2022</Typography>
-              </Box>
+              <MiniDashboardCalendar />
             </Box>
           </Box>
         </Box>
@@ -393,16 +393,15 @@ const styles = {
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "red",
+    backgroundColor: "#fff",
     borderRadius: "8px",
-    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
     width: "306px",
   },
 
   notificationsContainer: {
     marginBottom: "20px",
     padding: "20px",
-    backgroundColor: "#fff",
+    backgroundColor: "#f3f5f7",
     borderRadius: "8px",
     boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
     width: "306px",
@@ -427,17 +426,10 @@ const styles = {
     height: "438px",
   },
 
-  sectionTitle: {
+  notificationTitle: {
     fontWeight: "bold",
     marginBottom: "15px",
     fontSize: "18px",
-  },
-
-  calendarWidget: {
-    padding: "10px",
-    backgroundColor: "#f3f3f3",
-    borderRadius: "8px",
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
   },
 
   dashboardTabsContent: {
@@ -520,7 +512,7 @@ const styles = {
     alignItems: "center",
     padding: "10px",
     marginBottom: "15px",
-    backgroundColor: "#fff",
+    backgroundColor: "#dadcde",
     boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
     borderRadius: "8px",
   },
@@ -545,7 +537,7 @@ const styles = {
     alignItems: "center",
     padding: "10px",
     marginBottom: "15px",
-    backgroundColor: "#fff",
+    backgroundColor: "#dadcde",
     boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
     borderRadius: "8px",
   },
@@ -576,7 +568,7 @@ const styles = {
     alignItems: "center",
     padding: "10px",
     marginBottom: "15px",
-    backgroundColor: "#fff",
+    backgroundColor: "#dadcde",
     boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
     borderRadius: "8px",
   },
@@ -607,7 +599,7 @@ const styles = {
   },
   groupCard: {
     cursor: "pointer",
-    backgroundColor: "#fff",
+    backgroundColor: "#dadcde",
     marginBottom: "15px",
     padding: "10px",
     borderRadius: "8px",
@@ -619,10 +611,13 @@ const styles = {
     alignItems: "center",
   },
   groupDetailsContainer: {
+    marginTop: "40px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-start",
     padding: "20px",
+    backgroundColor: "#dadcde",
+    borderRadius: "15px",
   },
 
   groupInfo: {
@@ -671,7 +666,7 @@ const styles = {
     position: "absolute",
     top: "10px",
     right: "10px",
-    width: "100px",
+    width: "150px",
     height: "30px",
     marginTop: "50px",
     marginRight: "30px",
