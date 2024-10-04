@@ -1,54 +1,104 @@
-const { test, expect, afterEach } = require("@playwright/test");
-require("dotenv").config();
+const { test, expect, afterEach, beforeEach } = require("@playwright/test");
+require('dotenv').config({ path: './e2eTests/.env' });
 
 test.beforeEach(async ({ page }) => {
-  // Assuming there's a login function implemented
+  // the user has logged in
+  const email = process.env.DB_ADMIN_EMAIL;
+  const password = process.env.DB_ADMIN_PASSWORD;
 
-  await page.goto('http://localhost:5173/profile-setting');
-});
+  await page.goto(`${process.env.REACT_APP_URL}/signin`);
 
-test('should allow editing some fields in ProfileCantEdit', async ({ page }) => {
-  // Step 1: Visit the Profiledit page
 
-  // Step 2: Check that the page is loaded and displays the initial profile data
-  await page.waitForSelector('#fname'); // Confirm that the full name text box has loaded
-  const initialFullName = await page.inputValue('#fname');
-  expect(initialFullName).toBe('John Doe'); // Check based on initial data
-  // Step 3: Confirm that the input box is in a non-editable state (not editable)
-  const isEditableBefore = await page.isEditable('#fname');
-  expect(isEditableBefore).toBe(false);
-  // Step 4: Click the "Edit" button to enter edit mode
-  await page.click('#edit-save-button');
-  // Step 5: Confirm that the input box becomes editable
-  const isEditableAfter = await page.isEditable('#fname');
-  expect(isEditableAfter).toBe(true);
-  // Step 6: Change the full name (e.g. to "Jane Doe")
-  await page.fill('#fname', 'Jane Doe');
-  // Step 7: Click the "Save" button to save the changes
-  await page.click('#edit-save-button');
-  // Step 8: Confirm that the text box returns to a non-editable state
-  const isEditableAfterSave = await page.isEditable('#fname');
-  expect(isEditableAfterSave).toBe(false);
-  // Step 9: Verify that the updated full name is successfully saved
-  const updatedFullName = await page.inputValue('#fname');
-  expect(updatedFullName).toBe('Jane Doe');
+  // Wait for the  text to load
+  await page.waitForSelector('text="Sign in with Email"');
+
+  await page.fill('input[type="email"]', email);
+  await page.fill('input[type="password"]', password);
+
+
+  // Click the Submit button
+  const signInButton = page.locator('text="Sign in"');
+  await signInButton.click();
+  await page.goto(`${process.env.REACT_APP_URL}/profile-setting`);
 
 });
 
-test('should keep readonly fields uneditable in edit mode', async ({ page }) => {
-  await page.goto('http://localhost:5173/profile-setting');
 
+test('displays the correct welcome message', async ({ page }) => {
+
+  // 选择欢迎文本的元素
+  await page.waitForSelector('#fname');
+  const initialName = await page.inputValue('#fname');
+  const welcomeText = await page.locator(`text="Welcome, ${initialName}"`);
+  await expect(welcomeText).toBeVisible();
+
+});
+
+test('displays the correct date', async ({ page }) => {
+
+
+});
+
+
+
+
+test('Test can edit name', async ({ page }) => {
+
+  // Step 1: Navigate to the profile settings page
+  await page.waitForSelector('#fname');
+  const initialName = await page.inputValue('#fname');
+  const welcomeText = await page.locator(`text="Welcome, ${initialName}"`);
+  await expect(welcomeText).toBeVisible();
+  const namesToTest = [initialName, 'Ama Admin', 'Jane Admin', 'John Admin'];
+
+  for (const name of namesToTest) {
+    // Step 2: Check that the page is loaded and the initial profile data is displayed
+    await page.waitForSelector('#fname');
+
+    // Step 3: Confirm that the input box is initially non-editable
+    const isEditableBefore = await page.isEditable('#fname');
+    expect(isEditableBefore).toBe(false);
+
+    // Step 4: Click the "Edit" button to make the input box editable
+    await page.click('#edit-save-button');
+    const isEditableAfter = await page.isEditable('#fname');
+    expect(isEditableAfter).toBe(true);
+    // Step 5: Change the full name
+    await page.fill('#fname', name);
+
+    // Step 6: Click the "Save" button to save the changes
+    await page.click('#edit-save-button');
+
+    // Step 7: Confirm that the input box returns to a non-editable state
+    const isEditableAfterSave = await page.isEditable('#fname');
+    expect(isEditableAfterSave).toBe(false);
+
+    // Step 8: Reload the page to verify that the updated full name is saved
+    await page.reload();
+    await page.waitForSelector('#fname');
+
+    const updatedName = await page.inputValue('#fname');
+    expect(updatedName).toBe(name);
+  }
+
+});
+
+test('Test that read-only fields are not editable in edit mode', async ({ page }) => {
+  //Wait for the note to load and check its visibility
+  const noteText = await page.locator('text="Please note! Most of the details are populated via Tuakiri and cannot be changed here."');
+  //  Assert that the note is visible
+  await expect(noteText).toBeVisible();
   //Click the Edit button await page.
   await page.click('#edit-save-button');
 
   // Confirm that the email, ORCID, and LinkedIn fields are still not editable 
-  expect(await page.isEditable('input[value="john.doe@example.com"]')).toBe(false);
-  expect(await page.isEditable('input[value="0000-0001-2345-6789"]')).toBe(false);
-  expect(await page.isEditable('input[value="john-doe"]')).toBe(false);
+  expect(await page.isEditable('#email')).toBe(false);
+  expect(await page.isEditable('#orcid')).toBe(false);
+  expect(await page.isEditable('#linkedin')).toBe(false);
 });
 
-test('should allow adding secondary email and affiliation', async ({ page }) => {
-  await page.goto('http://localhost:5173/profile-setting');
+test('Test allow adding secondary email and affiliation', async ({ page }) => {
+
 
   //Click the Edit button await page.
   await page.click('#edit-save-button');
@@ -65,20 +115,20 @@ test('should allow adding secondary email and affiliation', async ({ page }) => 
 });
 
 test('should navigate between profile and career pages', async ({ page }) => {
-  await page.goto('http://localhost:5173/profile-setting');
 
   // Click the Next button
   await page.click('button:has-text("Next")');
 
   // Click on the Publications tab
   await page.click('text=Publications');
-  await page.click('#career-edit-button');
+  const careerEditButton = page.locator('#career-edit-button');
+  await expect(careerEditButton).toBeVisible();
+  //await page.click('#career-edit-button');
   // Click the Back button
   await page.click('button:has-text("Back")');
 });
 
 test('should show validation error when required fields are empty', async ({ page }) => {
-  await page.goto('http://localhost:5173/profile-setting');
 
   // 点击 Edit 按钮进入编辑模式
   await page.click('#edit-save-button');
