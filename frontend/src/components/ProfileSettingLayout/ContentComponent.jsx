@@ -82,7 +82,6 @@ const styles = {
     flexDirection: "column",
     height: "80vh",
     backgroundColor: "#fff",
-    display: "flex",
     position: "relative",
   },
   buttonsContainer: {
