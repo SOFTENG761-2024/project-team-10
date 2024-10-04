@@ -27,16 +27,16 @@ const Header = () => {
           <Typography variant="h6" component="div" sx={styles.welcomeText}>
             Welcome, Alzxa Rawlus
           </Typography>
-          <Typography variant="body2" sx={styles.dateText}>
+          <Typography id="formatted-date" variant="body2" sx={styles.dateText}>
             {formattedDate}
           </Typography>
         </Box>
         <Box sx={styles.iconContainer}>
           <IconButton onClick={handleThemeSwitchClick} color="inherit">
-            <Brightness4Icon />
+            <Brightness4Icon id="bright" />
           </IconButton>
           <IconButton color="inherit">
-            <MenuIcon />
+            <MenuIcon id="menu" />
           </IconButton>
         </Box>
       </Toolbar>
@@ -62,7 +62,7 @@ const styles = {
   },
   iconContainer: {
     display: 'flex',
-    
+
     gap: '5px',
   },
 };

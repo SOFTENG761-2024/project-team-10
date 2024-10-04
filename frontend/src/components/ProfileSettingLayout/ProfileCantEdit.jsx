@@ -41,7 +41,6 @@ const ProfileCantEdit = ({ profile, onSave }) => {
                 <TextField
                   id="fname"
                   value={profile.fullName}
-
                   onChange={(e) => handleInputChange('fullName', e.target.value)}
                   InputProps={{ readOnly: !isEditing }}
                   fullWidth
@@ -74,6 +73,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>E-mail Address:</Typography>
                 <TextField
+                  id="email"
                   value={profile.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   disabled
@@ -85,6 +85,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>ORCID ID:</Typography>
                 <TextField
+                  id="orcid"
                   value={profile.orcid}
                   disabled
                   onChange={(e) => handleInputChange('orcid', e.target.value)}
@@ -96,6 +97,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>Linkedin:</Typography>
                 <TextField
+                  id='linkedin'
                   value={profile.linkedin}
                   onChange={(e) => handleInputChange('linkedin', e.target.value)}
                   disabled

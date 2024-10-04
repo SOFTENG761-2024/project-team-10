@@ -102,6 +102,7 @@ const AccountCreation = () => {
             <Grid item xs={6}>
               <TextField
                 fullWidth
+                id="firstName"
                 label="First Name"
                 name="firstName"
                 autoComplete="fname"
