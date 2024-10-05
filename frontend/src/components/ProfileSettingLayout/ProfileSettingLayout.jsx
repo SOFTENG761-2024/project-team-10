@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Box } from '@mui/material';
-import ProfileSidebar from '../Profile/SidebarAndHeader/ProfileSidebar';
-import { ProfileHeader } from '../Profile/SidebarAndHeader';
-import ProfileCantEdit from './ProfileCantEdit';
-import Career from './Career';
+import React, { useEffect, useState } from "react";
+import { Button, Box } from "@mui/material";
+import ProfileSidebar from "../Profile/SidebarAndHeader/ProfileSidebar";
+import { ProfileHeader } from "../Profile/SidebarAndHeader";
+import ProfileCantEdit from "./ProfileCantEdit";
+import Career from "./Career";
 import { useOwnProfileAPI } from "../Profile/SidebarAndHeader/api";
 import { useAPI } from "@frontend-ui/components/GlobalProviders";
 
@@ -31,9 +31,9 @@ const transformProfileData = (data) => {
     custom1: "",
     custom2: "",
     mediaFileThumbnail: "",
-    docFileThumbnail: ""
+    docFileThumbnail: "",
   };
-}
+};
 
 function transformProfileToBackend(profile) {
   return {
@@ -54,7 +54,7 @@ function transformProfileToBackend(profile) {
   };
 }
 const ProfileSettingLayout = () => {
-  const [page, setPage] = useState('profile');
+  const [page, setPage] = useState("profile");
   const [profileData, setProfileData] = useState({});
 
   const { getOwnProfileData } = useOwnProfileAPI();
@@ -71,27 +71,76 @@ const ProfileSettingLayout = () => {
     fetchProfileData();
   }, []);
 
-  const { put } = useAPI()
+  const { put } = useAPI();
 
   const handleSave = (updatedProfile) => {
     setProfileData(updatedProfile);
-    put(`${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/userprofile/${profileData.id}`,
-      transformProfileToBackend(updatedProfile))
+    put(
+      `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/userprofile/${profileData.id}`,
+      transformProfileToBackend(updatedProfile),
+    );
   };
 
   return (
-    <Box>
-      <ProfileSidebar />
-      <Box sx={{ marginLeft: '135px', width: 'calc(100% - 135px)' }}>
+    <Box sx={{ display: "flex", position: "relative" }}>
+      <Box sx={{ position: "fixed" }}>
+        <ProfileSidebar />
         <ProfileHeader />
-        {page === 'profile' && <ProfileCantEdit profile={profileData} onSave={handleSave} />}
-        {page === 'career' && <Career profile={profileData} onSave={handleSave} />}
       </Box>
-      {page === 'profile' && <Button sx={{ marginLeft: '145px', marginTop: '20px' }} variant='contained' onClick={() => setPage('career')}>Next</Button>}
-      {page === 'career' && <Button sx={{ marginLeft: '145px', marginTop: '20px' }} variant='contained' onClick={() => setPage('profile')}>Back</Button>}
+      <Box
+        sx={{
+          marginTop: "130px",
+          marginLeft: "155px",
+          marginRight: "25px",
+          width: "calc(100% - 135px)",
+          height: "762px",
+        }}
+      >
+        {page === "profile" && (
+          <ProfileCantEdit profile={profileData} onSave={handleSave} />
+        )}
+        {page === "career" && (
+          <Career profile={profileData} onSave={handleSave} />
+        )}
+      </Box>
+      {page === "profile" && (
+        <Button
+          sx={{
+            position: "absolute",
+            bottom: "60px",
+            right: "50px",
+            width: "100px",
+            backgroundColor: "#666",
+            "&:hover": {
+              backgroundColor: "#999",
+            },
+          }}
+          variant="contained"
+          onClick={() => setPage("career")}
+        >
+          Next
+        </Button>
+      )}
+      {page === "career" && (
+        <Button
+          sx={{
+            position: "absolute",
+            bottom: "60px",
+            right: "50px",
+            width: "100px",
+            backgroundColor: "#666",
+            "&:hover": {
+              backgroundColor: "#999",
+            },
+          }}
+          variant="contained"
+          onClick={() => setPage("profile")}
+        >
+          Back
+        </Button>
+      )}
     </Box>
   );
-}
+};
 
 export default ProfileSettingLayout;
-
