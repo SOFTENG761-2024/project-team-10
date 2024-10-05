@@ -21,7 +21,7 @@ export const Landing = () => {
   const [positions, setPositions] = useState({ networkTop: 0, memberTop: 0 });
   const { toggleLightDarkTheme, theme } = useMuiTheme();
   const [navTop, setNavTop] = useState('33vh');
-  const isTablet = useMediaQuery('(max-width:1024px)'); 
+  const isTablet = useMediaQuery('(max-width:1024px)');
   const handleThemeSwitchClick = () => {
     toggleLightDarkTheme();
   };
@@ -64,12 +64,12 @@ export const Landing = () => {
     //   const screenWidth = window.innerWidth;
 
     //   let topValue;
-      
+
     //   if (screenWidth <= 768) {
-   
+
     //     topValue = window.innerHeight * 0.20;
     //   } else if (screenWidth <= 1024) {
-     
+
     //     topValue = window.innerHeight * 0.34; 
     //   } else {
 
@@ -81,7 +81,7 @@ export const Landing = () => {
     //     setNavTop('11vh'); 
     //   }
     // }
-  
+
     const networkSection = document.getElementById('network');
     const memberSection = document.getElementById('member');
 
@@ -250,12 +250,12 @@ export const Landing = () => {
           <img src='./landing/theme.png' className={style.themeStyle} alt="themeicon" />
         </button>
         <button className={style.menuIcon} onClick={handleMenuClick}>
-          <img src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
+          <img id="outline" src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
         </button>
       </Box>
-      <Box sx={{ display: 'flex'}}>
+      <Box sx={{ display: 'flex' }}>
         {/* Main Content Area */}
-        <Container sx={{ maxWidth: 'md', textAlign: 'center', mt: 4, top: '16vh',marginLeft:'7%' }}>
+        <Container sx={{ maxWidth: 'md', textAlign: 'center', mt: 4, top: '16vh', marginLeft: '7%' }}>
           <Box sx={{ position: 'relative', top: '17vh' }} aria-label="connecting video">
             <video className={style.topImage} autoPlay muted playsInline loop>
               <source src="./landing/design.mp4" type="video/mp4" />
@@ -276,7 +276,7 @@ export const Landing = () => {
               </div>
             </section>
           </Box>
-          <Box sx={{ display: 'flex', width: isTablet? '61vw':''}}>
+          <Box sx={{ display: 'flex', width: isTablet ? '61vw' : '' }}>
             <section id="network">
               <div className={style.flexContainer}>
                 {/* Circle Divs */}
@@ -295,7 +295,7 @@ export const Landing = () => {
               </div>
             </section>
           </Box>
-          <Box sx={{ display: 'flex', width: isTablet? '77%':'85%'}}>
+          <Box sx={{ display: 'flex', width: isTablet ? '77%' : '85%' }}>
             <section id="member">
               <div className={style.contentSections}>
                 <div className={`${style.sectId} ${style.search}`}>
@@ -338,7 +338,7 @@ export const Landing = () => {
               </div>
             </section>
           </Box>
-          <Box sx={{ display: 'flex'}}>
+          <Box sx={{ display: 'flex' }}>
             <section id="about-us">
               <div className={style.joinDiv}>
                 <div className={`${style.leftJoin} ${style.left}`}>
@@ -366,7 +366,7 @@ export const Landing = () => {
           </Box>
           <Box sx={{ width: '90%', maxWidth: '100%' }}>
             {/* <section id="about-us"> */}
-              {/* <div className={style.footerContainer}>
+            {/* <div className={style.footerContainer}>
                 <div className={style.leftLogo}>
                   <h2>Logo</h2></div>
                 <div className={style.about}>

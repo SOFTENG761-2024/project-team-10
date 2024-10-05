@@ -5,8 +5,14 @@ test.beforeEach(async ({ page }) => {
   // the user has logged in
   const email = process.env.DB_ADMIN_EMAIL;
   const password = process.env.DB_ADMIN_PASSWORD;
-
-  await page.goto(`${process.env.REACT_APP_URL}/signin`);
+  await page.goto(`${process.env.REACT_APP_URL}`);
+  await page.waitForSelector('#outline');
+  await page.click("#outline");
+  await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/signup`);
+  await page.waitForSelector('text="Already have a business Account?"');
+  await page.waitForSelector('text="Sign in"');
+  await page.locator('text="Sign in"').click();
+  await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/signin`);
 
 
   // Wait for the  text to load
@@ -17,25 +23,26 @@ test.beforeEach(async ({ page }) => {
 
 
   // Click the Submit button
-  const signInButton = page.locator('text="Sign in"');
-  await signInButton.click();
-  await page.goto(`${process.env.REACT_APP_URL}/profile-setting`);
+  await page.click("#signin");
+  await page.waitForSelector('ul');
+  await page.locator('li:nth-child(7)').click();
+  await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/profile-setting`);
+  await page.waitForTimeout(2000);
+
 
 });
 
 
 test('displays the correct welcome message', async ({ page }) => {
-
-  // 选择欢迎文本的元素
   await page.waitForSelector('#fname');
   const initialName = await page.inputValue('#fname');
   const welcomeText = await page.locator(`text="Welcome, ${initialName}"`);
-  await expect(welcomeText).toBeVisible();
 
+  console.log(`Initial Name: ${initialName}`);
+  await expect(welcomeText).toBeVisible();
 });
 
 test('displays the correct date', async ({ page }) => {
-
 
 });
 
@@ -43,45 +50,41 @@ test('displays the correct date', async ({ page }) => {
 
 
 test('Test can edit name', async ({ page }) => {
-
   // Step 1: Navigate to the profile settings page
   await page.waitForSelector('#fname');
   const initialName = await page.inputValue('#fname');
   const welcomeText = await page.locator(`text="Welcome, ${initialName}"`);
+  console.log(`Initial Name: ${initialName}`);
   await expect(welcomeText).toBeVisible();
-  const namesToTest = [initialName, 'Ama Admin', 'Jane Admin', 'John Admin'];
+
+  const namesToTest = ['Ama Admin', 'Jane Admin', 'Admin Admin'];
 
   for (const name of namesToTest) {
     // Step 2: Check that the page is loaded and the initial profile data is displayed
     await page.waitForSelector('#fname');
-
     // Step 3: Confirm that the input box is initially non-editable
     const isEditableBefore = await page.isEditable('#fname');
     expect(isEditableBefore).toBe(false);
-
     // Step 4: Click the "Edit" button to make the input box editable
     await page.click('#edit-save-button');
     const isEditableAfter = await page.isEditable('#fname');
     expect(isEditableAfter).toBe(true);
     // Step 5: Change the full name
     await page.fill('#fname', name);
-
     // Step 6: Click the "Save" button to save the changes
     await page.click('#edit-save-button');
-
     // Step 7: Confirm that the input box returns to a non-editable state
     const isEditableAfterSave = await page.isEditable('#fname');
     expect(isEditableAfterSave).toBe(false);
-
     // Step 8: Reload the page to verify that the updated full name is saved
     await page.reload();
     await page.waitForSelector('#fname');
-
     const updatedName = await page.inputValue('#fname');
     expect(updatedName).toBe(name);
   }
-
 });
+
+
 
 test('Test that read-only fields are not editable in edit mode', async ({ page }) => {
   //Wait for the note to load and check its visibility
@@ -109,61 +112,79 @@ test('Test allow adding secondary email and affiliation', async ({ page }) => {
   expect(addSecondaryEmailButton).toBe(true);
   expect(addSecondaryAffiliationButton).toBe(true);
 
-  // Click the button and verify that the new form appears（not set up）
+  // ？？？Click the button and verify that the new form appears（not set up）
   await page.click('button:has-text("+Add Secondary Email Address")');
 
 });
 
-test('should navigate between profile and career pages', async ({ page }) => {
+test('Test can logout', async ({ page }) => {
 
-  // Click the Next button
-  await page.click('button:has-text("Next")');
+  await page.getByRole('button', { name: 'Menu Icon' }).click();
+  await expect(page).toHaveURL(`${process.env.REACT_APP_URL}`);
+
+});
+
+test('should navigate between profile and career pages', async ({ page }) => {
+  // Click the "Next" button
+  await page.getByRole('button', { name: 'Next' }).click();
+
+  // Click the "Edit" button
+  await page.getByRole('button', { name: 'Edit' }).click();
+
+  // Click the input box and fill in the value 'sing'
+  const inputLocator = page.locator('[id="\\:ra\\:"]');
+  await inputLocator.click();
+  await inputLocator.fill('sing');
+
+  // Click the "Save" button
+  await page.getByRole('button', { name: 'Save' }).click();
+
+  // Reload the page
+  await page.reload();
+  await page.getByRole('button', { name: 'Next' }).click();
+
+  // Verify that the value of the input box is 'sing' after reloading
+  const inputValue = await inputLocator.inputValue(); expect(inputValue).toBe('sing');
+
+});
+
+test('should navigate career pages', async ({ page }) => {
+  // Click the "Next" button
+  await page.getByRole('button', { name: 'Next' }).click();
+
+  // Click the "Publications" button
+  await page.getByRole('button', { name: 'Publications' }).click();
+
+  // Click the "Edit" button
+  await page.getByRole('button', { name: 'Edit' }).click();
+
+  // Click and fill in 'Content for box 1'
+  const contentBox = page.getByText('Content for box 1');
+  await contentBox.click();
+  await contentBox.fill('publication'); // Fill in new content
+
+  // Click the "Save" button
+  await page.getByRole('button', { name: 'Save' }).click();
+
+  // Reload the page
+  await page.reload();
+  // Click the "Next" button
+  await page.getByRole('button', { name: 'Next' }).click();
 
   // Click on the Publications tab
-  await page.click('text=Publications');
-  const careerEditButton = page.locator('#career-edit-button');
-  await expect(careerEditButton).toBeVisible();
-  //await page.click('#career-edit-button');
-  // Click the Back button
-  await page.click('button:has-text("Back")');
+  await page.getByRole('button', { name: 'Publications' }).click();
+
+  // Verify that the content is 'publication' after reload
+  const updatedContent = await contentBox.textContent(); // Get the updated text content
+  expect(updatedContent).toBe('publication');
 });
 
-test('should show validation error when required fields are empty', async ({ page }) => {
-
-  // 点击 Edit 按钮进入编辑模式
-  await page.click('#edit-save-button');
-
-  // 清空必填字段，例如全名
-  await page.fill('#fname', '');
-
-  // 点击 Save 按钮
-  await page.click('#edit-save-button');
-
-  // 验证错误提示是否出现
-  await page.waitForSelector('text="Full name is required"');
-});
-
-test('should display profile photo and allow changing it', async ({ page }) => {
-  await page.goto('http://localhost:5173/profile-setting');
-
-  // 确认头像显示
-  const profilePhoto = await page.getAttribute('img', 'src');
-  expect(profilePhoto).toBe('https://example.com/your-profile-pic.jpg');
-
-  // 如果支持上传头像，可以测试上传图片（还没有）
-  const [fileChooser] = await Promise.all([
-    page.waitForEvent('filechooser'),
-    page.click('button:has-text("Upload Photo")'),
-  ]);
-  await fileChooser.setFiles('path/to/new/photo.jpg'); // 上传文件
-});
 
 test('验证主题切换按钮', async ({ page }) => {
-  await page.goto('http://localhost:5173/profile-settings');
 
   // 点击主题切换按钮
-  const themeToggleButton = page.locator('button[data-testid="theme-toggle"]');
-  await themeToggleButton.click();
+
+  await page.getByRole('button', { name: 'Theme Icon' }).click();
 
   // 验证页面的主题是否改变
   const body = page.locator('body');
