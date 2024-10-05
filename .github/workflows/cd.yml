@@ -58,10 +58,10 @@ jobs:
         working-directory: "./frontend"
         run: |
           rm .env
-          echo "VITE_BACKEND_API_BASE_URL=http://$EC2_INSTANCE_PUBLIC_DNS:3000" >> .env
+          echo "VITE_BACKEND_API_BASE_URL=https://api.academicfellows.com" >> .env
           echo "VITE_LINKEDIN_CLIENT_ID=$VITE_LINKEDIN_CLIENT_ID" >> .env
-          echo "FRONT_END_BASE_URL=http://$EC2_INSTANCE_PUBLIC_DNS:5000" >> .env
-          echo "VITE_LINKEDIN_AUTH_REDIRECTURI=http://$EC2_INSTANCE_PUBLIC_DNS:5000/signin" >> .env
+          echo "FRONT_END_BASE_URL=https://academicfellows.com" >> .env
+          echo "VITE_LINKEDIN_AUTH_REDIRECTURI=https://academicfellows.com/signin" >> .env
           cat .env
           npm install
           npm run build
@@ -73,13 +73,13 @@ jobs:
         run: |
           rm .env
           echo "DATABASE_URL=$DATABASE_URL" >> .env
-          echo "SWAGGER_API_BASE_URL=http://$EC2_INSTANCE_PUBLIC_DNS:3000" >> .env
+          echo "SWAGGER_API_BASE_URL=https://api.academicfellows.com" >> .env
           echo "DB_ADMIN_EMAIL=$DB_ADMIN_EMAIL" >> .env
           echo "DB_ADMIN_PASSWORD_ENCRYPTED=$DB_ADMIN_PASSWORD_ENCRYPTED" >> .env
           echo "LINKEDIN_CLIENT_ID=$LINKEDIN_CLIENT_ID" >> .env
           echo "LINKEDIN_CLIENT_SECRET=$LINKEDIN_CLIENT_SECRET" >> .env
           echo "LINKEDIN_REDIRECT_URI=$LINKEDIN_REDIRECT_URI" >> .env
-          echo "BACKEND_API_BASE_URL=http://$EC2_INSTANCE_PUBLIC_DNS:3000" >> .env
+          echo "BACKEND_API_BASE_URL=https://api.academicfellows.com" >> .env
           echo "LINKEDIN_TOKEN_URL=$LINKEDIN_TOKEN_URL" >> .env
           echo "COOKIE_KEY=$COOKIE_KEY" >> .env
           echo "SMTP_EMAIL_ENABLED=$SMTP_EMAIL_ENABLED" >> .env
