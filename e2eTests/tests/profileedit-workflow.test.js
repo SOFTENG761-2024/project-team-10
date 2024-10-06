@@ -2,6 +2,7 @@ const { test, expect, afterEach, beforeEach } = require("@playwright/test");
 require('dotenv').config({ path: './e2eTests/.env' });
 
 test.beforeEach(async ({ page }) => {
+
   // the user has logged in
   const email = process.env.DB_ADMIN_EMAIL;
   const password = process.env.DB_ADMIN_PASSWORD;
@@ -42,46 +43,67 @@ test('displays the correct welcome message', async ({ page }) => {
   await expect(welcomeText).toBeVisible();
 });
 
-test('displays the correct date', async ({ page }) => {
 
+test('displays the date', async ({ page }) => {
+  await page.clock.setFixedTime(new Date('2024-10-04T10:00:00'));
+
+  // Reload the page to apply the new date settings
+  await page.reload();
+  await page.waitForSelector('#headerDate');
+  // Get the date text displayed in the page
+  const displayedDate = await page.locator('#headerDate').innerText();
+  console.log('Displayed:', displayedDate);
+  await expect(page.locator('#headerDate')).toHaveText('Fri 04 October 2024');
 });
 
 
 
 
 test('Test can edit name', async ({ page }) => {
-  // Step 1: Navigate to the profile settings page
+  // Step 1: Navigate to the profile settings page and wait for the name field
   await page.waitForSelector('#fname');
+
+  // Get the initial name
   const initialName = await page.inputValue('#fname');
-  const welcomeText = await page.locator(`text="Welcome, ${initialName}"`);
   console.log(`Initial Name: ${initialName}`);
+
+  // Verify the welcome text is visible with the initial name
+  const welcomeText = await page.locator(`text="Welcome, ${initialName}"`);
   await expect(welcomeText).toBeVisible();
 
-  const namesToTest = ['Ama Admin', 'Jane Admin', 'Admin Admin'];
+  // Step 2: Confirm that the input box is initially non-editable
+  const isEditableBefore = await page.isEditable('#fname');
+  expect(isEditableBefore).toBe(false);
 
-  for (const name of namesToTest) {
-    // Step 2: Check that the page is loaded and the initial profile data is displayed
-    await page.waitForSelector('#fname');
-    // Step 3: Confirm that the input box is initially non-editable
-    const isEditableBefore = await page.isEditable('#fname');
-    expect(isEditableBefore).toBe(false);
-    // Step 4: Click the "Edit" button to make the input box editable
-    await page.click('#edit-save-button');
-    const isEditableAfter = await page.isEditable('#fname');
-    expect(isEditableAfter).toBe(true);
-    // Step 5: Change the full name
-    await page.fill('#fname', name);
-    // Step 6: Click the "Save" button to save the changes
-    await page.click('#edit-save-button');
-    // Step 7: Confirm that the input box returns to a non-editable state
-    const isEditableAfterSave = await page.isEditable('#fname');
-    expect(isEditableAfterSave).toBe(false);
-    // Step 8: Reload the page to verify that the updated full name is saved
-    await page.reload();
-    await page.waitForSelector('#fname');
-    const updatedName = await page.inputValue('#fname');
-    expect(updatedName).toBe(name);
-  }
+  // Step 3: Click the "Edit" button to make the input box editable
+  await page.click('#edit-save-button');
+  const isEditableAfter = await page.isEditable('#fname');
+  expect(isEditableAfter).toBe(true);
+
+  // Step 4: Change the full name
+  const newName = 'Jane Admin';
+  await page.fill('#fname', newName);
+
+  // Step 5: Click the "Save" button to save the changes
+  await page.click('#edit-save-button');
+
+  // Step 6: Confirm that the input box returns to a non-editable state
+  const isEditableAfterSave = await page.isEditable('#fname');
+  expect(isEditableAfterSave).toBe(false);
+
+  // Step 7: Reload the page to verify that the updated full name is saved
+  await page.reload();
+  await page.waitForSelector('#fname');
+  const updatedName = await page.inputValue('#fname');
+  console.log('Updated Name:', updatedName);
+
+  expect(updatedName).toBe(newName);
+
+  // Verify the welcome text is updated with the new name
+  const updatedWelcomeText = await page.locator(`text="Welcome, ${newName}"`);
+  await expect(updatedWelcomeText).toBeVisible();
+
+  console.log(`Name successfully changed to: ${newName}`);
 });
 
 
@@ -180,39 +202,31 @@ test('should navigate career pages', async ({ page }) => {
 });
 
 
-test('验证主题切换按钮', async ({ page }) => {
+test('test can switch theme', async ({ page }) => {
 
-  // 点击主题切换按钮
-
-  await page.getByRole('button', { name: 'Theme Icon' }).click();
-
-  // 验证页面的主题是否改变
-  const body = page.locator('body');
-  await expect(body).toHaveClass(/dark-theme/);
-});
-test('应该显示正确的当前日期', async ({ page }) => {
-  await page.goto('http://localhost:5173/profile-settings');
-
-  // 获取当前日期并格式化
-  const currentDate = new Date();
-  const formattedDate = currentDate.toLocaleDateString('en-GB', {
-    weekday: 'short',
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
+  // Get the initial style
+  const initialTextcolor = await page.evaluate(() => {
+    const element = document.querySelector('#welcomeText'); // The selector is ID
+    return window.getComputedStyle(element).color; // Get color attributes
   });
 
-  // 检查页面上是否正确显示日期
-  const dateText = await page.locator('text=' + formattedDate);
-  await expect(dateText).toBeVisible();
+  console.log(`Text Color: ${initialTextcolor}`);
+
+  // Click the theme switch button
+  const themeButton = page.locator('button:has(img[alt="Theme Icon"])');
+  await themeButton.click();
+
+  // Wait for the theme to change (may require a short delay)
+  await page.waitForTimeout(500);
+
+  // Verify the welcome text color change
+  const newTextcolor = await page.evaluate(() => {
+    const element = document.querySelector('#welcomeText'); // The selector is ID
+    return window.getComputedStyle(element).color; // Get color attributes
+  });
+
+  console.log(`Text Color: ${newTextcolor}`); console.log(`Theme changed from ${initialTextcolor} to ${newTextcolor}`); expect(newTextcolor).not.toBe(initialTextcolor); console.log('Theme successfully toggled');
+
 });
 
-
-test('应该显示正确的欢迎文本', async ({ page }) => {
-  await page.goto('http://localhost:5173/profile-settings');  // 替换为实际 URL
-
-  // 检查页面上是否显示 "Welcome, Alzxa Rawlus"
-  const welcomeText = await page.locator('text=Welcome, Alzxa Rawlus');
-  await expect(welcomeText).toBeVisible();
-});
 
