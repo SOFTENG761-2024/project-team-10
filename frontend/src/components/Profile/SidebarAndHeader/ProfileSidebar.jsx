@@ -27,7 +27,7 @@ const ProfileSidebar = () => {
     };
 
     fetchProfileData();
-  }, [getOwnProfileData]);
+  }, []);
 
   const handleIconClick = (iconName) => {
     setActiveIcon(iconName);
