@@ -7,7 +7,6 @@ const path = require("path");
 const filePath = path.resolve(__dirname, "swaggerDoc.yaml");
 
 const swaggerDocument = YAML.load(filePath);
-console.log("");
 swaggerDocument.servers = swaggerDocument.servers.map((server) => {
   server.url = server.url.replace(
     "__SWAGGER_API_BASE_URL__",
