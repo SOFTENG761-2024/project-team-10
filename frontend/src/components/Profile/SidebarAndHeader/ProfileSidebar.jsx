@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import {
   DashboardIcon,
   SettingsIcon,
@@ -13,7 +13,7 @@ import {
 import { useOwnProfileAPI } from "./api";
 
 const ProfileSidebar = () => {
-  const [activeIcon, setActiveIcon] = useState("Network");
+  const [activeIcon, setActiveIcon] = useState();
   const { getOwnProfileData, error } = useOwnProfileAPI();
   const [ownProfileData, setOwnProfileData] = useState(null);
   const navigate = useNavigate();
@@ -64,10 +64,9 @@ const ProfileSidebar = () => {
             { name: "Message", Icon: MessageIcon, route: "" },
             { name: "Settings", Icon: SettingsIcon, route: "/profile-setting" },
           ].map((item) => (
-            <Box
+            <Button
               key={item.name}
               component="li"
-              role="button"
               sx={{
                 ...styles.sidebarItem,
                 backgroundColor:
@@ -77,9 +76,9 @@ const ProfileSidebar = () => {
               onClick={() => handleIconClick(item.name, item.route)}
             >
               <item.Icon
-                fillColor={activeIcon === item.name ? "#4b5a68" : "white"}
+                fillColor={activeIcon === item.name ? "#4b5a68" : "#FFFFFF"}
               />
-            </Box>
+            </Button>
           ))}
         </Box>
       </Box>
@@ -132,6 +131,18 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     marginBottom: "0",
+    transition: "all 0.3s ease",
+
+    "&:hover": {
+      backgroundColor: "#FFFFFF",
+      color: "#4b5a68",
+    },
+
+    "&.active": {
+      backgroundColor: "#FFFFFF",
+      color: "#4b5a68",
+    },
+
     "&[data-icon='Message']": {
       marginBottom: "50px",
     },

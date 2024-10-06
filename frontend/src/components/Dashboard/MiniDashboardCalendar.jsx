@@ -87,7 +87,7 @@ const MiniDashboardCalendar = () => {
   const isSixRows = totalCells > 35;
 
   return (
-    <Box onClick={handleCalendarClick} sx={styles.calendarContainer}>
+    <Box sx={styles.calendarContainer}>
       <Box sx={styles.calendarHeader}>
         <Typography variant="h6" sx={styles.monthText}>
           {monthNames[currentMonth]} {currentYear}
@@ -108,7 +108,9 @@ const MiniDashboardCalendar = () => {
           </Typography>
         ))}
       </Box>
-      <Box sx={styles.calendarDays(isSixRows)}>{renderCalendarDays()}</Box>
+      <Box onClick={handleCalendarClick} sx={styles.calendarDays(isSixRows)}>
+        {renderCalendarDays()}
+      </Box>
     </Box>
   );
 };
