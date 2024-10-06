@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography, IconButton } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -7,6 +8,11 @@ const MiniDashboardCalendar = () => {
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
+  const navigate = useNavigate();
+
+  const handleCalendarClick = () => {
+    navigate("/calendar");
+  };
 
   const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
 
@@ -56,18 +62,6 @@ const MiniDashboardCalendar = () => {
       );
     }
 
-    // Determine if the current month needs a 6th row
-    const totalCells = firstDay + numDays;
-    const remainingCells = totalCells > 35 ? 42 - totalCells : 35 - totalCells;
-
-    for (let i = 1; i <= remainingCells; i++) {
-      days.push(
-        <Box key={`next-${i}`} sx={styles.emptyDay}>
-          {i}
-        </Box>,
-      );
-    }
-
     return days;
   };
 
@@ -93,7 +87,7 @@ const MiniDashboardCalendar = () => {
   const isSixRows = totalCells > 35;
 
   return (
-    <Box sx={styles.calendarContainer}>
+    <Box onClick={handleCalendarClick} sx={styles.calendarContainer}>
       <Box sx={styles.calendarHeader}>
         <Typography variant="h6" sx={styles.monthText}>
           {monthNames[currentMonth]} {currentYear}
@@ -119,7 +113,6 @@ const MiniDashboardCalendar = () => {
   );
 };
 
-// Styles for the calendar component
 const styles = {
   calendarContainer: {
     width: "306px",
@@ -128,6 +121,7 @@ const styles = {
     borderRadius: "8px",
     boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
     height: "300px",
+    cursor: "pointer",
   },
   calendarHeader: {
     width: "279px",

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProfileSidebar from "../Profile/SidebarAndHeader/ProfileSidebar";
 import { ProfileHeader } from "../Profile/SidebarAndHeader";
-import MiniDashboardCalendar from "./Calender";
-import EventManagementCalendar from "./EventManagementCalendar";
+import MiniDashboardCalendar from "./MiniDashboardCalendar";
 
 import {
   Box,
@@ -18,7 +17,7 @@ import {
   Link,
 } from "@mui/material";
 
-const tabs = ["Tasks", "Projects", "Events", "Groups", "Calendar"];
+const tabs = ["Tasks", "Projects", "Events", "Groups"];
 
 // Dummy data for projects, tasks, and events
 const dummyProfileData = {
@@ -288,8 +287,6 @@ const Dashboard = () => {
             )}
           </Box>
         );
-      case "Calendar":
-        return <EventManagementCalendar />;
 
       default:
         return <Box sx={styles.contentBox}>No data available</Box>;
@@ -420,7 +417,7 @@ const styles = {
   },
 
   calendarContainer: {
-    width: "100%",
+    // width: "100%",
     textAlign: "center",
     width: "306px",
     height: "438px",
@@ -492,7 +489,6 @@ const styles = {
     border: "1px solid #ddd",
     minHeight: "300px",
     overflowY: "auto",
-    border: "none",
   },
   tabContent: {
     padding: "20px",

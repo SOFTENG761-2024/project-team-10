@@ -23,6 +23,7 @@ import AccountCreation from "@frontend-ui/components/LinkedInAccountCreation/Lin
 import { SearchProfile } from "../../SearchProfile";
 import LinkedinAdminVerification from "@frontend-ui/components/LinkedinAdminVerification";
 import Dashboard from "@frontend-ui/components/Dashboard/Dashboard";
+import EventManagementCalendar from "@frontend-ui/components/Calendar";
 
 const RouteContext = createContext({});
 
@@ -91,6 +92,7 @@ const RouteProvider = () => {
             element={<LinkedinAdminVerification />}
           />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/calendar" element={<EventManagementCalendar />} />
         </Routes>
       </BrowserRouter>
     </RouteContext.Provider>

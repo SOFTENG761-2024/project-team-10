@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { GlobalStyles } from "@mui/material";
+
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ProfileHeader from "../Profile/SidebarAndHeader/ProfileHeader";
+import ProfileSidebar from "../Profile/SidebarAndHeader/ProfileSidebar";
 
 // Dummy data for the events
 const dummyEvents = [
@@ -153,11 +157,11 @@ const EventManagementCalendar = () => {
       );
     }
 
-    // Check if the current month needs 6 rows (42 days)
+    // check if the current month needs 6 rows (42 days)
     const totalCells = firstDay + numDays;
     const remainingCells = totalCells <= 35 ? 35 - totalCells : 42 - totalCells;
 
-    // Add placeholders for the next month's days
+    // Add holders for the next month's days
     for (let i = 1; i <= remainingCells; i++) {
       days.push(
         <Box key={`next-${i}`} sx={styles.emptyDay(isSixRows)}>
@@ -193,40 +197,69 @@ const EventManagementCalendar = () => {
   const isSixRows = totalCells > 35;
 
   return (
-    <Box sx={styles.calendarContainer}>
-      <Box sx={styles.calendarHeader}>
-        <Typography variant="h6" sx={styles.monthText}>
-          {monthNames[currentMonth]} {currentYear}
-        </Typography>
-        <Box sx={styles.iconContainer}>
-          <IconButton sx={styles.iconButton} onClick={handlePreviousMonth}>
-            <ArrowBackIosIcon sx={styles.arrowIcon} />
-          </IconButton>
-          <IconButton sx={styles.iconButton} onClick={handleNextMonth}>
-            <ArrowForwardIosIcon sx={styles.arrowIcon} />
-          </IconButton>
+    <>
+      <GlobalStyles styles={styles.global} />
+      <Box sx={styles.wrapperContainer}>
+        <ProfileSidebar />
+        <ProfileHeader />
+        <Box sx={styles.calendarContainer}>
+          <Box sx={styles.calendarHeader}>
+            <Typography variant="h6" sx={styles.monthText}>
+              {monthNames[currentMonth]} {currentYear}
+            </Typography>
+            <Box sx={styles.iconContainer}>
+              <IconButton sx={styles.iconButton} onClick={handlePreviousMonth}>
+                <ArrowBackIosIcon sx={styles.arrowIcon} />
+              </IconButton>
+              <IconButton sx={styles.iconButton} onClick={handleNextMonth}>
+                <ArrowForwardIosIcon sx={styles.arrowIcon} />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box sx={styles.daysOfWeek}>
+            {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map(
+              (day, index) => (
+                <Typography key={index} sx={styles.dayOfWeek}>
+                  {day}
+                </Typography>
+              ),
+            )}
+          </Box>
+          <Box sx={styles.calendarDays}>{renderCalendarDays()}</Box>
         </Box>
       </Box>
-      <Box sx={styles.daysOfWeek}>
-        {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((day, index) => (
-          <Typography key={index} sx={styles.dayOfWeek}>
-            {day}
-          </Typography>
-        ))}
-      </Box>
-      <Box sx={styles.calendarDays}>{renderCalendarDays()}</Box>
-    </Box>
+    </>
   );
 };
 
 const styles = {
+  global: {
+    "html, body": {
+      height: "100%",
+      margin: 0,
+      padding: 0,
+      overflow: "hidden",
+    },
+  },
+  wrapperContainer: {
+    display: "flex",
+    width: "100%",
+    height: "100vh",
+    margin: "0 auto",
+    background: "#F9F9F9",
+    position: "relative",
+  },
   calendarContainer: {
-    width: "1176px",
-    height: "720px", // Adjust height based on 5 or 6 rows
-    backgroundColor: "#f9f9f9",
+    height: "720px",
     padding: "20px",
     borderRadius: "8px",
     boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)",
+    width: "calc(100% - 130px)",
+    marginTop: "120px",
+    marginLeft: "155px",
+    marginBottom: "25px",
+    marginRight: "25px",
+    background: "#ffffff",
   },
   calendarHeader: {
     display: "flex",
