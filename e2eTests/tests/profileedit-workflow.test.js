@@ -1,11 +1,12 @@
 const { test, expect, afterEach, beforeEach } = require("@playwright/test");
-require('dotenv').config({ path: './e2eTests/.env' });
+require('dotenv').config({ path: './.env' });
 
 test.beforeEach(async ({ page }) => {
 
   // the user has logged in
   const email = process.env.DB_ADMIN_EMAIL;
   const password = process.env.DB_ADMIN_PASSWORD;
+
   await page.goto(`${process.env.REACT_APP_URL}`);
   await page.waitForSelector('#outline');
   await page.click("#outline");
@@ -55,7 +56,6 @@ test('displays the date', async ({ page }) => {
   console.log('Displayed:', displayedDate);
   await expect(page.locator('#headerDate')).toHaveText('Fri 04 October 2024');
 });
-
 
 
 
@@ -164,9 +164,11 @@ test('should navigate between profile and career pages', async ({ page }) => {
   // Reload the page
   await page.reload();
   await page.getByRole('button', { name: 'Next' }).click();
+  await page.waitForTimeout(500);
 
   // Verify that the value of the input box is 'sing' after reloading
-  const inputValue = await inputLocator.inputValue(); expect(inputValue).toBe('sing');
+  const inputValue = await inputLocator.inputValue();
+  expect(inputValue).toBe('sing');
 
 });
 

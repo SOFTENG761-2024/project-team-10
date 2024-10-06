@@ -1,6 +1,7 @@
 const { test, expect } = require("@playwright/test");
-require('dotenv').config({ path: './e2eTests/.env' });
+require('dotenv').config({ path: './.env' });
 test.beforeEach(async ({ page }) => {
+
   await page.goto(`${process.env.REACT_APP_URL}`);
   await page.getByRole('button', { name: 'menuicon' }).click();
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/signup`);

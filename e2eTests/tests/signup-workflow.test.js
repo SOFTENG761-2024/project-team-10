@@ -1,6 +1,7 @@
 const { test, expect } = require("@playwright/test");
 require('dotenv').config({ path: './e2eTests/.env' });
 test.beforeEach(async ({ page }) => {
+
   await page.goto(`${process.env.REACT_APP_URL}`);
   await page.getByRole('button', { name: 'menuicon' }).click();
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/signup`);
@@ -11,7 +12,7 @@ test('Ability to jump between the sign up page and the sign in page', async ({ p
   await page.waitForSelector('text="Sign in"');
   await page.locator('text="Sign in"').click();
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/signin`);
-  page.goBack();
+  await page.getByRole('link', { name: 'Create account' }).click();
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/signup`);
 });
 
