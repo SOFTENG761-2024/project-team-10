@@ -27,7 +27,11 @@ test.beforeEach(async ({ page }) => {
   // Click the Submit button
   await page.click("#signin");
   await page.waitForTimeout(500);
-  await page.locator('li:nth-child(7)').click();
+  // Use data attributes to locate the Settings icon
+  const settingsIcon = await page.locator('[data-testid="sidebar-icon-settings"]');
+
+  // Click the Settings icon
+  await settingsIcon.click();
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/profile-setting`);
   await page.waitForTimeout(2000);
 

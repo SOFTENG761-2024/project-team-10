@@ -63,6 +63,7 @@ const ProfileSidebar = () => {
               key={item.name}
               component="li"
               role="button"
+              data-testid={`sidebar-icon-${item.name.toLowerCase()}`}
               sx={{
                 ...styles.sidebarItem,
                 backgroundColor:
