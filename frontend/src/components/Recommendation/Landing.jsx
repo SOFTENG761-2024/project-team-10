@@ -1,18 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Box, Container, IconButton, TextField, Typography } from "@mui/material";
+import { Box, Container, IconButton, TextField, Typography , CircularProgress} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
 import style from './Landing.module.css';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import XIcon from '@mui/icons-material/X';
 import { useMediaQuery } from '@mui/material';
-import {
-  MuiTheme,
-  useAuth,
-  useLocalStorage,
-  useMuiTheme,
-  useRoute,
-} from "../GlobalProviders";
+import {  useMuiTheme } from "../GlobalProviders";
+import { useSearchProfiles } from '../SearchProfile/searchProfileApi';
 
 export const Landing = () => {
   const navigate = useNavigate();
@@ -22,6 +17,9 @@ export const Landing = () => {
   const { toggleLightDarkTheme, theme } = useMuiTheme();
   const [navTop, setNavTop] = useState('33vh');
   const isTablet = useMediaQuery('(max-width:1024px)'); 
+  const { institutionGroups, loading, error, searchProfiles } = useSearchProfiles();
+  const [keyword, setKeyword] = useState('');
+
   const handleThemeSwitchClick = () => {
     toggleLightDarkTheme();
   };
@@ -56,32 +54,7 @@ export const Landing = () => {
       } else {
         setNavTop('16vh');
       }
-    }
-
-    // if (searchSection) {
-    //   const searchSectionBottom = searchSection.offsetTop + searchSection.offsetHeight;
-
-    //   const screenWidth = window.innerWidth;
-
-    //   let topValue;
-      
-    //   if (screenWidth <= 768) {
-   
-    //     topValue = window.innerHeight * 0.20;
-    //   } else if (screenWidth <= 1024) {
-     
-    //     topValue = window.innerHeight * 0.34; 
-    //   } else {
-
-    //     topValue = window.innerHeight * 0.33; 
-    //   }
-    //   if (currentScrollPosition < searchSectionBottom - 50) {
-    //     setNavTop(`${topValue}px`); 
-    //   } else {
-    //     setNavTop('11vh'); 
-    //   }
-    // }
-  
+    }  
     const networkSection = document.getElementById('network');
     const memberSection = document.getElementById('member');
 
@@ -113,6 +86,19 @@ export const Landing = () => {
     }
   };
 
+  const handleInputChange = (e) => {
+    setKeyword(e.target.value);
+  }
+
+  const handleSearch = () => {
+    searchProfiles(keyword)
+  }
+
+  const handleKeyPress = (e) => {
+    if(e.key === 'Enter') {
+      handleSearch();
+    }
+  }
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -269,17 +255,72 @@ export const Landing = () => {
                   type="text"
                   placeholder="Search"
                   className={style.searchInput}
+                  value={keyword} onChange={handleInputChange} onKeyPress={handleKeyPress}
                 />
-                <button className={style.searchIconButton}>
+                <button className={style.searchIconButton} onClick={handleSearch}>
                   <SearchIcon />
                 </button>
               </div>
             </section>
           </Box>
-          <Box sx={{ display: 'flex', width: isTablet? '61vw':''}}>
+
+          {/* Loading Indicator */}
+          {loading && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+             <CircularProgress />
+            </Box>
+          )}
+
+
+          {/* Error Message */}
+          {!loading && error && (
+            <Typography color="error" sx={{ textAlign: 'center', marginTop: '16px' }}>
+              {error.message}
+            </Typography>
+          )}
+
+
+          {/* No Data Available Message */}
+          {!loading && !error && institutionGroups.length === 0 && (
+            <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh' }}>
+              No data found. Please enter some term for search.
+            </Typography>
+          )}
+
+           {/* Network Section with Dynamic Circles */}
+           <Box sx={{ display: 'flex', width: isTablet ? '61vw' : '' }}>
             <section id="network">
               <div className={style.flexContainer}>
-                {/* Circle Divs */}
+                <div className={style.circleContainer}>
+                  {/* Dynamically Render Institution Circles */}
+                  {!loading && institutionGroups.length > 0 && (
+                    institutionGroups.map((group, index) => {
+                      const baseSize = 80; 
+                      const sizeIncrement = 5;
+                      const maxSize = 200;
+                      const size = Math.min(baseSize + group.members.length * sizeIncrement, maxSize);
+                      return (
+                        <div
+                          key={index}
+                          className={`${style.circle}`}
+                          style={{ width: size, height: size }}
+                        >
+                          <span>{group.institution.name} ({group.members.length})</span>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+            </section>
+          </Box>
+        
+      {/* </Box> */}
+
+          {/* <Box sx={{ display: 'flex', width: isTablet? '61vw':''}}>
+            <section id="network">
+              <div className={style.flexContainer}>
+                
                 <div className={style.circleContainer}>
                   <div className={`${style.circle} ${style.circle1}`}><span>AUT(3)</span></div>
                   <div className={`${style.circle} ${style.circle2}`}><span>UOA(2)</span></div>
@@ -294,7 +335,9 @@ export const Landing = () => {
                 </div>
               </div>
             </section>
-          </Box>
+          </Box> */}
+
+          
           <Box sx={{ display: 'flex', width: isTablet? '77%':'85%'}}>
             <section id="member">
               <div className={style.contentSections}>
@@ -363,22 +406,6 @@ export const Landing = () => {
                 </div>
               </div>
             </section>
-          </Box>
-          <Box sx={{ width: '90%', maxWidth: '100%' }}>
-            {/* <section id="about-us"> */}
-              {/* <div className={style.footerContainer}>
-                <div className={style.leftLogo}>
-                  <h2>Logo</h2></div>
-                <div className={style.about}>
-                  <ul className={style.aboutList}>
-                    <li>About us</li>
-                    <li>Link Two</li>
-                    <li>Link Three</li>
-                    <li>Contact</li>
-                  </ul>
-                </div>
-              </div> */}
-            {/* </section> */}
           </Box>
           <Box sx={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column' }}>
             <div className={style.borderLine}></div>
