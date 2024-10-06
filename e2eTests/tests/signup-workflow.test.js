@@ -26,6 +26,7 @@ test('test can sign up with email', async ({ page }) => {
   await page.fill('#last-name', 'Doe');
   await page.fill('#organization', 'Test Corp');
   await page.fill('input[type="email"], input[placeholder="Email"]', 'john.doe@example.com');
+  await page.waitForTimeout(500);
   // 模拟 API 调用
   await page.route('**/api/create-business-account', route => {
     route.fulfill({
@@ -37,8 +38,6 @@ test('test can sign up with email', async ({ page }) => {
   // Submit the form
   await page.locator('text="Create account"').click();
   await page.waitForTimeout(2000);
-
-
 
 });
 

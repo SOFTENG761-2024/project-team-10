@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useOwnProfileAPI } from "./api";
+import { useMuiTheme } from "../../GlobalProviders";
 
 const ProfileHeader = () => {
   const navigate = useNavigate();
   const { getOwnProfileData, error } = useOwnProfileAPI();
   const [ownProfileData, setOwnProfileData] = useState(null);
+  const { toggleLightDarkTheme, theme } = useMuiTheme();
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -17,11 +19,9 @@ const ProfileHeader = () => {
         console.error("Error fetching profile data:", err);
       }
     };
-
     fetchProfileData();
-  }, [getOwnProfileData]); // This now only runs when `getOwnProfileData` actually changes
+  }, [getOwnProfileData]);
 
-  //get the current date in a readable format
   const getCurrentDate = () => {
     const today = new Date();
     const options = {
@@ -38,18 +38,85 @@ const ProfileHeader = () => {
   };
 
   const handleThemeSwitchClick = () => {
-    // Logic to handle theme toggle
+    toggleLightDarkTheme();
+  };
+
+  // 根据当前主题动态设置样式
+  const styles = {
+    header: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "calc(100% - 135px)",
+      height: "118px",
+      position: "fixed",
+      left: "135px",
+      background: theme === 'light' ? "#F9F9F9" : "#333",
+      color: theme === 'light' ? "#4b5a68" : "#F9F9F9",
+    },
+    nameAndDate: {
+      width: "400px",
+      textAlign: "left",
+      pl: "2.5rem",
+      mb: "1.25rem",
+      color: theme === 'light' ? "#4b5a68" : "#F9F9F9",
+    },
+    headerTitle: {
+      fontSize: "20px",
+      fontWeight: "500",
+      color: theme === 'light' ? "#4b5a68" : "#F9F9F9",
+      mb: "0.5rem",
+    },
+    headerDate: {
+      fontSize: "1rem",
+      fontWeight: "300",
+      color: theme === 'light' ? "#ada7a7" : "#999",
+      margin: "0",
+    },
+    iconContainer: {
+      display: "flex",
+      justifyContent: "flex-end",
+      alignItems: "center",
+      mr: "50px",
+      gap: "10px",
+    },
+    themeIcon: {
+      width: "42px",
+      height: "33px",
+      border: `2px solid ${theme === 'light' ? "black" : "white"}`,
+      borderRadius: "4px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: theme === 'light' ? "white" : "#555",
+    },
+    menuIcon: {
+      width: "42px",
+      height: "33px",
+      border: `2px solid ${theme === 'light' ? "black" : "white"}`,
+      borderRadius: "4px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: theme === 'light' ? "white" : "#555",
+    },
+    iconImage: {
+      width: "100%",
+      height: "100%",
+      objectFit: "contain",
+      filter: theme === 'dark' ? "invert(1)" : "none", // 在暗色主题下反转图标颜色
+    },
   };
 
   return (
     <Box sx={styles.header}>
       <Box sx={styles.nameAndDate}>
-        <Typography variant="h5" component="h2" sx={styles.headerTitle}>
+        <Typography id="welcomeText" variant="h5" component="h2" sx={styles.headerTitle}>
           Welcome,{" "}
           {ownProfileData?.first_name + " " + ownProfileData?.last_name ||
             "Alexa Rawus"}
         </Typography>
-        <Typography variant="body2" sx={styles.headerDate}>
+        <Typography id="headerDate" variant="body2" sx={styles.headerDate}>
           {getCurrentDate()}
         </Typography>
       </Box>
@@ -74,67 +141,3 @@ const ProfileHeader = () => {
 };
 
 export default ProfileHeader;
-
-const styles = {
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "calc(100% - 135px)",
-    height: "118px",
-    position: "fixed",
-    left: "135px",
-    background: "#F9F9F9",
-  },
-  nameAndDate: {
-    width: "400px",
-    textAlign: "left",
-    pl: "2.5rem",
-    mb: "1.25rem",
-    color: "#4b5a68",
-  },
-  headerTitle: {
-    fontSize: "20px",
-    fontWeight: "500",
-    color: "#4b5a68",
-    mb: "0.5rem",
-  },
-  headerDate: {
-    fontSize: "1rem",
-    fontWeight: "300",
-    color: "#ada7a7",
-    margin: "0",
-  },
-  iconContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    mr: "50px",
-    gap: "10px",
-  },
-  themeIcon: {
-    width: "42px",
-    height: "33px",
-    border: "2px solid black",
-    borderRadius: "4px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-  menuIcon: {
-    width: "42px",
-    height: "33px",
-    border: "2px solid black",
-    borderRadius: "4px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-  iconImage: {
-    width: "100%",
-    height: "100%",
-    objectFit: "contain",
-  },
-};
