@@ -1,5 +1,5 @@
 const { test, expect, afterEach, beforeEach } = require("@playwright/test");
-require('dotenv').config({ path: './.env' });
+require('dotenv').config({ path: './e2eTests/.env' });
 test.beforeEach(async ({ page }) => {
 
   await page.goto(`${process.env.REACT_APP_URL}`);

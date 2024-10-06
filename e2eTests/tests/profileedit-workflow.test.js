@@ -1,5 +1,6 @@
 const { test, expect, afterEach, beforeEach } = require("@playwright/test");
 require('dotenv').config({ path: './e2eTests/.env' });
+const i = 0;
 
 test.beforeEach(async ({ page }) => {
 
@@ -85,8 +86,10 @@ test('Test can edit name', async ({ page }) => {
   expect(isEditableAfter).toBe(true);
 
   // Step 4: Change the full name
-  const newName = 'Jane Admin';
-  await page.fill('#fname', newName);
+
+  await page.fill('#fname', 'Jo Admin');
+  const newName = await page.inputValue('#fname')
+  console.log('Attempting to change name to:', newName);
 
   // Step 5: Click the "Save" button to save the changes
   await page.click('#edit-save-button');
@@ -106,7 +109,6 @@ test('Test can edit name', async ({ page }) => {
   // Verify the welcome text is updated with the new name
   const updatedWelcomeText = await page.locator(`text="Welcome, ${newName}"`);
   await expect(updatedWelcomeText).toBeVisible();
-
   console.log(`Name successfully changed to: ${newName}`);
 });
 

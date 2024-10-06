@@ -34,7 +34,10 @@ const ProfileSidebar = () => {
   const handleIconClick = (iconName) => {
     setActiveIcon(iconName);
     if (iconName === "Settings") {
-      navigate("/profile-setting"); // <-- Navigates to /search-profile
+      navigate("/profile-setting"); // <-- Navigates to /profile-setting
+    }
+    if (iconName === "Network") {
+      navigate("/search-profile"); // <-- Navigates to /search-profile
     }
   };
 
