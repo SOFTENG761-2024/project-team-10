@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import {
   DashboardIcon,
   SettingsIcon,
@@ -11,13 +10,11 @@ import {
   MessageIcon,
 } from "./SidebarIcons";
 import { useOwnProfileAPI } from "./api";
-import ProfileSettingLayout from "@frontend-ui/components/ProfileSettingLayout";
 
 const ProfileSidebar = () => {
   const [activeIcon, setActiveIcon] = useState("Network");
   const { getOwnProfileData, error } = useOwnProfileAPI();
   const [ownProfileData, setOwnProfileData] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -34,9 +31,6 @@ const ProfileSidebar = () => {
 
   const handleIconClick = (iconName) => {
     setActiveIcon(iconName);
-    if (iconName === "Settings") {
-      navigate("/profile-setting"); // <-- Navigates to /search-profile
-    }
   };
 
   return (

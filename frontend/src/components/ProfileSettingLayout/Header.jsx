@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Box } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';  // Picture icon1
@@ -27,16 +28,16 @@ const Header = () => {
           <Typography variant="h6" component="div" sx={styles.welcomeText}>
             Welcome, Alzxa Rawlus
           </Typography>
-          <Typography id="formatted-date" variant="body2" sx={styles.dateText}>
+          <Typography variant="body2" sx={styles.dateText}>
             {formattedDate}
           </Typography>
         </Box>
         <Box sx={styles.iconContainer}>
           <IconButton onClick={handleThemeSwitchClick} color="inherit">
-            <Brightness4Icon id="bright" />
+            <Brightness4Icon />
           </IconButton>
           <IconButton color="inherit">
-            <MenuIcon id="menu" />
+            <MenuIcon />
           </IconButton>
         </Box>
       </Toolbar>

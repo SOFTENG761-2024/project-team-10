@@ -36,7 +36,7 @@ export class EC2Stack extends Stack {
     const securityGroup = new SecurityGroup(this, "AppSG-prod", {
       vpc,
       description:
-        "Allow inbound from ports 3000(node) and 80(react) and 8080(db admin) and 8888(pgadmin)",
+        "Allow inbound from ports 3000(node) and 80(react) and 8888(pgadmin)",
       allowAllOutbound: true,
     });
     securityGroup.addEgressRule(Peer.anyIpv4(), Port.allTraffic());
@@ -44,7 +44,6 @@ export class EC2Stack extends Stack {
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(443));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(22));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(3000));
-    securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(8080));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(8888));
     securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(5000));
 
