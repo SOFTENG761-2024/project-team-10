@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto(`${process.env.REACT_APP_URL}`);
   await page.waitForTimeout(500);
 });
-test("test can load login page", async ({ page }) => {
+test("test can switch theme of landing page", async ({ page }) => {
 
   // Get the initial theme
   const initialTheme = await page.evaluate(() => document.body.getAttribute('data-theme'));
@@ -30,6 +30,5 @@ test("test can load login page", async ({ page }) => {
   // Verify that the theme has been switched back to the initial state
   expect(finalTheme).toBe(initialTheme);
   console.log(`Theme changed back to ${finalTheme}`);
-
-
 });
+
