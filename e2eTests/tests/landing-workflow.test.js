@@ -1,7 +1,6 @@
 const { test, expect, afterEach, beforeEach } = require("@playwright/test");
 require('dotenv').config({ path: './.env' });
 test.beforeEach(async ({ page }) => {
-  console.log(`${process.env.REACT_APP_URL}`); // 确认是否正确加载
 
   await page.goto(`${process.env.REACT_APP_URL}`);
   await page.waitForTimeout(500);

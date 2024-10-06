@@ -27,7 +27,7 @@ test("Sign in with email", async ({ page }) => {
 
   // Click the Submit button
   await page.click("#signin");
-  await page.waitForNavigation();
+  await page.waitForTimeout(500);
 
   // ????After confirming the form submission, jump to the correct page
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/search-profile`);

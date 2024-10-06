@@ -26,7 +26,7 @@ test.beforeEach(async ({ page }) => {
 
   // Click the Submit button
   await page.click("#signin");
-  await page.waitForSelector('ul');
+  await page.waitForTimeout(500);
   await page.locator('li:nth-child(7)').click();
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/profile-setting`);
   await page.waitForTimeout(2000);
