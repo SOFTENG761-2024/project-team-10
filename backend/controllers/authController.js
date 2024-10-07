@@ -60,20 +60,18 @@ router.get('/linkedin/redirect', passport.authenticate('linkedinOpenId', {
   }
 });
 
-
+//Tuakiri SignIn
 router.get(
   "/tuakiri",
-  passport.authenticate("openid-client", { state: "123", passReqToCallback: true }));
+  passport.authenticate("linkedin", { state: "123", passReqToCallback: true }));
 
-//callback route for linkedin to redirect to
-router.get('/tuakiri/redirect', passport.authenticate('linkedinOpenId', {
+//callback route for Tuakiri to redirect to
+router.get('/tuakiri/redirect', passport.authenticate('tuakiriOpenId', {
   failureRedirect: process.env.FRONT_END_BASE_URL + '/signin', failureMessage: true
 }), (req, res) => {
-  if (req.user.is_verified) {
+  
     res.redirect(process.env.FRONT_END_BASE_URL + '/search-profile'); // Redirect to search page if verified
-  } else {
-    res.redirect(process.env.FRONT_END_BASE_URL + '/create-account'); // Redirect to screen if not verified
-  }
+  
 });
 
 router.get("/current-user", async (req, res) => {
