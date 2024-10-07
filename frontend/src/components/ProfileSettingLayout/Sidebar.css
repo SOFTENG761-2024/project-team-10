@@ -1,0 +1,62 @@
+.sidebar {
+    width: 80px;
+    background-color: #4E5D6C;
+    padding-top: 20px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+  }
+  
+  .profile-container {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
+  
+  .profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+    height: 70%;
+  }
+  
+  .sidebar-icon {
+    color: #fff;
+    font-size: 30px;
+    margin: 15px 0;
+    cursor: pointer;
+    padding: 10px 0; /* Adjust padding only for top and bottom */
+    width: 100%; /* Make the icon container occupy the full width */
+    text-align: center; /* Center align the icon */
+    transition: background-color 0.3s ease;
+    border-radius: 0 20px 20px 0; /* Apply rounded corners only on the left side, keeping right side square */
+  }
+  
+  .sidebar-icon.active {
+    background-color: #FFFFFF; /* Set the background color to white */
+    color: #4E5D6C; /* Change the icon color to match the white background */
+    border-radius: 0; /* Remove border radius to make the white background connect to the right */
+    width: 80px; /* Extend the white background to the right */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for better visual separation */
+  }
+  
+  .sidebar-icon:hover {
+    background-color: #FFFFFF33; /* Add a hover effect */
+  }
+  
+  .settings-container {
+    margin-bottom: 40px;
+  }
+
