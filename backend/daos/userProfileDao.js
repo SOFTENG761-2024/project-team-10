@@ -237,12 +237,12 @@ async function searchKeywords(keywordList)
     where: {
       AND: [
         ...searchConditions,  // Combine keyword search conditions
-        { usertypeid: { in: [USER_TYPE_ACADEMIC, USER_TYPE_BUSINESS] } }  // Only include usertypeid for academic and business
+        { usertypeid: { in: [USER_TYPE_ACADEMIC] } }  // Only include usertypeid for academic professionals
       ],
     },
     include: {
       institution: true,
-      organization: true,
+      faculty: true,
     },
   });
 
