@@ -19,6 +19,9 @@ export const Landing = () => {
   const isTablet = useMediaQuery('(max-width:1024px)'); 
   const { institutionGroups, loading, error, searchProfiles } = useSearchProfiles();
   const [keyword, setKeyword] = useState('');
+  const [activeTab, setActiveTab] = useState("");
+  const [selectedInstitution, setSelectedInstitution] = useState(null); 
+  const [selectedFaculty, setSelectedFaculty] = useState(null);
 
   const handleThemeSwitchClick = () => {
     toggleLightDarkTheme();
@@ -26,6 +29,12 @@ export const Landing = () => {
   const handleMenuClick = () => {
     navigate("/signup");  // This navigates to the /signup page
   };
+
+
+  const handleProfileClick = (profileId) => {
+    navigate(`/profile-visitor/${profileId}`); 
+  };
+
   const handleScroll = () => {
     const sections = document.querySelectorAll('section');
     const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
@@ -91,6 +100,9 @@ export const Landing = () => {
   }
 
   const handleSearch = () => {
+    setActiveTab("Institution");
+    setSelectedInstitution(null);
+    setSelectedFaculty(null);
     searchProfiles(keyword)
   }
 
@@ -99,6 +111,89 @@ export const Landing = () => {
       handleSearch();
     }
   }
+
+  const tabs = [
+    "Institution",
+    "Faculty",
+    "Profiles",
+  ];
+
+
+  const renderSearchCircles = (institutionGroups, loading) => {
+      if (loading || institutionGroups.length === 0) return null;
+
+      const baseSize = 80; 
+      const sizeIncrement = 5;
+      const maxSize = 200;
+
+      switch(activeTab)
+      {
+        case "Institution":
+          return institutionGroups.map((group, index) => {
+            const size = Math.min(baseSize + group.totalMembers * sizeIncrement, maxSize);
+            return (
+                <div
+                    key={index}
+                    className={`${style.circle}`}
+                    style={{ width: size, height: size }}
+                    onClick={() => {
+                      setSelectedInstitution(group); 
+                      setActiveTab("Faculty");
+                    }}
+                >
+                    <span>{group.institution.name} ({group.totalMembers})</span>
+                </div>
+            );
+        });
+        case "Faculty":
+          if (!selectedInstitution) return null;
+          return selectedInstitution.faculties.map((faculty, facultyIndex) => {
+            const size = Math.min(baseSize + faculty.members.length * sizeIncrement, maxSize);
+            return (
+                <div
+                    key={`${facultyIndex}`}
+                    className={`${style.circle}`}
+                    style={{ width: size, height: size }}
+                    onClick={() => {
+                      setSelectedFaculty(faculty); 
+                      setActiveTab("Profiles");
+                    }}
+                >
+                    <span>{faculty.faculty.name} ({faculty.members.length})</span>
+                </div>
+            );
+        });
+        
+        case "Profiles":
+          if (!selectedInstitution) return null;
+          if (!selectedFaculty) return null;
+
+          return selectedFaculty.members.map((member, memberIndex) => {
+            const size = 120;
+            return (
+                <div
+                    key={`${memberIndex}`}
+                    className={`${style.circle}`}
+                    style={{ width: size, height: size }}
+                    onClick={() => {
+                      setSelectedFaculty(null);
+                      setSelectedInstitution(null); 
+                      handleProfileClick(member.id);
+                    }}
+                >
+                    <span>{member.name}</span>
+                </div>
+            );
+        });
+
+        default:
+          return;
+               
+      }
+      
+  };
+  
+
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -293,23 +388,7 @@ export const Landing = () => {
               <div className={style.flexContainer}>
                 <div className={style.circleContainer}>
                   {/* Dynamically Render Institution Circles */}
-                  {!loading && institutionGroups.length > 0 && (
-                    institutionGroups.map((group, index) => {
-                      const baseSize = 80; 
-                      const sizeIncrement = 5;
-                      const maxSize = 200;
-                      const size = Math.min(baseSize + group.members.length * sizeIncrement, maxSize);
-                      return (
-                        <div
-                          key={index}
-                          className={`${style.circle}`}
-                          style={{ width: size, height: size }}
-                        >
-                          <span>{group.institution.name} ({group.members.length})</span>
-                        </div>
-                      );
-                    })
-                  )}
+                  {renderSearchCircles(institutionGroups, loading)}
                 </div>
               </div>
             </section>

@@ -23,35 +23,59 @@ export const useSearchProfiles = () => {
             );
 
             if (response.data && response.data.length > 0) {
-                // Group individuals by institution
-            const groups = response.data.reduce((acc, item) => {
-            const institutionName = item.institution?.name;
-        if (institutionName) {
-            if (!acc[institutionName]) {
-                acc[institutionName] = {
-                    institution: item.institution,
-                    members: [],
-            };
-        }
-        acc[institutionName].members.push(item);
-    }
-    return acc;
-    }, {});
+                // Group individuals by institution and then by faculty
+                const groups = response.data.reduce((acc, item) => {
+                    const institutionId = item.institution?.id;
+                    const institutionName = item.institution?.name;
+                    const facultyId = item.faculty_id;
+                    const facultyName = item.department;
 
-    // Convert the groups object to an array
-    const institutionGroupsArray = Object.values(groups);
-    setInstitutionGroups(institutionGroupsArray);
-    } else {
-        setError({ message: "No institutions found" });
-    }
-    } catch (err) {
-        setError({ message: "An error occurred while fetching data." });
-    } finally {
-        // Add a slight delay to improve UX before updating loading to false
-        setTimeout(() => {
-            setLoading(false);
-        }, 500);
-    }
+                    if (institutionId && institutionName) {
+                        if (!acc[institutionId]) {
+                            acc[institutionId] = {
+                                institution: { id: institutionId, name: institutionName },
+                                faculties: {},
+                                totalMembers: 0,
+                            };
+                        }
+
+                        if (facultyId && facultyName) {
+                            if (!acc[institutionId].faculties[facultyId]) {
+                                acc[institutionId].faculties[facultyId] = {
+                                    faculty: { id: facultyId, name: facultyName },
+                                    members: [],
+                                };
+                            }
+
+                            acc[institutionId].faculties[facultyId].members.push({
+                                id: item.id,
+                                name: item.first_name + " " + item.last_name,
+                            });
+                        }
+                        acc[institutionId].totalMembers += 1;
+                    }   
+                    return acc;
+                }, {});
+
+                // Convert the groups object to an array
+                const institutionGroupsArray = Object.values(groups).map(institution => ({
+                    ...institution,
+                    faculties: Object.values(institution.faculties),
+                }));
+
+                console.log(institutionGroupsArray);
+                setInstitutionGroups(institutionGroupsArray);
+            } else {
+                setError({ message: "No institutions found" });
+            }
+        } catch (err) {
+            setError({ message: "An error occurred while fetching data." });
+        } finally {
+            // Add a slight delay to improve UX before updating loading to false
+            setTimeout(() => {
+                setLoading(false);
+            }, 500);
+        }
     }, [get]);
 
     return { institutionGroups, loading, error, searchProfiles };
