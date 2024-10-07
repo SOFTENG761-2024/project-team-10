@@ -51,6 +51,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               <div className={styles.fieldContainer}>
                 <Typography variant="body2" className={styles.fieldLabel}>Last Name:</Typography>
                 <TextField
+                  id="lname"
                   value={profile.lastName}
                   onChange={(e) => handleInputChange('lastName', e.target.value)}
                   InputProps={{ readOnly: !isEditing }}

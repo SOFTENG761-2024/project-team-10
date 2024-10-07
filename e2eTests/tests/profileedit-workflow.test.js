@@ -87,7 +87,7 @@ test('Test can edit name', async ({ page }) => {
 
   // Step 4: Change the full name
 
-  await page.fill('#fname', 'Jo Admin');
+  await page.fill('#fname', 'John Admin');
   const newName = await page.inputValue('#fname')
   console.log('Attempting to change name to:', newName);
 
