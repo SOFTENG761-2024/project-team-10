@@ -139,6 +139,7 @@ export const Landing = () => {
                     onClick={() => {
                       setSelectedInstitution(group); 
                       setActiveTab("Faculty");
+                      //alert(activeTab);
                     }}
                 >
                     <span>{group.institution.name} ({group.totalMembers})</span>
