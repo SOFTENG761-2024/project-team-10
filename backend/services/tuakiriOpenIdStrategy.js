@@ -18,7 +18,7 @@ class tuakiriOpenIdStrategy extends PassportStrategy {
             const client_secret = process.env.TUAKIRI_CLIENT_SECRET;
             const redirect_uri = process.env.BACKEND_API_BASE_URL + process.env.TUAKIRI_REDIRECT_URI;
             const url = process.env.TUAKIRI_TOKEN_URL;
-            const tokenData = await getOpenIdToken(
+            const tokenData = await getTuakiriProfile(
                 grant_type,
                 code,
                 client_id,
@@ -53,7 +53,7 @@ class tuakiriOpenIdStrategy extends PassportStrategy {
                         expertise: "",
                         positions: "",
                         tools: "",
-                        profile_picture: tokenData.picture,
+                        profile_picture: "",
                         is_verified: false,
                         signup_datetime: new Date(),
                     };
