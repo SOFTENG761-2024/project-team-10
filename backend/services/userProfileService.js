@@ -15,7 +15,7 @@ async function createUserProfile(userProfileObject) {
     `Creeating user for email address ${userProfileObject.primary_email}.`
   );
 
-  const userProfile = await userProfileDao.createUserProfile(userProfileObject,);
+  const userProfile = await userProfileDao.createUserProfile(userProfileObject);
 
   logger.info(`Created profile: ${JSON.stringify(userProfile)}`);
   return userProfile;
