@@ -53,7 +53,7 @@
   position: relative;
   width: 820px;
   height: 600px;
-  margin: 20px auto;
+  margin: 51px auto;
   display: flex;
   flex-wrap: wrap;
 }
@@ -401,6 +401,7 @@
   object-fit: none;
   width: 63vw;
 }
+
 
 /* Media Query */
 @media (max-width: 1024px) {  

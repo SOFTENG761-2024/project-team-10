@@ -50,6 +50,7 @@ export const useSearchProfiles = () => {
                             acc[institutionId].faculties[facultyId].members.push({
                                 id: item.id,
                                 name: item.first_name + " " + item.last_name,
+                                pic: item.profile_picture,
                             });
                         }
                         acc[institutionId].totalMembers += 1;

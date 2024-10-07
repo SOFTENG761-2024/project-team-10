@@ -123,7 +123,7 @@ export const Landing = () => {
       if (loading || institutionGroups.length === 0) return null;
 
       const baseSize = 100; 
-      const sizeIncrement = 19;
+      const sizeIncrement = 15;
       const maxSize = 200;
 
       switch(activeTab)
