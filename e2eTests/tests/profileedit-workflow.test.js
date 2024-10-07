@@ -1,6 +1,5 @@
 const { test, expect, afterEach, beforeEach } = require("@playwright/test");
 require('dotenv').config({ path: './e2eTests/.env' });
-const i = 0;
 
 test.beforeEach(async ({ page }) => {
 
@@ -29,10 +28,11 @@ test.beforeEach(async ({ page }) => {
   await page.click("#signin");
   await page.waitForTimeout(500);
   // Use data attributes to locate the Settings icon
-  const settingsIcon = await page.locator('[data-testid="sidebar-icon-settings"]');
+  //const settingsIcon = await page.locator('[data-testid="sidebar-icon-settings"]');
 
   // Click the Settings icon
-  await settingsIcon.click();
+  // await settingsIcon.click();
+  await page.click('ul > li:last-child');
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/profile-setting`);
   await page.waitForTimeout(2000);
 
@@ -158,11 +158,10 @@ test('should navigate between profile and career pages', async ({ page }) => {
 
   // Click the "Edit" button
   await page.getByRole('button', { name: 'Edit' }).click();
+  await page.waitForTimeout(500);
 
   // Click the input box and fill in the value 'sing'
-  const inputLocator = page.locator('[id="\\:ra\\:"]');
-  await inputLocator.click();
-  await inputLocator.fill('sing');
+  await page.fill('input[type="text"], input[id="skills-input"]', 'sing');
 
   // Click the "Save" button
   await page.getByRole('button', { name: 'Save' }).click();
@@ -173,7 +172,7 @@ test('should navigate between profile and career pages', async ({ page }) => {
   await page.waitForTimeout(500);
 
   // Verify that the value of the input box is 'sing' after reloading
-  const inputValue = await inputLocator.inputValue();
+  const inputValue = await page.inputValue('input[type="text"], input[id="skills-input"]');
   expect(inputValue).toBe('sing');
 
 });
