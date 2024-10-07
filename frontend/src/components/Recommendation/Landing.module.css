@@ -53,7 +53,9 @@
   position: relative;
   width: 820px;
   height: 600px;
-  margin: 51px auto;
+  margin: 20px auto;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .circle {

@@ -122,8 +122,8 @@ export const Landing = () => {
   const renderSearchCircles = (institutionGroups, loading) => {
       if (loading || institutionGroups.length === 0) return null;
 
-      const baseSize = 80; 
-      const sizeIncrement = 5;
+      const baseSize = 100; 
+      const sizeIncrement = 19;
       const maxSize = 200;
 
       switch(activeTab)
@@ -135,7 +135,12 @@ export const Landing = () => {
                 <div
                     key={index}
                     className={`${style.circle}`}
-                    style={{ width: size, height: size }}
+                    style={{ width: size, 
+                      height: size, 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      margin: '10px'  }}
                     onClick={() => {
                       setSelectedInstitution(group); 
                       setActiveTab("Faculty");
@@ -154,7 +159,12 @@ export const Landing = () => {
                 <div
                     key={`${facultyIndex}`}
                     className={`${style.circle}`}
-                    style={{ width: size, height: size }}
+                    style={{ width: size, 
+                      height: size, 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      margin: '10px'  }}
                     onClick={() => {
                       setSelectedFaculty(faculty); 
                       setActiveTab("Profiles");
@@ -170,12 +180,17 @@ export const Landing = () => {
           if (!selectedFaculty) return null;
 
           return selectedFaculty.members.map((member, memberIndex) => {
-            const size = 120;
+            const size = 120; //TODO: fix later
             return (
                 <div
                     key={`${memberIndex}`}
                     className={`${style.circle}`}
-                    style={{ width: size, height: size }}
+                    style={{ width: size, 
+                      height: size, 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      margin: '10px'  }}
                     onClick={() => {
                       setSelectedFaculty(null);
                       setSelectedInstitution(null); 
@@ -377,7 +392,7 @@ export const Landing = () => {
 
 
           {/* No Data Available Message */}
-          {!loading && !error && institutionGroups.length === 0 && (
+          {!loading && !error && institutionGroups.length === 0 && activeTab && activeTab.trim() !== '' && (
             <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh' }}>
               No data found. Please enter some term for search.
             </Typography>

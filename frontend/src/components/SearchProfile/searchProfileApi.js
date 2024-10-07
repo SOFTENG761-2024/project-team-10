@@ -74,7 +74,7 @@ export const useSearchProfiles = () => {
             // Add a slight delay to improve UX before updating loading to false
             setTimeout(() => {
                 setLoading(false);
-            }, 500);
+            }, 300);
         }
     }, [get]);
 
