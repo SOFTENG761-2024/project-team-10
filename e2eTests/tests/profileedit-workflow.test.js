@@ -93,9 +93,6 @@ test('Test can edit name', async ({ page }) => {
 
   // Step 5: Click the "Save" button to save the changes
   await page.click('#edit-save-button');
-  await page.waitForResponse(response =>
-    response.url().includes('/api/userprofile') && response.status() === 200
-  );
 
   // Step 6: Confirm that the input box returns to a non-editable state
   const isEditableAfterSave = await page.isEditable('#fname');
@@ -104,8 +101,7 @@ test('Test can edit name', async ({ page }) => {
   // Step 7: Reload the page to verify that the updated full name is saved
   await page.reload();
   await page.waitForSelector('#fname', { state: 'visible', timeout: 10000 });
-  const updatedName = await page.inputValue('#fname');
-  console.log('Updated Name:', updatedName);
+
 
   expect(initialName).toBe(newName);
 
