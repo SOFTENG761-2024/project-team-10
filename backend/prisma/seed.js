@@ -310,7 +310,7 @@ async function main() {
       ];
     
       for (const profile of userProfiles) {
-        await await prismaClient.user_profile.create({
+         await prismaClient.user_profile.create({
           data: profile,
         });
       }
