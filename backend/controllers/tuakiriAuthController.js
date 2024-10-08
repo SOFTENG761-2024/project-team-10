@@ -30,10 +30,10 @@ router.get(
 
 //callback route for Tuakiri to redirect to
 router.get('/tuakiri/redirect', passport.authenticate('tuakiriOpenId', {
-  failureRedirect: process.env.FRONT_END_BASE_URL + '/signin', failureMessage: true
+  failureRedirect: "https://www.academicfellows.com/signin", failureMessage: true
 }), (req, res) => {
   
-    res.redirect(process.env.FRONT_END_BASE_URL + '/search-profile'); // Redirect to search page if verified
+    res.redirect("https://www.academicfellows.com/search-profile"); // Redirect to search page if verified
   
 });
 
