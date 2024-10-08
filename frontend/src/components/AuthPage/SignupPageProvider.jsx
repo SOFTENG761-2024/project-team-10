@@ -3,6 +3,7 @@ import axios from 'axios';
 import { styled } from '@mui/material/styles';
 import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
 import { useAPI } from "../GlobalProviders/APIProvider";
+import { useNavigate } from "react-router-dom";
 
 import {
   Box,
@@ -102,6 +103,7 @@ const SignupPageContext = createContext({});
 export const useSignupPage = () => useContext(SignupPageContext);
 
 const SignupPageProvider = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [organization, setOrganization] = useState('');
@@ -114,19 +116,41 @@ const SignupPageProvider = () => {
     window.location.href = 'https://www.reannz.co.nz';
   };
 
+  const createAccount = async (formData) => {
+    try {
+      const response = await post(
+        `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/auth/biz-account-create`, // need to change the api
+        formData
+      );
+      return response?.data;
+    } catch (error) {
+      console.error("Error creating account:", error);
+      throw error;
+    }
+  };
+
   const handleCreateBusinessAccount = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/create-business-account', {
-        firstName,
-        lastName,
-        organization,
-        email,
+      const data = await createAccount(
+        {
+          'first_name': firstName,
+          'last_name': lastName,
+          'organization_name': organization,
+          'email': email,
+        }
+      ).then((response) => {
+        if (response === true) {
+          navigate("/create-account");
+
+        } else {
+          setError("Failed to create account. Please go to the sign up page and try again.");
+        }
       });
-      alert('Business account created successfully!');
+
     } catch (error) {
-      console.error('Error creating business account:', error);
-      alert('Failed to create business account. Please try again.');
+      console.error("Error:", error);
+      setError(error);
     }
   };
 

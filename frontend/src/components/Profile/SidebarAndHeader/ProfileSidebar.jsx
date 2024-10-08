@@ -29,7 +29,7 @@ const ProfileSidebar = () => {
     };
 
     fetchProfileData();
-  }, [getOwnProfileData]);
+  }, []);
 
   const handleIconClick = (iconName, route) => {
     setActiveIcon(iconName);
