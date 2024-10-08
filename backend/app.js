@@ -72,17 +72,17 @@ app.use("/api/publications", publicationController);
 app.use("/api/auth", authController);
 app.use("/api/test", testController);
 app.use("/api/search", searchController);
-app.use("", tuakiriAuthController);
+app.use("/api/auth", tuakiriAuthController);
 
 // setup swagger ui
 swaggerController(app);
 
-var port = process.env.PORT || 8080;  // Set port from environment variable or default to 8080
-app.set('port', port);
+// var port = process.env.PORT || 8080;  // Set port from environment variable or default to 8080
+// app.set('port', port);
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+// });
 
 logger.info("server started successfully.");
 
