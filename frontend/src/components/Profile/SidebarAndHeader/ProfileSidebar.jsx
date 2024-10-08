@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Box, Button } from "@mui/material";
 import {
   DashboardIcon,
   SettingsIcon,
@@ -12,9 +13,10 @@ import {
 import { useOwnProfileAPI } from "./api";
 
 const ProfileSidebar = () => {
-  const [activeIcon, setActiveIcon] = useState("Network");
+  const [activeIcon, setActiveIcon] = useState();
   const { getOwnProfileData, error } = useOwnProfileAPI();
   const [ownProfileData, setOwnProfileData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -29,8 +31,13 @@ const ProfileSidebar = () => {
     fetchProfileData();
   }, []);
 
-  const handleIconClick = (iconName) => {
+  const handleIconClick = (iconName, route) => {
     setActiveIcon(iconName);
+    if (route) {
+      navigate(route); // Navigate only if the route is provided
+    } else {
+      console.log(`${iconName} page is not yet implemented.`);
+    }
   };
 
   return (
@@ -45,30 +52,33 @@ const ProfileSidebar = () => {
       <Box sx={styles.sidebarContent}>
         <Box component="ul" sx={styles.sidebarList}>
           {[
-            { name: "Dashboard", Icon: DashboardIcon },
-            { name: "Network", Icon: NetworkChartIcon },
-            { name: "Category", Icon: CategoryIcon },
-            { name: "Calendar", Icon: CalenderIcon },
-            { name: "Quarter", Icon: CircleIcon },
-            { name: "Message", Icon: MessageIcon },
-            { name: "Settings", Icon: SettingsIcon },
+            { name: "Dashboard", Icon: DashboardIcon, route: "/dashboard" },
+            {
+              name: "Network",
+              Icon: NetworkChartIcon,
+              route: "/search-profile",
+            },
+            { name: "Category", Icon: CategoryIcon, route: "" },
+            { name: "Calendar", Icon: CalenderIcon, route: "/calendar" }, // Calendar route
+            { name: "Quarter", Icon: CircleIcon, route: "" },
+            { name: "Message", Icon: MessageIcon, route: "" },
+            { name: "Settings", Icon: SettingsIcon, route: "/profile-setting" },
           ].map((item) => (
-            <Box
+            <Button
               key={item.name}
               component="li"
-              role="button"
               sx={{
                 ...styles.sidebarItem,
                 backgroundColor:
                   activeIcon === item.name ? "#FFFFFF" : "#4b5a68",
                 marginBottom: item.name === "Message" ? "50px" : "0",
               }}
-              onClick={() => handleIconClick(item.name)}
+              onClick={() => handleIconClick(item.name, item.route)}
             >
               <item.Icon
-                fillColor={activeIcon === item.name ? "#4b5a68" : "white"}
+                fillColor={activeIcon === item.name ? "#4b5a68" : "#FFFFFF"}
               />
-            </Box>
+            </Button>
           ))}
         </Box>
       </Box>
@@ -121,6 +131,18 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     marginBottom: "0",
+    transition: "all 0.3s ease",
+
+    "&:hover": {
+      backgroundColor: "#FFFFFF",
+      color: "#4b5a68",
+    },
+
+    "&.active": {
+      backgroundColor: "#FFFFFF",
+      color: "#4b5a68",
+    },
+
     "&[data-icon='Message']": {
       marginBottom: "50px",
     },

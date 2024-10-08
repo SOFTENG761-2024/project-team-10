@@ -232,35 +232,36 @@ async function updatePassword(userId, userPassword) {
 }
 
 //Search against keywords
-async function searchKeywords(keywordList) {
-  try {
-    const keywords = keywordList.split(' ');
-    const searchConditions = keywords.map(searchTerm => ({
-      OR: [
-        { first_name: { contains: searchTerm, mode: 'insensitive' } },
-        { last_name: { contains: searchTerm, mode: 'insensitive' } },
-        { title: { contains: searchTerm, mode: 'insensitive' } },
-        { positions: { contains: searchTerm, mode: 'insensitive' } },
-        { department: { contains: searchTerm, mode: 'insensitive' } },
-        { research_tags: { contains: searchTerm, mode: 'insensitive' } },
-        { skills: { contains: searchTerm, mode: 'insensitive' } },
-        { institution: { name: { contains: searchTerm, mode: 'insensitive' } } },
-        { organization: { name: { contains: searchTerm, mode: 'insensitive' } } }
-      ]
-    }));
+async function searchKeywords(keywordList)
+{
+  try{
+  const keywords = keywordList.split(' ');
+  const searchConditions = keywords.map(searchTerm => ({
+    OR: [
+      { first_name: { contains: searchTerm, mode: 'insensitive' } },
+      { last_name: { contains: searchTerm, mode: 'insensitive' } },
+      { title: { contains: searchTerm, mode: 'insensitive' } },
+      { positions: { contains: searchTerm, mode: 'insensitive' } },
+      { department: { contains: searchTerm, mode: 'insensitive' } },
+      { research_tags: { contains: searchTerm, mode: 'insensitive' } },
+      { skills: { contains: searchTerm, mode: 'insensitive' } },
+      { institution: { name: { contains: searchTerm, mode: 'insensitive' } } },
+      { organization: { name: { contains: searchTerm, mode: 'insensitive' } } }
+    ]
+  }));
 
-    const searchResults = await prismaClient.user_profile.findMany({
-      where: {
-        AND: [
-          ...searchConditions,  // Combine keyword search conditions
-          { usertypeid: { in: [USER_TYPE_ACADEMIC, USER_TYPE_BUSINESS] } }  // Only include usertypeid for academic and business
-        ],
-      },
-      include: {
-        institution: true,
-        organization: true,
-      },
-    });
+  const searchResults = await prismaClient.user_profile.findMany({
+    where: {
+      AND: [
+        ...searchConditions,  // Combine keyword search conditions
+        { usertypeid: { in: [USER_TYPE_ACADEMIC] } }  // Only include usertypeid for academic professionals
+      ],
+    },
+    include: {
+      institution: true,
+      faculty: true,
+    },
+  });
 
     return searchResults;
   }
