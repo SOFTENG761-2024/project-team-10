@@ -46,9 +46,11 @@ const ProfileHeader = () => {
       <Box sx={styles.nameAndDate}>
         <Typography variant="h5" component="h2" sx={styles.headerTitle}>
           Welcome,{" "}
-          {ownProfileData?.first_name + " " + ownProfileData?.last_name ||
-            "Alexa Rawus"}
+          {ownProfileData?.first_name && ownProfileData?.last_name
+            ? `${ownProfileData.first_name} ${ownProfileData.last_name}`
+            : "Guest"}
         </Typography>
+
         <Typography variant="body2" sx={styles.headerDate}>
           {getCurrentDate()}
         </Typography>
