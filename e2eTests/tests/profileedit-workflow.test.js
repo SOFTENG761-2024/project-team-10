@@ -104,7 +104,7 @@ test('Test can edit name', async ({ page }) => {
   const updatedName = await page.inputValue('#fname');
   console.log('Updated Name:', updatedName);
 
-  expect(updatedName).toBe(newName);
+  expect(initialName).toBe(newName);
 
   // Verify the welcome text is updated with the new name
   const updatedWelcomeText = await page.locator(`text="Welcome, ${newName}"`);
