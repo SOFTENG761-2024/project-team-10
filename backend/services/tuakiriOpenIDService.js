@@ -1,6 +1,6 @@
 const axios = require('axios');
 const qs = require('qs');
-const jwt = require ('jsonwebtoken');
+// const jwt = require ('jsonwebtoken');
 
 async function getTuakiriProfile(grant_type, code, client_id, client_secret, redirect_uri){
 

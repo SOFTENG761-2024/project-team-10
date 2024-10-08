@@ -58,8 +58,8 @@ passport.use(new OpenIDConnectStrategy({
     clientSecret: 'LLR3FRT7WqifPzC+u0h9dUqg',
     callbackURL: 'http://localhost:8080/redirect',
     scope: ['email', 'profile', 'openid']
-  }, function verify(issuer, profile, cb) {
-        console.log("linkedin startegy done: ", done)
+  }, function verify() {
+        console.log("linkedin startegy done: ")
   }));
 
 // Define authenticateUser function
