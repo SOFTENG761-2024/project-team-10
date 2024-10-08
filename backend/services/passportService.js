@@ -2,7 +2,8 @@ const passport = require('passport');
 const linkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const path = require('path');
 const env = require('dotenv');
-const linkedinOpenIdStrategy = require("./tuakiriOpenIdStrategy");
+const linkedinOpenIdStrategy = require("./linkedinOpenIdStrategy");
+const tuakiriOpenIdStrategy = require("./tuakiriOpenIdStrategy");
 const { getUserProfileById, getUserProfileByPrimaryEmail } = require('./userProfileService');
 const LocalStrategy = require('passport-local').Strategy;
 const passwordService = require('./passwordService');
@@ -39,6 +40,15 @@ passport.use(new linkedinOpenIdStrategy({
     }
 }));
 
+passport.use(new tuakiriOpenIdStrategy({
+}, function (user, done) {
+    try {
+        return done(null, done);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}));
+
 passport.use(new OpenIDConnectStrategy({
     issuer: 'https://openidconnect.test.tuakiri.ac.nz',
     authorizationURL: 'https://openidconnect.test.tuakiri.ac.nz/OIDC/authorization',
@@ -47,7 +57,7 @@ passport.use(new OpenIDConnectStrategy({
     clientID: '1726206339_dev.academicfellows.com_openidconnect.test.tuakiri.ac.nz',
     clientSecret: 'LLR3FRT7WqifPzC+u0h9dUqg',
     callbackURL: 'http://localhost:8080/redirect',
-    scope: [ 'profile' ]
+    scope: ['email', 'profile', 'openid']
   }, function verify(issuer, profile, cb) {
         console.log("linkedin startegy done: ", done)
   }));

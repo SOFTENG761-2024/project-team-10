@@ -24,6 +24,7 @@ async function getTuakiriProfile(grant_type, code, client_id, client_secret, red
         });
 
         const token = response.data.access_token;
+        console.log("token:"+token)
 
         try {
 
@@ -35,6 +36,7 @@ async function getTuakiriProfile(grant_type, code, client_id, client_secret, red
             });
     
             const profile = response.data;
+            console.log("profile: "+profile);
 
             return profile;
 

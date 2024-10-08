@@ -1,11 +1,11 @@
-const getOpenIdToken = require("./openIDService");
+const getTuakiriProfile = require("./tuakiriOpenIDService");
 const { getUserProfileByPrimaryEmail, createUserProfile } = require("../daos/userProfileDao");
 const { Strategy: PassportStrategy } = require('passport-strategy');
 
 class tuakiriOpenIdStrategy extends PassportStrategy {
     constructor(options, verify) {
         super(); // Call the constructor of PassportStrategy
-        this.name = 'linkedinOpenId'; // Name of the strategy
+        this.name = 'tuakiriOpenId'; // Name of the strategy
         this.verify = verify; // `verify` is a callback function to handle authentication
     }
 
@@ -16,7 +16,7 @@ class tuakiriOpenIdStrategy extends PassportStrategy {
             const grant_type = "authorization_code";
             const client_id = process.env.TUAKIRI_CLIENT_ID;
             const client_secret = process.env.TUAKIRI_CLIENT_SECRET;
-            const redirect_uri = process.env.BACKEND_API_BASE_URL + process.env.TUAKIRI_REDIRECT_URI;
+            const redirect_uri = process.env.TUAKIRI_REDIRECT_URI;
             const url = process.env.TUAKIRI_TOKEN_URL;
             const tokenData = await getTuakiriProfile(
                 grant_type,

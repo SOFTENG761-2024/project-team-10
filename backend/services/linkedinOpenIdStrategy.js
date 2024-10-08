@@ -1,4 +1,4 @@
-const getOpenIdToken = require("../services/openIDService");
+const getOpenIdToken = require("./openIDService");
 const { getUserProfileByPrimaryEmail, createUserProfile } = require("../daos/userProfileDao");
 const { Strategy: PassportStrategy } = require('passport-strategy');
 
