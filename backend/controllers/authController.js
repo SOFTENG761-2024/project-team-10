@@ -63,10 +63,10 @@ router.get('/linkedin/redirect', passport.authenticate('linkedinOpenId', {
 //Tuakiri SignIn
 router.get(
   "/tuakiri",
-  passport.authenticate("linkedin", { state: "123", passReqToCallback: true }));
+  passport.authenticate("openidconnect", { state: "123", passReqToCallback: true }));
 
 //callback route for Tuakiri to redirect to
-router.get('/tuakiri/redirect', passport.authenticate('tuakiriOpenId', {
+router.get('/tuakiri/redirect', passport.authenticate('linkedinOpenId', {
   failureRedirect: process.env.FRONT_END_BASE_URL + '/signin', failureMessage: true
 }), (req, res) => {
   
