@@ -44,7 +44,7 @@ const ProfileSidebar = () => {
     <Box sx={styles.sidebar}>
       <Box sx={styles.profile}>
         <img
-          src={ownProfileData?.profile_picture || "/default-profile.png"}
+          src={ownProfileData?.profile_picture || "/sidebar/guest.png"}
           alt={`${ownProfileData?.first_name} ${ownProfileData?.last_name}`}
           style={styles.profileImage}
         />
