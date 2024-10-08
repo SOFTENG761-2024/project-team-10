@@ -56,7 +56,7 @@ passport.use(new OpenIDConnectStrategy({
     userInfoURL: 'https://openidconnect.test.tuakiri.ac.nz/OIDC/userinfo',
     clientID: '1726206339_dev.academicfellows.com_openidconnect.test.tuakiri.ac.nz',
     clientSecret: 'LLR3FRT7WqifPzC+u0h9dUqg',
-    callbackURL: 'http://localhost:8080/redirect',
+    callbackURL: 'https://api.academicfellows.com/api/auth/tuakiri/redirect',
     scope: ['email', 'profile', 'openid']
   }, function verify() {
         console.log("linkedin startegy done: ")
