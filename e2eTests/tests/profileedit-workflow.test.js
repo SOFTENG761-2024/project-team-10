@@ -100,7 +100,7 @@ test('Test can edit name', async ({ page }) => {
 
   // Step 7: Reload the page to verify that the updated full name is saved
   await page.reload();
-  await page.waitForSelector('#fname');
+  await page.waitForSelector('#fname', { state: 'visible', timeout: 10000 });
   const updatedName = await page.inputValue('#fname');
   console.log('Updated Name:', updatedName);
 
