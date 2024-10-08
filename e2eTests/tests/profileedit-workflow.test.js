@@ -98,6 +98,18 @@ test('Test can edit name', async ({ page }) => {
   const isEditableAfterSave = await page.isEditable('#fname');
   expect(isEditableAfterSave).toBe(false);
 
+  // Step 7: Reload the page to verify that the updated full name is saved
+  await page.reload();
+  await page.waitForSelector('#fname', { state: 'visible', timeout: 10000 });
+
+
+  expect(initialName).toBe(newName);
+
+  // Verify the welcome text is updated with the new name
+  const updatedWelcomeText = await page.locator(`text="Welcome, ${newName}"`);
+  await expect(updatedWelcomeText).toBeVisible();
+  console.log(`Name successfully changed to: ${newName}`);
+
 });
 
 
@@ -159,6 +171,9 @@ test('should navigate between profile and career pages', async ({ page }) => {
   await page.getByRole('button', { name: 'Next' }).click();
   await page.waitForTimeout(500);
 
+  // Verify that the value of the input box is 'sing' after reloading
+  const inputValue = await page.inputValue('input[type="text"], input[id="skills-input"]');
+  expect(inputValue).toBe('sing');
 
 });
 
