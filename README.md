@@ -97,7 +97,6 @@ Run this from Git Bash if you use Windows.
 cd ./backend
 npm run start:dep
 ```
-1
 #Verify the env,
 
 Open http://localhost:8888/ Login with user-name@domain-name.com/pgadminpassword
