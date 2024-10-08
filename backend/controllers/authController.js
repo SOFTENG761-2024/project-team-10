@@ -54,9 +54,9 @@ router.get('/linkedin/redirect', passport.authenticate('linkedinOpenId', {
   failureRedirect: process.env.FRONT_END_BASE_URL + '/signin', failureMessage: true
 }), (req, res) => {
   if (req.user.is_verified) {
-    res.redirect(process.env.FRONT_END_BASE_URL + '/search-profile'); // Redirect to search page if verified
+    res.redirect("https://www.academicfellows.com/search-profile"); // Redirect to search page if verified
   } else {
-    res.redirect(process.env.FRONT_END_BASE_URL + '/create-account'); // Redirect to screen if not verified
+    res.redirect("https://www.academicfellows.com/create-account"); // Redirect to screen if not verified
   }
 });
 
