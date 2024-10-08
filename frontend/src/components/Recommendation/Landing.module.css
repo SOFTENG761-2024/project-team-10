@@ -54,10 +54,12 @@
   width: 820px;
   height: 600px;
   margin: 51px auto;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .circle {
-  position: absolute;
+  /*position: absolute;*/
   border-radius: 50%;
   border: solid 1px #ccc;
   background-color: #cccccc8a;
@@ -399,6 +401,7 @@
   object-fit: none;
   width: 63vw;
 }
+
 
 /* Media Query */
 @media (max-width: 1024px) {  

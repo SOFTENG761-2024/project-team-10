@@ -83,6 +83,41 @@ router.get("/current-user", async (req, res) => {
   }
 });
 
+router.post("/biz-account-create", async (req, res) => {
+  try {
+    const user = req.body;
+    const dbUser = {};
+    if (user.first_name && user.first_name.trim() != '') {
+      dbUser.first_name = user.first_name.trim();
+    }
+    if (user.last_name && user.last_name.trim() != '') {
+      dbUser.last_name = user.last_name.trim();
+    }
+    if (user.email && user.email.trim() != '') {
+      dbUser.primary_email = user.email.trim();
+    }
+    if (user.organization_name && user.organization_name.trim() != '') {
+      dbUser.organization = { name: user.organization_name.trim() };
+    }
+    dbUser.usertypeid = 2; // Business
+    const profile = await userProfileService.createUserProfile(dbUser);
+    if (profile)
+    {
+      req.logIn(profile, (err) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json(err);
+        }
+        return res.json(true);
+      });
+    }
+    else
+      return res.json(false);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
+
 router.post("/account-screen", async (req, res) => {
   try {
     console.log("account-screen: ", req.user);
@@ -179,15 +214,14 @@ router.post("/test", async (req, res) => {
 });
 
 //end point to update user password
-router.put("/updatePassword/:id", async function updatePassword(req, res)  {
-  try
-  {
+router.put("/updatePassword/:id", async function updatePassword(req, res) {
+  try {
     const id = req.params.id;
     const hashedPassword = await passwordService.hashPassword(req.body.password);
     const userprofileObject = { id: id, password: hashedPassword, password_update_datetime: new Date() };
     const updatedUser = await userProfileService.updateUserProfile(userprofileObject);
     return res.json(updatedUser);
-  } 
+  }
   catch (error) {
     console.log(error);
     return res.status(500).json(error);

@@ -65,6 +65,7 @@ async function main() {
     {
       usertypeid: 1,
       institution_id: 6,
+      faculty_id:1,
       first_name: 'Natalie',
       last_name: 'Baird',
       title: 'Associate Professor',
@@ -73,12 +74,14 @@ async function main() {
       department: 'Faculty of Law',
       positions: 'Associate Professor',
       bio: 'Natalie’s current research interests lie in the areas of refugee law, international human rights, Pacific legal studies and the scholarship of teaching and learning. In relation to refugee law, current projects include New Zealand\'s complementary protection jurisprudence since the enactment of the Immigration Act 2009, and New Zealand\'s under-developed system for responding to claims for protection from stateless people. In the human rights context, a major focus has been the impact of the UN\'s Universal Periodic Review mechanism, in both New Zealand and the Pacific Islands. In 2014, along with a group of enthusiastic students, Natalie coordinated a submission for New Zealand\'s second Universal Periodic Review at the UN Human Rights Council on the human rights impacts of the Canterbury earthquakes. Natalie is also a member of the Socio-Legal Studies Group in the Law School, which is currently engaged in a longitudinal study of the 2014 intake of New Zealand law students.',
+      profile_picture: 'https://profiles.canterbury.ac.nz/Natalie-Baird/photo',
       research_area: '',
       research_tags: '',
     },
     {
       usertypeid: 1,
       institution_id: 6,
+      faculty_id:2,
       first_name: 'Paul',
       last_name: 'Ballantine',
       title: 'Professor',
@@ -87,12 +90,14 @@ async function main() {
       department: 'UC Business School',
       positions: 'Executive Dean, Professor',
       bio: 'Research interests include retailing, consumption behaviour (particularly the negative aspects of consumption), and social and ethical issues in marketing.',
+      profile_picture: 'https://www.canterbury.ac.nz/content/dam/uoc-main-site/images/3-people-images/profiles/staff-profiles/paul-ballantine.jpg',
       research_area: '',
       research_tags: '',
     },
     {
       usertypeid: 1,
       institution_id: 6,
+      faculty_id: 1,
       first_name: 'Oscar',
       last_name: 'Bloom',
       title: 'Mr',
@@ -101,12 +106,14 @@ async function main() {
       department: 'Faculty of Law',
       positions: 'LawME Mentor',
       bio: '',
+      profile_picture: '',
       research_area: '',
       research_tags: '',
     },
     {
       usertypeid: 1,
       institution_id: 6,
+      faculty_id:1,
       first_name: 'Neil',
       last_name: 'Boister',
       title: 'Professor',
@@ -121,6 +128,7 @@ async function main() {
     {
       usertypeid: 1,
       institution_id: 6,
+      faculty_id:1,
       first_name: 'Lindsay',
       last_name: 'Breach',
       title: 'Doctor',
@@ -135,6 +143,7 @@ async function main() {
     {
       usertypeid: 1,
       institution_id: 6,
+      faculty_id:1,
       first_name: 'Taryn',
       last_name: 'Breen',
       title: 'Miss',
@@ -149,6 +158,7 @@ async function main() {
     {
       usertypeid: 1,
       institution_id: 6,
+      faculty_id: 1,
       first_name: 'Richard',
       last_name: 'Burchill',
       title: 'Doctor',
@@ -163,12 +173,13 @@ async function main() {
     {
       usertypeid: 1,
       institution_id: 7,
+      faculty_id:2,
       first_name: 'Gloria',
       last_name: 'Hao',
       title: 'Dr',
       primary_email: 'gloria.hao@lincoln.ac.nz',
       orcid_identifier: null,
-      department: '',
+      department: 'Lincoln Business School',
       positions: 'Senior Lecturer',
       bio: 'My specialist area is financial accounting, with an interest in accounting theory, financial reporting, IFRSs, agricultural accounting, accounting education and information disclosure. In my over twenty years of accounting teaching, at both graduate and undergraduate levels in China and New Zealand, I have realised that I profoundly love teaching and am strongly willing to help my students grow. I am a member of CPA Australia and Chartered Accountants Australia and New Zealand (CAANZ). My research, which includes financial accounting, accounting education, and financial management, has resulted in many publications in professional journals and presiding and participating in research projects. I have edited several accounting finance textbooks and Accounting Principles of which I was the principal editor, was the recommended tertiary level textbook in China.',
       research_area: 'Commerce, management, tourism and services, Accounting, auditing and accountability',
@@ -177,12 +188,13 @@ async function main() {
     {
       usertypeid: 1,
       institution_id: 7,
+      faculty_id:2,
       first_name: 'Khanh (Harry)',
       last_name: 'Hoang',
       title: 'Dr',
       primary_email: 'Khanh.Hoang@lincoln.ac.nz',
       orcid_identifier: '0000-0002-5570-9303',
-      department: '',
+      department: 'Lincoln Business School',
       positions: 'Senior Lecturer',
       bio: 'I am an active researcher in the field of corporate finance, business uncertainty, corporate social responsibility, and sustainable finance. My current research topics include how corporate financial policies respond to changes in macroeconomic conditions and government policies. My research works are published in international peer-reviewed journals in the ABDC Journal Ranking List, including Journal of Accounting and Public Policy, International Review of Economics and Finance, Journal of Behavioral & Experimental Finance, Global Finance Journal, Evaluation Review, Finance Research Letters, International Journal of Emerging Markets, Economic Analysis and Policy, Managerial and Decision Economics, among others. Regarding my services to the academic community, I serve as an Associate Editor of the Economic-Financial section of PLOS ONE journal, a Co-Guest Editor for special issues published in some academic journals in the ABDC list, including Research in International Business & Finance and Journal of Chinese Business and Economic Studies. I also contribute as an adhoc reviewer for Journal of Economic Behavior and Organization, Empirical Economics, European Financial Management, Annals of Operations Research, Evaluation Review, etc. I also contribute as a referee for Vietnam\'s National Foundation for Science and Technology Development, and act as one of the managers in the Finance and Banking Network (AVSE Global).',
       research_area: 'Banking, finance and investment, Applied economics, Commerce, management, tourism and services, Strategy, management and organisational behaviour, Economics',
@@ -192,6 +204,7 @@ async function main() {
         {
           usertypeid: 1,
           institution_id: 6,
+          faculty_id:1,
           first_name: 'Chat',
           last_name: 'Nguyen',
           title: 'Doctor',
@@ -206,6 +219,7 @@ async function main() {
         {
           usertypeid: 1,
           institution_id: 6,
+          faculty_id:2,
           first_name: 'Frank',
           last_name: 'Owen',
           title: 'Mr',
@@ -220,6 +234,7 @@ async function main() {
         {
           usertypeid: 1,
           institution_id: 6,
+          faculty_id:1,
           first_name: 'Veil',
           last_name: 'Pacanza',
           title: 'Mr',
@@ -234,6 +249,7 @@ async function main() {
         {
           usertypeid: 1,
           institution_id: 6,
+          faculty_id:1,
           first_name: 'Christian',
           last_name: 'Riffel',
           title: 'Doctor',
@@ -248,12 +264,13 @@ async function main() {
         {
           usertypeid: 1,
           institution_id: 7,
+          faculty_id:2,
           first_name: 'Cuong',
           last_name: 'Nguyen',
           title: 'Assoc. Prof.',
           primary_email: 'Cuong.Nguyen@lincoln.ac.nz',
           orcid_identifier: '0000-0002-7563-2374',
-          department: '',
+          department: 'Lincoln Business School',
           positions: 'Associate Professor',
           bio: 'I am an Associate Professor in Finance & FinTech at Lincoln University, New Zealand and recipient of Australian Leadership Awards. I am also a research fellow for “Stochastics with Emphasis on Finance” at the Austrian Academy of Sciences-OAW and Johann Radon Institute for Computational and Applied Mathematics RICAM and for “Risk Theory and Related Topics” at the European Mathematical Society and Institute of Mathematics Polish Academy of Sciences-IMPAN, Poland 2008. My research interests broadly lie in financial econometrics, financial markets and financial technologies. My work has appeared at the Journal of International Financial Markets, Institutions and Money, International Journal of Economics and Finance, Quality & Quantity: International Journal of Methodology, Emerging Market Finance and Trade, Economic Modeling, Journal of Economics and Finance, the Journal of Statistical Theory and Applications, and Financial Research Letters. I have also served as an ad-hoc reviewer for several international academic journals in finance, statistics, accounting, and economics, such as the Journal of Banking and Finance, International Journal of Economics and Finance, International Review of Economics and Finance, International Review of Financial Analysis, Australian Journal of Agricultural and Resource Economics, Economic Systems, Applied Economics, Physica A: Statistical Mechanics and its Applications and Emerging Markets Review. I supervised more than 15 PhD students, two of whom are currently teaching at Otago University and Auckland University of Technology. I also received the Postgraduate Publication Research Award 2016 from the Faculty of Agribusiness and Commerce, Lincoln University.',
           research_area: 'Commerce, management, tourism and services, Banking, finance and investment, Applied economics, Economics',
@@ -262,21 +279,38 @@ async function main() {
         {
           usertypeid: 1,
           institution_id: 7,
+          faculty_id:2,
           first_name: 'Michael',
           last_name: 'Zhang',
           title: 'Dr',
           primary_email: 'Yuqian.Zhang@lincoln.ac.nz',
           orcid_identifier: '0000-0001-5667-4002',
-          department: '',
+          department: 'Lincoln Business School',
           positions: 'Senior Lecturer',
           bio: 'I am an interdisciplinary accounting scholar. My research focuses on contemporary accounting issues, with a particular emphasis on the behavioural aspects of accounting information processing, big data and the implementation of blockchain technology in accounting. My passion for research stems from a desire to understand and explore the fundamental issues regarding accounting numbers, uncertainty expressions, linguistic impact, and information recording systems. Most of my research is interdisciplinary in nature and employs both quantitative and qualitative methods. This results in my research contribution to both the theory and practise of international accounting. My works have been published in journals such as Meditari Accountancy Research, Accounting Research Journal, Industrial Management & Data Systems, Journal of Corporate Accounting and Finance, and Australasian Accounting, Business and Finance Journal. I have also served as an ad-hoc reviewer for several accounting and ethics journals, such as Business Ethics, the Environment and Responsibility. I have been active in engaging with stakeholders in both academic and industrial sectors, and have experience in PhD supervision and executive training.',
           research_area: 'Commerce, management, tourism and services, Accounting, auditing and accountability',
           research_tags: 'Accounting theory and standards, Auditing and accountability, Financial accounting, International accounting, Management accounting',
         },
+        {
+          usertypeid: 1,
+          institution_id: 7,
+          faculty_id:2,
+          first_name: 'Nelly',
+          last_name: 'Michael',
+          title: 'Ms',
+          primary_email: 'nelly.michael@lincoln.ac.nz',
+          orcid_identifier: null,
+          department: 'Lincoln Business School',
+          positions: 'Adjunct Appointment',
+          bio: 'I am an active researcher in the field of Corporate Finance. I finished my PhD under the supervision of Dr.Sylvia Choi last year.',
+          research_area: '',
+          research_tags: '',
+        },
+        
       ];
     
       for (const profile of userProfiles) {
-        await await prismaClient.user_profile.create({
+         await prismaClient.user_profile.create({
           data: profile,
         });
       }
