@@ -105,8 +105,8 @@ jobs:
           LINKEDIN_TOKEN_URL: https://www.linkedin.com/oauth/v2/accessToken
           COOKIE_KEY: fellowappsteam10
           SMTP_EMAIL_ENABLED: true
-          SMTP_EMAIL_USER: liuzhuo56@gmail.com
-          SMTP_EMAIL_PASSWORD: kwhz cgbd pupm brnv
+          SMTP_EMAIL_USER: Fellows.setup@gmail.com
+          SMTP_EMAIL_PASSWORD: fouz aowo rqes vuip
       - name: Set docker-compose configs
         working-directory: "./"
         run: |
