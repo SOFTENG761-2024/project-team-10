@@ -109,8 +109,8 @@ jobs:
           LINKEDIN_TOKEN_URL: https://www.linkedin.com/oauth/v2/accessToken
           COOKIE_KEY: fellowappsteam10
           SMTP_EMAIL_ENABLED: true
-          SMTP_EMAIL_USER: liuzhuo56@gmail.com
-          SMTP_EMAIL_PASSWORD: kwhz cgbd pupm brnv
+          SMTP_EMAIL_USER: Fellows.setup@gmail.com
+          SMTP_EMAIL_PASSWORD: fouz aowo rqes vuip
           TUAKIRI_CLIENT_ID: 1726206339_dev.academicfellows.com_openidconnect.test.tuakiri.ac.nz
           TUAKIRI_CLIENT_SECRET: LLR3FRT7WqifPzC+u0h9dUqg
           TUAKIRI_REDIRECT_URI: https://api.academicfellows.com/api/auth/tuakiri/redirect
