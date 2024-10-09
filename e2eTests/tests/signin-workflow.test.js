@@ -16,7 +16,7 @@ test.beforeEach(async ({ page }) => {
 test("Sign in with email", async ({ page }) => {
   // 从环境变量获取凭证
   const email = process.env.DB_ADMIN_EMAIL;
-  const password = process.env.DB_ADMIN_PASSWORD;
+  const password = process.env.DB_ADMIN_PASSWORD_ENCRYPTED;
 
   // Wait for the  text to load
   await page.waitForSelector('text="Sign in with Email"');

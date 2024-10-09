@@ -151,11 +151,15 @@ jobs:
         run: |
           echo "REACT_APP_URL=$REACT_APP_URL" >> .env
           echo "DB_ADMIN_EMAIL=$DB_ADMIN_EMAIL" >> .env
-          echo "DB_ADMIN_PASSWORD=$DB_ADMIN_PASSWORD" >> .env
           echo "DB_ADMIN_PASSWORD_ENCRYPTED=$DB_ADMIN_PASSWORD_ENCRYPTED" >> .env      
           npm install
           npx playwright install --with-deps chromium
           npm run test:e2e
         env:
           REACT_APP_URL: http://localhost:5000
+          DB_ADMIN_PASSWORD_ENCRYPTED: $2a$10$tRs1k3ar2cL5qY3XH2K8ZeOER2BIj1veqSoMDuFyAqafaAwoqadE6
+          DB_ADMIN_EMAIL: fellows@fellows.com
+
+
+
           

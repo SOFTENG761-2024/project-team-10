@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => {
 
   // the user has logged in
   const email = process.env.DB_ADMIN_EMAIL;
-  const password = process.env.DB_ADMIN_PASSWORD;
+  const password = process.env.DB_ADMIN_PASSWORD_ENCRYPTED;
 
   await page.goto(`${process.env.REACT_APP_URL}`);
   await page.waitForSelector('#outline');
