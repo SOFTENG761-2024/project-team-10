@@ -14,7 +14,7 @@
     "build:image": "cd ../ && sh scripts/build.sh"
   },
   "dependencies": {
-    "@prisma/client": "^5.18.0",
+    "@prisma/client": "^5.20.0",
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
@@ -47,7 +47,7 @@
   "devDependencies": {
     "eslint": "^8.57.0",
     "jest": "^29.7.0",
-    "prisma": "^5.18.0",
+    "prisma": "^5.20.0",
     "rimraf": "^5.0.5",
     "supertest": "^6.3.4"
   }

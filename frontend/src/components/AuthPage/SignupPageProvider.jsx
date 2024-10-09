@@ -113,7 +113,7 @@ const SignupPageProvider = () => {
 
 
   const handleCreateProfessionalAccount = () => {
-    window.location.href = 'https://www.reannz.co.nz';
+    window.location.href = `${import.meta.env.VITE_BACKEND_API_BASE_URL}/tuakiri`;
   };
 
   const createAccount = async (formData) => {
