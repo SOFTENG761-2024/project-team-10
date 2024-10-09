@@ -94,6 +94,17 @@ async function getUserProfileById(id) {
         institution: true,
         faculty: true,
         publication: true,
+        teaching_activity: true,
+        professional_details: true,
+        user_affiliations: {
+          include: {
+            institution: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        }
       }
     });
     return userProfile;

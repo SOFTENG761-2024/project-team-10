@@ -215,12 +215,12 @@ const ProfileVisitorView = () => {
       case "Professional":
         return (
           <Box sx={styles.contentBox}>
-            {profileData?.projects?.length > 0 ? (
-              profileData.projects.map((project, index) => (
+            {profileData?.professional_details?.length > 0 ? (
+              profileData.professional_details.map((project, index) => (
                 <Card key={index} sx={styles.contentItem}>
                   <CardContent>
                     <Typography variant="h6" sx={styles.contentItemHeading}>
-                      {project.title}
+                      {project.name}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -242,12 +242,12 @@ const ProfileVisitorView = () => {
       case "Teaching/Research":
         return (
           <Box sx={styles.contentBox}>
-            {profileData?.teachingItems?.length > 0 ? (
-              profileData.teachingItems.map((teaching, index) => (
+            {profileData?.teaching_activity?.length > 0 ? (
+              profileData.teaching_activity.map((teaching, index) => (
                 <Card key={index} sx={styles.contentItem}>
                   <CardContent>
                     <Typography variant="h6" sx={styles.contentItemHeading}>
-                      {teaching.title}
+                      {teaching.name}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -319,9 +319,9 @@ const ProfileVisitorView = () => {
               <Typography variant="h4" sx={styles.affiliations}>
                 <span style={styles.labelText}>Affiliations:</span>
                 <Box sx={styles.contentList}>
-                  {profileData?.affiliations?.split(", ").map((item, index) => (
+                  {profileData?.user_affiliations?.map((item, index) => (
                     <Typography key={index} sx={styles.contentText}>
-                      {item}
+                      {item.institution.name}
                     </Typography>
                   )) || (
                     <Typography sx={styles.contentText}>
