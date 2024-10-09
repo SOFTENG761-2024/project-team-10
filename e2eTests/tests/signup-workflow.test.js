@@ -29,16 +29,18 @@ test('test can sign up with email', async ({ page }) => {
   await page.fill('input[type="email"], input[placeholder="Email"]', 'john.doe@example.com');
   await page.waitForTimeout(500);
   // 模拟 API 调用
-  await page.route('**/api/create-business-account', route => {
+  await page.route('**/api/auth/biz-account-create', route => {
     route.fulfill({
       status: 200,
       contentType: 'application/json',
-      body: JSON.stringify({ success: true, message: 'Business account created successfully!' })
+      body: JSON.stringify(true),
     });
   });
   // Submit the form
-  await page.locator('text="Create account"').click();
+  await page.getByRole('button', { name: 'Create account', exact: true }).click();
   await page.waitForTimeout(2000);
+
+  await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/create-account`);
 
 });
 

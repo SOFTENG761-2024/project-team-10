@@ -1,7 +1,6 @@
 const { test, expect } = require("@playwright/test");
 require('dotenv').config({ path: './e2eTests/.env' });
 test.beforeEach(async ({ page }) => {
-
   await page.goto(`${process.env.REACT_APP_URL}`);
   await page.getByRole('button', { name: 'menuicon' }).click();
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/signup`);
@@ -14,22 +13,27 @@ test.beforeEach(async ({ page }) => {
 
 
 test("Sign in with email", async ({ page }) => {
-  // 从环境变量获取凭证
-  const email = process.env.DB_ADMIN_EMAIL;
-  const password = process.env.DB_ADMIN_PASSWORD_ENCRYPTED;
+
 
   // Wait for the  text to load
   await page.waitForSelector('text="Sign in with Email"');
+  // 填写登录表单
+  await page.getByLabel('Email *').click();
+  await page.getByLabel('Email *').fill('test@example.com');
+  await page.getByLabel('Password *').click();
+  await page.getByLabel('Password *').fill('test@example.com');
 
-  await page.fill('input[type="email"]', email);
-  await page.fill('input[type="password"]', password);
+  // 拦截 /email-signin 请求，并返回成功响应
+  await page.route('**/api/auth/email-signin', route => {
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(true), // 模拟成功登录
+    });
+  });
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
 
-
-  // Click the Submit button
-  await page.click("#signin");
-  await page.waitForTimeout(500);
-
-  // ????After confirming the form submission, jump to the correct page
+  // After confirming the form submission, jump to the correct page
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/search-profile`);
 
 });

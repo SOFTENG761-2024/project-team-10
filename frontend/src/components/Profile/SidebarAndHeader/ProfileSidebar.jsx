@@ -71,6 +71,7 @@ const ProfileSidebar = () => {
             <Button
               key={item.name}
               component="li"
+              data-icon-name={item.name}
               sx={{
                 ...styles.sidebarItem,
                 backgroundColor:

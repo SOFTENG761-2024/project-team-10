@@ -52,7 +52,7 @@ const ProfileHeader = () => {
             : "Guest"}
         </Typography>
 
-        <Typography id="headerDate" variant="body2" sx={styles.headerDate}>
+        <Typography id="headerdate" variant="body2" sx={styles.headerDate}>
           {getCurrentDate()}
         </Typography>
       </Box>
