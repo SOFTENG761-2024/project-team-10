@@ -114,13 +114,13 @@ const ProfileVisitorView = () => {
                 variant="body1"
                 sx={styles.descriptionSectionParagraph}
               >
-                --BLANK FOR NOW-------
+                ---------
               </Typography>
               <Typography
                 variant="body1"
                 sx={styles.descriptionSectionParagraph}
               >
-                --BLANK FOR NOW-------
+                ---------
               </Typography>
             </Box>
 

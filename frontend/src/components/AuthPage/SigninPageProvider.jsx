@@ -107,7 +107,7 @@ const SigninPageProvider = () => {
   const { get, post, setError } = useAPI();
 
   const handleCreateProfessionalAccount = () => {
-    window.location.href = 'https://www.reannz.co.nz';
+    window.location.href = `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/auth/tuakiri`;
   };
 
   const handleEmailSignin = async (e) => {

@@ -2,13 +2,10 @@ name: CD
 permissions:
   id-token: write
   contents: read
-# triggers on pull_request for ease of testing
-# on:
-#   push:
-#     branches:
-#       - main
 on:
- pull_request:
+  push:
+    branches:
+      - main
   
 jobs:
   archive-src-code:
@@ -80,11 +77,17 @@ jobs:
           echo "LINKEDIN_CLIENT_SECRET=$LINKEDIN_CLIENT_SECRET" >> .env
           echo "LINKEDIN_REDIRECT_URI=$LINKEDIN_REDIRECT_URI" >> .env
           echo "BACKEND_API_BASE_URL=https://api.academicfellows.com" >> .env
+          echo "FRONT_END_BASE_URL=https://academicfellows.com" >> .env
           echo "LINKEDIN_TOKEN_URL=$LINKEDIN_TOKEN_URL" >> .env
           echo "COOKIE_KEY=$COOKIE_KEY" >> .env
           echo "SMTP_EMAIL_ENABLED=$SMTP_EMAIL_ENABLED" >> .env
           echo "SMTP_EMAIL_USER=$SMTP_EMAIL_USER" >> .env
           echo "SMTP_EMAIL_PASSWORD=$SMTP_EMAIL_PASSWORD" >> .env
+          echo "TUAKIRI_CLIENT_ID=$TUAKIRI_CLIENT_ID" >> .env
+          echo "TUAKIRI_CLIENT_SECRET=$TUAKIRI_CLIENT_SECRET" >> .env
+          echo "TUAKIRI_REDIRECT_URI=$TUAKIRI_REDIRECT_URI" >> .env
+          echo "TUAKIRI_TOKEN_URL=$TUAKIRI_TOKEN_URL" >> .env
+          
         env:
           # node creds
           DATABASE_URL: postgresql://postgres:postgres@postgres:5432/test?schema=public
@@ -96,8 +99,13 @@ jobs:
           LINKEDIN_TOKEN_URL: https://www.linkedin.com/oauth/v2/accessToken
           COOKIE_KEY: fellowappsteam10
           SMTP_EMAIL_ENABLED: true
-          SMTP_EMAIL_USER: liuzhuo56@gmail.com
-          SMTP_EMAIL_PASSWORD: kwhz cgbd pupm brnv
+          SMTP_EMAIL_USER: Fellows.setup@gmail.com
+          SMTP_EMAIL_PASSWORD: fouz aowo rqes vuip
+          TUAKIRI_CLIENT_ID: 1726206339_dev.academicfellows.com_openidconnect.test.tuakiri.ac.nz
+          TUAKIRI_CLIENT_SECRET: LLR3FRT7WqifPzC+u0h9dUqg
+          TUAKIRI_REDIRECT_URI: https://api.academicfellows.com/api/auth/tuakiri/redirect
+          TUAKIRI_TOKEN_URL: https://openidconnect.test.tuakiri.ac.nz/OIDC/token
+
       - name: Archive src code
         run: |
           cat ".env"

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Box, Container, IconButton, TextField, Typography, CircularProgress } from "@mui/material";
+
+import { Box, Container, Typography, CircularProgress } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
 import style from './Landing.module.css';
@@ -23,6 +24,7 @@ export const Landing = () => {
   const [activeTab, setActiveTab] = useState("");
   const [selectedInstitution, setSelectedInstitution] = useState(null);
   const [selectedFaculty, setSelectedFaculty] = useState(null);
+  const [hasSearched, setHasSearched] = useState(false);
 
 
   const handleThemeSwitchClick = () => {
@@ -67,7 +69,6 @@ export const Landing = () => {
       }
 
     }
-
     const networkSection = document.getElementById('network');
     const memberSection = document.getElementById('member');
 
@@ -83,7 +84,6 @@ export const Landing = () => {
     });
 
     const scrollPosition = window.scrollY || window.pageYOffset;
-    // const buffer = 25;
     const { networkTop, memberTop } = positions;
 
     const buffer = 30;
@@ -104,6 +104,7 @@ export const Landing = () => {
   }
 
   const handleSearch = () => {
+    setHasSearched(true);
     setActiveTab("Institution");
     setSelectedInstitution(null);
     setSelectedFaculty(null);
@@ -116,20 +117,12 @@ export const Landing = () => {
     }
   }
 
-  const tabs = [
-    "Institution",
-    "Faculty",
-    "Profiles",
-  ];
-
-
   const renderSearchCircles = (institutionGroups, loading) => {
     if (loading || institutionGroups.length === 0) return null;
 
-    const baseSize = 80;
-    const sizeIncrement = 5;
+    const baseSize = 100;
+    const sizeIncrement = 15;
     const maxSize = 200;
-
     switch (activeTab) {
       case "Institution":
         return institutionGroups.map((group, index) => {
@@ -138,7 +131,15 @@ export const Landing = () => {
             <div
               key={index}
               className={`${style.circle}`}
-              style={{ width: size, height: size }}
+
+              style={{
+                width: size,
+                height: size,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '8%'
+              }}
               onClick={() => {
                 setSelectedInstitution(group);
                 setActiveTab("Faculty");
@@ -157,7 +158,15 @@ export const Landing = () => {
             <div
               key={`${facultyIndex}`}
               className={`${style.circle}`}
-              style={{ width: size, height: size }}
+
+              style={{
+                width: size,
+                height: size,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '8%'
+              }}
               onClick={() => {
                 setSelectedFaculty(faculty);
                 setActiveTab("Profiles");
@@ -173,12 +182,22 @@ export const Landing = () => {
         if (!selectedFaculty) return null;
 
         return selectedFaculty.members.map((member, memberIndex) => {
-          const size = 120;
+          const size = 120; //TODO: fix later
+
           return (
             <div
               key={`${memberIndex}`}
               className={`${style.circle}`}
-              style={{ width: size, height: size }}
+
+              style={{
+                width: size,
+                height: size,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '8%'
+              }}
+
               onClick={() => {
                 setSelectedFaculty(null);
                 setSelectedInstitution(null);
@@ -196,7 +215,6 @@ export const Landing = () => {
     }
 
   };
-
 
 
   useEffect(() => {
@@ -364,28 +382,42 @@ export const Landing = () => {
           </Box>
 
 
-          {/* Loading Indicator */}
-          {loading && (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
-              <CircularProgress />
-            </Box>
+          {/* Default Message Before Search */}
+          {!hasSearched && !loading && !error && (
+            <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh', marginRight: '17%' }}>
+              Please enter a value for search.
+            </Typography>
           )}
+
+
+          {/* Loading Indicator */}
+          {
+            loading && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+                <CircularProgress />
+              </Box>
+            )
+          }
 
 
           {/* Error Message */}
-          {!loading && error && (
-            <Typography color="error" sx={{ textAlign: 'center', marginTop: '16px' }}>
-              {error.message}
-            </Typography>
-          )}
+          {
+            !loading && error && (
+              <Typography color="error" sx={{ textAlign: 'center', marginTop: '16px' }}>
+                {error.message}
+              </Typography>
+            )
+          }
 
 
           {/* No Data Available Message */}
-          {!loading && !error && institutionGroups.length === 0 && (
-            <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh' }}>
-              No data found. Please enter some term for search.
-            </Typography>
-          )}
+          {
+            !loading && !error && institutionGroups.length === 0 && activeTab && activeTab.trim() !== '' && (
+              <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh' }}>
+                No data found. Please enter some term for search.
+              </Typography>
+            )
+          }
 
           {/* Network Section with Dynamic Circles */}
           <Box sx={{ display: 'flex', width: isTablet ? '61vw' : '' }}>
@@ -398,31 +430,7 @@ export const Landing = () => {
                 </div>
               </div>
             </section>
-          </Box>
-
-          {/* </Box> */}
-
-          {/* <Box sx={{ display: 'flex', width: isTablet? '61vw':''}}>
-            <section id="network">
-              <div className={style.flexContainer}>
-                
-                <div className={style.circleContainer}>
-                  <div className={`${style.circle} ${style.circle1}`}><span>AUT(3)</span></div>
-                  <div className={`${style.circle} ${style.circle2}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle3}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle4}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle5}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle6}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle7}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle8}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle9}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle11}`}><span>UOA(2)</span></div>
-                </div>
-              </div>
-            </section>
-
-          </Box> */}
-
+          </Box >
 
           <Box sx={{ display: 'flex', width: isTablet ? '77%' : '85%' }}>
 
@@ -522,9 +530,9 @@ export const Landing = () => {
             </footer>
           </Box>
         </Container>
-      </Box>
+      </Box >
       {/* Right Sidebar with Navigation */}
-      <Box sx={{ position: 'fixed', right: '7%', top: '50%', transform: 'translateY(-50%)', width: '10%' }}>
+      < Box sx={{ position: 'fixed', right: '7%', top: '50%', transform: 'translateY(-50%)', width: '10%' }}>
         <nav style={styles.navContainer}>
           <div style={{ ...styles.nav, top: navTop }}>
             <a
@@ -557,8 +565,8 @@ export const Landing = () => {
             </a>
           </div>
         </nav>
-      </Box>
-    </Box>
+      </Box >
+    </Box >
   );
 };
 export default Landing;
