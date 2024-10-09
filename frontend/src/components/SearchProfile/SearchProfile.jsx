@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {  useState } from "react";
 import ProfileSidebar from "../Profile/SidebarAndHeader/ProfileSidebar";
 import ProfileHeader from "../Profile/SidebarAndHeader/ProfileHeader";
 import { Box } from "@mui/system";
@@ -88,7 +88,7 @@ export const SearchProfile = () => {
     const maxSize = 200;
 
     switch (activeTab) {
-      case "Institution":
+      case "Institution": {
         return institutionGroups.map((group, index) => {
           const size = Math.min(baseSize + group.totalMembers * sizeIncrement, maxSize);
           return (
@@ -118,7 +118,8 @@ export const SearchProfile = () => {
             </Box>
           );
         });
-      case "Faculty":
+      }
+      case "Faculty": {
         if (!selectedInstitution) return null;
         return selectedInstitution.faculties.map((faculty, facultyIndex) => {
           const size = Math.min(baseSize + faculty.members.length * sizeIncrement, maxSize);
@@ -148,8 +149,8 @@ export const SearchProfile = () => {
             </Box>
           );
         });
-
-      case "Profiles":
+      }
+      case "Profiles": {
         if (!selectedInstitution) return null;
         if (!selectedFaculty) return null;
         const container = document.getElementById('circleContainer');
@@ -201,6 +202,7 @@ export const SearchProfile = () => {
             </Box>
           );
         });
+      }
       default:
         return;
     }
