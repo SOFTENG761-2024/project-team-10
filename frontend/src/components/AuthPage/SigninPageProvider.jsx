@@ -107,7 +107,11 @@ const SigninPageProvider = () => {
   const { get, post, setError } = useAPI();
 
   const handleCreateProfessionalAccount = () => {
+// <<<<<<< HEAD
     window.location.href = `${import.meta.env.VITE_BACKEND_API_BASE_URL}/tuakiri`;
+// =======
+//     // window.location.href = `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/auth/tuakiri`;
+// >>>>>>> main
   };
 
   const handleEmailSignin = async (e) => {
