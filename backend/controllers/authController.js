@@ -56,7 +56,7 @@ router.get('/linkedin/redirect', passport.authenticate('linkedinOpenId', {
   if (req.user.is_verified) {
     res.redirect(process.env.FRONT_END_BASE_URL + '/search-profile'); // Redirect to search page if verified
   } else {
-    res.redirect(process.env.FRONT_END_BASE_URL + '/search-profile'); // Redirect to screen if not verified
+    res.redirect(process.env.FRONT_END_BASE_URL + '/create-account'); // Redirect to screen if not verified
   }
 });
 
