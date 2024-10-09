@@ -373,7 +373,7 @@ export const Landing = () => {
 
           {/* Default Message Before Search */}
           {!hasSearched && !loading && !error && (
-            <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh' }}>
+            <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh', marginRight:'17%'}}>
               Please enter a value for search.
             </Typography>
           )}
