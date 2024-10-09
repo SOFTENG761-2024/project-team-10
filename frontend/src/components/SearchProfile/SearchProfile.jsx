@@ -1,106 +1,213 @@
 import React, { useEffect, useState, useRef } from "react";
 import ProfileSidebar from "../Profile/SidebarAndHeader/ProfileSidebar";
 import ProfileHeader from "../Profile/SidebarAndHeader/ProfileHeader";
-import { Box} from "@mui/system";
+import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import { Search } from '@mui/icons-material'
-import {  InputBase } from '@mui/material'
+import { InputBase } from '@mui/material'
 import { useSearchProfiles } from './searchProfileApi';
+import { useNavigate } from "react-router-dom";
 
-const CircleElement = ({ size, top, left }) => (
-    <Box
-      sx={{
-        width: size,
-        height: size,
-        borderRadius: '50%',
-        backgroundColor: '#e0e0e0',
-        position: 'absolute',
-        top,
-        left,
-      }}
-    />
-  )
 export const SearchProfile = () => {
-    // const { get } = useAPI();
-    const profileData = {
-        first_name: "Alexa",
-        last_name: "Rawlus",
-        date: "Tue, 07 June 2024",
-        bio: "This is the About section with some introductory information.",
-        picture: "/default-profile.png",
-        title: "Professor",
-        orcid_identifier: "0000-0002-1825-0097",
-        faculty_name: "Department of Engineering",
-        affiliations: "Affiliation1, Affiliation2, Affiliation3",
-        research_area: "Field1, Field2, Field3",
-        research_tags: "Tag1, Tag2, Tag3",
-        institution_name: "The University of Canterbury",
-        publications: [
-          {
-            title: "Publication 1",
-            description: "Description of Publication 1",
-          },
-          {
-            title: "Publication 2",
-            description: "Description of Publication 2",
-          },
-        ],
-        projects: [
-          {
-            title: "Project 1",
-            description: "Description of Project 1",
-          },
-          {
-            title: "Project 2",
-            description: "Description of Project 2",
-          },
-        ],
-        teachingItems: [
-          {
-            title: "Teaching/Research Item 1",
-            description: "Description of Teaching/Research Item 1",
-          },
-          {
-            title: "Teaching/Research Item 2",
-            description: "Description of Teaching/Research Item 2",
-          },
-        ],
-    };
-    const circles = [
-        { size: 120, top: '15%', left: '0%' },
-        { size: 80, top: '25%', left: '30%' },
-        { size: 100, top: '45%', left: '0%' },
-        { size: 60, top: '65%', left: '15%' },
-        { size: 90, top: '10%', left: '56%' },
-        { size: 70, top: '35%', left: '60%' },
-        { size: 110, top: '55%', left: '70%' },
-        { size: 50, top: '81%', left: '54%' },
-        { size: 85, top: '20%', left: '70%' },
-        { size: 75, top: '74%', left: '30%' },
-        { size: 95, top: '50%', left: '35%' },
-        { size: 65, top: '80%', left: '80%' },
-    ]
-    const { institutionGroups, loading, error, searchProfiles } = useSearchProfiles();
-    
-    const [keyword, setKeyword] = useState('');
+  const [activeTab, setActiveTab] = useState("");
+  const [selectedInstitution, setSelectedInstitution] = useState(null);
+  const [selectedFaculty, setSelectedFaculty] = useState(null);
+  const [keyword, setKeyword] = useState('');
+  const navigate = useNavigate();
+  const profileData = {
+    first_name: "Alexa",
+    last_name: "Rawlus",
+    date: "Tue, 07 June 2024",
+    bio: "This is the About section with some introductory information.",
+    picture: "/default-profile.png",
+    title: "Professor",
+    orcid_identifier: "0000-0002-1825-0097",
+    faculty_name: "Department of Engineering",
+    affiliations: "Affiliation1, Affiliation2, Affiliation3",
+    research_area: "Field1, Field2, Field3",
+    research_tags: "Tag1, Tag2, Tag3",
+    institution_name: "The University of Canterbury",
+    publications: [
+      {
+        title: "Publication 1",
+        description: "Description of Publication 1",
+      },
+      {
+        title: "Publication 2",
+        description: "Description of Publication 2",
+      },
+    ],
+    projects: [
+      {
+        title: "Project 1",
+        description: "Description of Project 1",
+      },
+      {
+        title: "Project 2",
+        description: "Description of Project 2",
+      },
+    ],
+    teachingItems: [
+      {
+        title: "Teaching/Research Item 1",
+        description: "Description of Teaching/Research Item 1",
+      },
+      {
+        title: "Teaching/Research Item 2",
+        description: "Description of Teaching/Research Item 2",
+      },
+    ],
+  };
+  const { institutionGroups, loading, error, searchProfiles } = useSearchProfiles();
+  const handleInputChange = (e) => {
+    setKeyword(e.target.value);
+  };
 
-    const handleInputChange = (e) => {
-      setKeyword(e.target.value);
-    };
+  const handleSearch = () => {
+    setActiveTab("Institution");
+    setSelectedInstitution(null);
+    setSelectedFaculty(null);
+    searchProfiles(keyword);
+  }
 
-    const handleSearch = () => {
-      searchProfiles(keyword);
+  // Handle Enter Key Press
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
     }
+  };
 
-     // Handle Enter Key Press
-    const handleKeyPress = (e) => {
-      if (e.key === 'Enter') {
-        handleSearch();
-      }
-    };
+  const handleProfileClick = (profileId) => {
+    navigate(`/profile-visitor/${profileId}`);
+  };
+  const renderSearchCircles = (institutionGroups, loading) => {
+    if (loading || institutionGroups.length === 0) return null;
 
-    return (
-      <Box sx={{ display: 'flex', height: '100vh', background: '#F9F9F9', overflow: 'hidden' }}>
+    const baseSize = 100;
+    const sizeIncrement = 15;
+    const maxSize = 200;
+
+    switch (activeTab) {
+      case "Institution":
+        return institutionGroups.map((group, index) => {
+          const size = Math.min(baseSize + group.totalMembers * sizeIncrement, maxSize);
+          return (
+            <Box
+              key={index}
+              sx={{
+                width: size,
+                height: size,
+                borderRadius: '50%',
+                backgroundColor: '#f0f0f0',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                position: 'relative',
+              }}
+              onClick={() => {
+                setSelectedInstitution(group);
+                setActiveTab("Faculty");
+
+              }}
+            >
+              <Typography variant="body2" sx={{ fontSize: '14px', textAlign: 'center' }}>
+                {group.institution.name} ({group.totalMembers})
+              </Typography>
+            </Box>
+          );
+        });
+      case "Faculty":
+        if (!selectedInstitution) return null;
+        return selectedInstitution.faculties.map((faculty, facultyIndex) => {
+          const size = Math.min(baseSize + faculty.members.length * sizeIncrement, maxSize);
+          return (
+            <Box
+              key={`${facultyIndex}`}
+              sx={{
+                width: size,
+                height: size,
+                borderRadius: '50%',
+                backgroundColor: '#f0f0f0',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                position: 'relative',
+              }}
+              onClick={() => {
+                setSelectedFaculty(faculty);
+                setActiveTab("Profiles");
+              }}
+            >
+              <Typography variant="body2" sx={{ fontSize: '14px', textAlign: 'center' }}>
+                {faculty.faculty.name} ({faculty.members.length})
+              </Typography>
+            </Box>
+          );
+        });
+
+      case "Profiles":
+        if (!selectedInstitution) return null;
+        if (!selectedFaculty) return null;
+        const container = document.getElementById('circleContainer');
+        const containerWidth = container.clientWidth;
+        const containerHeight = container.clientHeight;
+        const margin = 230;
+        const size = 100;
+        return selectedFaculty.members.map((member, memberIndex) => {
+          const rows = Math.ceil(Math.sqrt(selectedFaculty.members.length));
+          const columns = Math.ceil(selectedFaculty.members.length / rows);
+
+          const horizontalSpacing = (containerWidth - margin * 2 - size) / (columns - 1);
+          const verticalSpacing = (containerHeight - margin * 2 - size) / (rows - 1);
+
+          const row = Math.floor(memberIndex / columns);
+          const column = memberIndex % columns;
+
+          // Add randomness to make positions more organic
+          const topPosition = margin + row * verticalSpacing + (Math.random() * 10); // ±15px for randomness
+          const leftPosition = margin + column * horizontalSpacing + (Math.random() * 30);
+
+          return (
+            <Box
+              key={`${memberIndex}`}
+              sx={{
+                position: 'absolute', // Make circles absolutely positioned
+                top: `${topPosition}px`,
+                left: `${leftPosition}px`,
+                width: size,
+                height: size,
+                borderRadius: '50%',
+                backgroundColor: '#f0f0f0',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                cursor: 'pointer',
+              }}
+              onClick={() => {
+                setSelectedFaculty(null);
+                setSelectedInstitution(null);
+                handleProfileClick(member.id);
+              }}
+            >
+              <Typography variant="body2" sx={{ fontSize: '14px', textAlign: 'center' }}>
+                {member.name}
+              </Typography>
+            </Box>
+          );
+        });
+      default:
+        return;
+    }
+  };
+
+  return (
+    <Box sx={{ display: 'flex', height: '100vh', background: '#F9F9F9', overflow: 'hidden' }}>
       <ProfileSidebar profileData={{}} /> {/* Adjust profileData accordingly */}
       <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
         <ProfileHeader profileData={{}} /> {/* Adjust profileData accordingly */}
@@ -138,91 +245,22 @@ export const SearchProfile = () => {
                 />
               </Box>
             </Box>
-            <Box sx={{
+            <Box id="circleContainer" sx={{
               position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center',
               flex: 1, margin: 'auto auto auto auto',
               borderRadius: 4,
               overflow: 'hidden', width: '100%',
             }}>
               {loading && <Typography>Loading...</Typography>}
-              { !loading && error && <Typography>{error.message}</Typography>}
-
-              {/* Render institution circles */}
-              { !loading && institutionGroups.length > 0 ? (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '20px',
-                    justifyContent: 'center',
-                    width: '100%',
-                  }}
-                >
-                  {institutionGroups.map((group, index) => {
-                    // Calculate the circle size based on the number of members
-                    const baseSize = 80; // Smaller base circle size
-                    const sizeIncrement = 5; // Adjust increment per member
-                    const maxSize = 200; // Limit maximum circle size
-                    const size = Math.min(baseSize + group.members.length * sizeIncrement, maxSize);
-
-                    // Calculate font size based on the circle size
-                    const fontSize = size * 0.15; // Font size is 15% of the circle size
-                    const subFontSize = size * 0.1; // Smaller font for the members count
-
-                    return (
-                      <Box
-                        key={group.institution.id}
-                        sx={{
-                          width: size,
-                          height: size,
-                          borderRadius: '50%',
-                          backgroundColor: '#f0f0f0',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          flexDirection: 'column',
-                          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                          position: 'relative',
-                        }}
-                      >
-                        {/* Display Institution Name */}
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            fontSize: `${fontSize}px`,
-                          }}
-                        >
-                          {group.institution.name}
-                        </Typography>
-                        {/* Display Number of Members in the Institution */}
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            textAlign: 'center',
-                            marginTop: '5px',
-                            fontSize: `${subFontSize}px`,
-                          }}
-                        >
-                          Members: {group.members.length}
-                        </Typography>
-                      </Box>
-                    );
-                  })}
-                </Box>
-              ) : (
-                !loading && !error && (
-                  <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px' }}>
-                    No details available.
-                  </Typography>
-                )
-              )}
+              {!loading && error && <Typography>{error.message}</Typography>}
+              <div>
+                {renderSearchCircles(institutionGroups, loading)}
+              </div>
             </Box>
           </Box>
         </Box>
       </Box>
     </Box>
-    );
+  );
 };
 export default SearchProfile;

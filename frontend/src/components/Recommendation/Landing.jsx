@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Box, Container, IconButton, TextField, Typography , CircularProgress} from "@mui/material";
+import { Box, Container, Typography, CircularProgress } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
 import style from './Landing.module.css';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import XIcon from '@mui/icons-material/X';
 import { useMediaQuery } from '@mui/material';
-import {  useMuiTheme } from "../GlobalProviders";
+import { useMuiTheme } from "../GlobalProviders";
 import { useSearchProfiles } from '../SearchProfile/searchProfileApi';
 
 export const Landing = () => {
@@ -16,12 +16,13 @@ export const Landing = () => {
   const [positions, setPositions] = useState({ networkTop: 0, memberTop: 0 });
   const { toggleLightDarkTheme, theme } = useMuiTheme();
   const [navTop, setNavTop] = useState('33vh');
-  const isTablet = useMediaQuery('(max-width:1024px)'); 
+  const isTablet = useMediaQuery('(max-width:1024px)');
   const { institutionGroups, loading, error, searchProfiles } = useSearchProfiles();
   const [keyword, setKeyword] = useState('');
   const [activeTab, setActiveTab] = useState("");
-  const [selectedInstitution, setSelectedInstitution] = useState(null); 
+  const [selectedInstitution, setSelectedInstitution] = useState(null);
   const [selectedFaculty, setSelectedFaculty] = useState(null);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleThemeSwitchClick = () => {
     toggleLightDarkTheme();
@@ -32,7 +33,7 @@ export const Landing = () => {
 
 
   const handleProfileClick = (profileId) => {
-    navigate(`/profile-visitor/${profileId}`); 
+    navigate(`/profile-visitor/${profileId}`);
   };
 
   const handleScroll = () => {
@@ -63,7 +64,7 @@ export const Landing = () => {
       } else {
         setNavTop('16vh');
       }
-    }  
+    }
     const networkSection = document.getElementById('network');
     const memberSection = document.getElementById('member');
 
@@ -79,7 +80,6 @@ export const Landing = () => {
     });
 
     const scrollPosition = window.scrollY || window.pageYOffset;
-    // const buffer = 25;
     const { networkTop, memberTop } = positions;
 
     const buffer = 30;
@@ -100,6 +100,7 @@ export const Landing = () => {
   }
 
   const handleSearch = () => {
+    setHasSearched(true);
     setActiveTab("Institution");
     setSelectedInstitution(null);
     setSelectedFaculty(null);
@@ -107,109 +108,104 @@ export const Landing = () => {
   }
 
   const handleKeyPress = (e) => {
-    if(e.key === 'Enter') {
+    if (e.key === 'Enter') {
       handleSearch();
     }
   }
 
-  const tabs = [
-    "Institution",
-    "Faculty",
-    "Profiles",
-  ];
-
-
   const renderSearchCircles = (institutionGroups, loading) => {
-      if (loading || institutionGroups.length === 0) return null;
+    if (loading || institutionGroups.length === 0) return null;
+    const baseSize = 100;
+    const sizeIncrement = 15;
+    const maxSize = 200;
 
-      const baseSize = 100; 
-      const sizeIncrement = 15;
-      const maxSize = 200;
-
-      switch(activeTab)
-      {
-        case "Institution":
-          return institutionGroups.map((group, index) => {
-            const size = Math.min(baseSize + group.totalMembers * sizeIncrement, maxSize);
-            return (
-                <div
-                    key={index}
-                    className={`${style.circle}`}
-                    style={{ width: size, 
-                      height: size, 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      margin: '10px'  }}
-                    onClick={() => {
-                      setSelectedInstitution(group); 
-                      setActiveTab("Faculty");
-                      //alert(activeTab);
-                    }}
-                >
-                    <span>{group.institution.name} ({group.totalMembers})</span>
-                </div>
-            );
+    switch (activeTab) {
+      case "Institution":
+        return institutionGroups.map((group, index) => {
+          const size = Math.min(baseSize + group.totalMembers * sizeIncrement, maxSize);
+          return (
+            <div
+              key={index}
+              className={`${style.circle}`}
+              style={{
+                width: size,
+                height: size,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '8%'
+              }}
+              onClick={() => {
+                setSelectedInstitution(group);
+                setActiveTab("Faculty");
+                //alert(activeTab);
+              }}
+            >
+              <span>{group.institution.name} ({group.totalMembers})</span>
+            </div>
+          );
         });
-        case "Faculty":
-          if (!selectedInstitution) return null;
-          return selectedInstitution.faculties.map((faculty, facultyIndex) => {
-            const size = Math.min(baseSize + faculty.members.length * sizeIncrement, maxSize);
-            return (
-                <div
-                    key={`${facultyIndex}`}
-                    className={`${style.circle}`}
-                    style={{ width: size, 
-                      height: size, 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      margin: '10px'  }}
-                    onClick={() => {
-                      setSelectedFaculty(faculty); 
-                      setActiveTab("Profiles");
-                    }}
-                >
-                    <span>{faculty.faculty.name} ({faculty.members.length})</span>
-                </div>
-            );
-        });
-        
-        case "Profiles":
-          if (!selectedInstitution) return null;
-          if (!selectedFaculty) return null;
-
-          return selectedFaculty.members.map((member, memberIndex) => {
-            const size = 120; //TODO: fix later
-            return (
-                <div
-                    key={`${memberIndex}`}
-                    className={`${style.circle}`}
-                    style={{ width: size, 
-                      height: size, 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      margin: '10px'  }}
-                    onClick={() => {
-                      setSelectedFaculty(null);
-                      setSelectedInstitution(null); 
-                      handleProfileClick(member.id);
-                    }}
-                >
-                    <span>{member.name}</span>
-                </div>
-            );
+      case "Faculty":
+        if (!selectedInstitution) return null;
+        return selectedInstitution.faculties.map((faculty, facultyIndex) => {
+          const size = Math.min(baseSize + faculty.members.length * sizeIncrement, maxSize);
+          return (
+            <div
+              key={`${facultyIndex}`}
+              className={`${style.circle}`}
+              style={{
+                width: size,
+                height: size,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '8%'
+              }}
+              onClick={() => {
+                setSelectedFaculty(faculty);
+                setActiveTab("Profiles");
+              }}
+            >
+              <span>{faculty.faculty.name} ({faculty.members.length})</span>
+            </div>
+          );
         });
 
-        default:
-          return;
-               
-      }
-      
+      case "Profiles":
+        if (!selectedInstitution) return null;
+        if (!selectedFaculty) return null;
+
+        return selectedFaculty.members.map((member, memberIndex) => {
+          const size = 120; //TODO: fix later
+          return (
+            <div
+              key={`${memberIndex}`}
+              className={`${style.circle}`}
+              style={{
+                width: size,
+                height: size,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '8%'
+              }}
+              onClick={() => {
+                setSelectedFaculty(null);
+                setSelectedInstitution(null);
+                handleProfileClick(member.id);
+              }}
+            >
+              <span>{member.name}</span>
+            </div>
+          );
+        });
+
+      default:
+        return;
+
+    }
+
   };
-  
-
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -350,9 +346,9 @@ export const Landing = () => {
           <img src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
         </button>
       </Box>
-      <Box sx={{ display: 'flex'}}>
+      <Box sx={{ display: 'flex' }}>
         {/* Main Content Area */}
-        <Container sx={{ maxWidth: 'md', textAlign: 'center', mt: 4, top: '16vh',marginLeft:'7%' }}>
+        <Container sx={{ maxWidth: 'md', textAlign: 'center', mt: 4, top: '16vh', marginLeft: '7%' }}>
           <Box sx={{ position: 'relative', top: '17vh' }} aria-label="connecting video">
             <video className={style.topImage} autoPlay muted playsInline loop>
               <source src="./landing/design.mp4" type="video/mp4" />
@@ -375,10 +371,17 @@ export const Landing = () => {
             </section>
           </Box>
 
+          {/* Default Message Before Search */}
+          {!hasSearched && !loading && !error && (
+            <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh' }}>
+              Please enter a value for search.
+            </Typography>
+          )}
+
           {/* Loading Indicator */}
           {loading && (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
-             <CircularProgress />
+              <CircularProgress />
             </Box>
           )}
 
@@ -398,8 +401,8 @@ export const Landing = () => {
             </Typography>
           )}
 
-           {/* Network Section with Dynamic Circles */}
-           <Box sx={{ display: 'flex', width: isTablet ? '61vw' : '' }}>
+          {/* Network Section with Dynamic Circles */}
+          <Box sx={{ display: 'flex', width: isTablet ? '61vw' : '' }}>
             <section id="network">
               <div className={style.flexContainer}>
                 <div className={style.circleContainer}>
@@ -409,31 +412,7 @@ export const Landing = () => {
               </div>
             </section>
           </Box>
-        
-      {/* </Box> */}
-
-          {/* <Box sx={{ display: 'flex', width: isTablet? '61vw':''}}>
-            <section id="network">
-              <div className={style.flexContainer}>
-                
-                <div className={style.circleContainer}>
-                  <div className={`${style.circle} ${style.circle1}`}><span>AUT(3)</span></div>
-                  <div className={`${style.circle} ${style.circle2}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle3}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle4}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle5}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle6}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle7}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle8}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle9}`}><span>UOA(2)</span></div>
-                  <div className={`${style.circle} ${style.circle11}`}><span>UOA(2)</span></div>
-                </div>
-              </div>
-            </section>
-          </Box> */}
-
-          
-          <Box sx={{ display: 'flex', width: isTablet? '77%':'85%'}}>
+          <Box sx={{ display: 'flex', width: isTablet ? '77%' : '85%' }}>
             <section id="member">
               <div className={style.contentSections}>
                 <div className={`${style.sectId} ${style.search}`}>
@@ -476,7 +455,7 @@ export const Landing = () => {
               </div>
             </section>
           </Box>
-          <Box sx={{ display: 'flex'}}>
+          <Box sx={{ display: 'flex' }}>
             <section id="about-us">
               <div className={style.joinDiv}>
                 <div className={`${style.leftJoin} ${style.left}`}>
