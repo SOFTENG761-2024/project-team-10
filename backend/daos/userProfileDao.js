@@ -100,7 +100,7 @@ async function getUserProfileById(id) {
           include: {
             institution: {
               select: {
-                name: true,
+                name: true,    //affiliations appear as the name of secondary institutions
               },
             },
           },
