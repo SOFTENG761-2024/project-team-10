@@ -2,7 +2,7 @@
 
 # Solution Architecture
 
-![SOLUTION-DIAGRAM](https://github.com/user-attachments/assets/3fd86ea3-6f87-4174-8391-a50ae3529819)
+![SOLUTION-DIAGRAM](https://github.com/user-attachments/assets/5a9388fd-e356-4e75-9e6d-35c45c643360)
 
 # Code Structure
 
