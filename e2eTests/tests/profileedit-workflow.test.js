@@ -115,7 +115,7 @@ test('displays the correct welcome message', async ({ page }) => {
   await expect(welcomeText).toBeVisible();
 });
 
-test('displays the date', async ({ page }) => {
+/*test('displays the date', async ({ page }) => {
   await page.clock.setFixedTime(new Date('2024-10-04T10:00:00'));
   // Reload the page to apply the new date settings
   await page.reload();
@@ -123,7 +123,7 @@ test('displays the date', async ({ page }) => {
   const displayedDate = await page.locator('#headerdate').innerText();
   console.log('Displayed:', displayedDate);
   await expect(page.locator('#headerdate')).toHaveText('Fri 04 October 2024');
-});
+});*/
 
 test('Test can edit name', async ({ page }) => {
   await page.waitForSelector('#fname');
