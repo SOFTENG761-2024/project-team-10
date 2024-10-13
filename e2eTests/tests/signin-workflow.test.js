@@ -1,33 +1,46 @@
+
 const { test, expect } = require("@playwright/test");
 require('dotenv').config({ path: './e2eTests/.env' });
+
 test.beforeEach(async ({ page }) => {
+  // 1. Navigate to the home page
   await page.goto(`${process.env.REACT_APP_URL}`);
+
+  // 2. Click the menu icon
   await page.getByRole('button', { name: 'menuicon' }).click();
+
+  // 3. Ensure the URL changes to the signup page
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/signup`);
+
+  // 4. Wait for specific signup page elements to load
   await page.waitForSelector('text="Already have a business Account?"');
   await page.waitForSelector('text="Sign in"');
+
+  // 5. Click on the 'Sign in' text link
   await page.locator('text="Sign in"').click();
+
+  // 6. Confirm the navigation to the signin page
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/signin`);
 });
 
 test("Sign in with email", async ({ page }) => {
-  // 1. 等待页面加载并显示 'Sign in with Email' 文本
+  // 1. Wait for the 'Sign in with Email' text to appear
   await page.waitForSelector('text="Sign in with Email"');
 
-  // 2. 填写登录表单
+  // 2. Fill in the login form
   await page.getByLabel('Email *').fill('test@example.com');
   await page.getByLabel('Password *').fill('test@example.com');
 
-  // 3. 拦截 /email-signin 请求，并返回成功响应
+  // 3. Intercept the /email-signin API call and simulate a successful response
   await page.route('**/api/auth/email-signin', route => {
     route.fulfill({
       status: 200,
       contentType: 'application/json',
-      body: JSON.stringify(true), // 模拟成功登录
+      body: JSON.stringify(true), // Simulate successful login
     });
   });
 
-  // 4. 模拟 /current-user 请求返回用户信息
+  // 4. Mock the /current-user API response with user data
   await page.route('**/api/auth/current-user', async route => {
     await route.fulfill({
       status: 200,
@@ -35,39 +48,29 @@ test("Sign in with email", async ({ page }) => {
       body: JSON.stringify({
         id: 1,
         usertypeid: 3,
-        institution_id: null,
-        faculty_id: null,
-        organization_id: null,
         first_name: "John",
         last_name: "Doe",
-        preferred_name: null,
-        title: "Ms.",
         primary_email: "test@example.com",
-        password: "12345rf",
         is_verified: true,
-        signup_datetime: "2006-02-26T10:13:02.000Z",
       }),
     });
   });
 
-  // 5. 点击 'Sign in' 按钮
+  // 5. Click the 'Sign in' button
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
 
-  // 6. 确认页面跳转到搜索页面
+  // 6. Verify navigation to the search profile page
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/search-profile`);
 
-  // 7. 等待欢迎消息出现，并验证其可见性
+  // 7. Ensure the welcome message is visible
   await expect(page.locator('text=Welcome, John Doe')).toBeVisible();
 });
 
-
 test("Sign in with Reannz button", async ({ page }) => {
-
-  // 等待指示文本加载
+  // 1. Wait for the instructional text to appear
   await page.waitForSelector('text=Institutional members can sign in with their institutional ID through www.reannz.co.nz');
 
-  // 拦截认证API调用
-
+  // 2. Intercept the Tuakiri authentication API call
   await page.route('**/api/auth/tuakiri', async route => {
     const response = await route.fetch();
     const contentType = response.headers()['content-type'];
@@ -82,94 +85,37 @@ test("Sign in with Reannz button", async ({ page }) => {
       await route.fulfill({ response, json });
     }
   });
+
+  // 3. Mock the /current-user API with user data
   await page.route('**/api/auth/current-user', async route => {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify({
         id: 1,
-        usertypeid: 3,
-        institution_id: null,
-        faculty_id: null,
-        organization_id: null,
         first_name: "John",
         last_name: "Doe",
-        preferred_name: null,
-        title: "Ms.",
         primary_email: "test@example.com",
-        password: "12345rf",
         is_verified: true,
-        signup_datetime: "2006-02-26T10:13:02.000Z",
-
-      })
+      }),
     });
   });
 
-  // 点击"Sign in with Reannz"按钮
+  // 4. Click the 'Sign in with Reannz' button
   await page.click('button:has-text("Sign in with Reannz")');
 
-
-  // 等待搜索资料页面加载
+  // 5. Wait for the search profile page to load
   await page.waitForTimeout(500);
 
-  // 验证URL
+  // 6. Confirm the URL
   await page.goto(`${process.env.REACT_APP_URL}/search-profile`);
 
-  await page.waitForTimeout(500);
-
-  // 验证用户名显示
+  // 7. Verify the username is displayed
   await expect(page.getByText('John Doe')).toBeVisible();
 });
-
-
-test("Sign in with Reannz button2", async ({ page }) => {
-
-  // 等待指示文本加载
-  await page.waitForSelector('text=Institutional members can sign in with their institutional ID through www.reannz.co.nz');
-
-  // 拦截认证API调用
-
-  await page.route('**/api/auth/current-user', async route => {
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({
-        id: 1,
-        usertypeid: 3,
-        institution_id: null,
-        faculty_id: null,
-        organization_id: null,
-        first_name: "John",
-        last_name: "Doe",
-        preferred_name: null,
-        title: "Ms.",
-        primary_email: "test@example.com",
-        password: "12345rf",
-        is_verified: true,
-        signup_datetime: "2006-02-26T10:13:02.000Z",
-
-      })
-    });
-  });
-
-  // 点击"Sign in with Reannz"按钮
-  await page.click('button:has-text("Sign in with Reannz")');
-
-
-  // 等待搜索资料页面加载
-  await page.waitForTimeout(500);
-
-  // 验证URL
-  await page.goto(`${process.env.REACT_APP_URL}/search-profile`);
-
-  await page.waitForTimeout(500);
-
-  // 验证用户名显示
-  await expect(page.getByText('John Doe')).toBeVisible();
-});
-
 
 test('Sign in with LinkedIn', async ({ page }) => {
+  // 1. Intercept the LinkedIn authentication API call
   await page.route('**/api/auth/linkedin', route => {
     route.fulfill({
       status: 200,
@@ -177,13 +123,13 @@ test('Sign in with LinkedIn', async ({ page }) => {
       body: JSON.stringify({
         first_name: 'John',
         last_name: 'Doe',
-        id: 100, // LinkedIn 用户 ID
-        token: 'mock-linkedin-token' // 模拟 LinkedIn token
-      })
+        id: 100, // LinkedIn user ID
+        token: 'mock-linkedin-token', // Simulate LinkedIn token
+      }),
     });
   });
 
-  // 模拟获取当前用户信息的请求，用模拟的 LinkedIn 用户数据
+  // 2. Mock the /current-user API using LinkedIn user data
   await page.route('**/api/auth/current-user', route => {
     route.fulfill({
       status: 200,
@@ -198,19 +144,13 @@ test('Sign in with LinkedIn', async ({ page }) => {
     });
   });
 
-  // Wait for the LinkedIn button to appear
+  // 3. Wait for the LinkedIn sign-in button and click it
   await page.waitForSelector('img[alt="Sign in with Linked In"]');
   await page.click('img[alt="Sign in with Linked In"]');
-  // 验证URL
+
+  // 4. Confirm navigation to the search profile page
   await page.goto(`${process.env.REACT_APP_URL}/search-profile`);
 
-  await page.waitForTimeout(500);
-
-  // 验证用户名显示
+  // 5. Verify the username is visible
   await expect(page.getByText('John Doe')).toBeVisible();
-
 });
-
-
-
-
