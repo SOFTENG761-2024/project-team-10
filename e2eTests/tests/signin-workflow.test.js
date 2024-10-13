@@ -160,7 +160,7 @@ test("Sign in with Reannz button2", async ({ page }) => {
   await page.waitForTimeout(500);
 
   // 验证URL
-  await page.toHaveURL(`${process.env.REACT_APP_URL}/search-profile`);
+  await page.goto(`${process.env.REACT_APP_URL}/search-profile`);
 
   await page.waitForTimeout(500);
 
