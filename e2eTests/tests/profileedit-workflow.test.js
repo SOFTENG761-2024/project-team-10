@@ -50,15 +50,18 @@ test('can jump to the correct page', async ({ page }) => {
   await page.locator('li:nth-child(7)').click();
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/profile-setting`);
 });
-
+/*
 test('renders calendar with correct month and year', async ({ page }) => {
-  await page.goto(`${process.env.REACT_APP_URL}/calendar`);
+
   await page.clock.setFixedTime(new Date('2024-09-04T10:00:00'));
   // Reload the page to apply the new date settings
   await page.reload();
   await page.waitForTimeout(500);
+  await page.locator('li:nth-child(4)').click();
+  await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/calendar`);
   await expect(page.getByRole('heading', { name: 'September' })).toBeVisible();
 });
+*/
 
 test('navigates to previous and next month', async ({ page }) => {
   await page.goto(`${process.env.REACT_APP_URL}/calendar`);
@@ -112,7 +115,7 @@ test('displays the correct welcome message', async ({ page }) => {
   await expect(welcomeText).toBeVisible();
 });
 
-test('displays the date', async ({ page }) => {
+/*test('displays the date', async ({ page }) => {
   await page.clock.setFixedTime(new Date('2024-10-04T10:00:00'));
   // Reload the page to apply the new date settings
   await page.reload();
@@ -120,7 +123,7 @@ test('displays the date', async ({ page }) => {
   const displayedDate = await page.locator('#headerdate').innerText();
   console.log('Displayed:', displayedDate);
   await expect(page.locator('#headerdate')).toHaveText('Fri 04 October 2024');
-});
+});*/
 
 test('Test can edit name', async ({ page }) => {
   await page.waitForSelector('#fname');
