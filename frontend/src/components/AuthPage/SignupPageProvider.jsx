@@ -218,6 +218,7 @@ const SignupPageProvider = () => {
                         <Grid item xs={6}>
                           <StyledTextField
                             fullWidth
+                            id="first-name"
                             label="First Name"
                             margin="dense"
                             size='small'
@@ -228,6 +229,7 @@ const SignupPageProvider = () => {
                         <Grid item xs={6}>
                           <StyledTextField
                             fullWidth
+                            id="last-name"
                             label="Last Name"
                             margin="dense"
                             size='small'
@@ -238,13 +240,16 @@ const SignupPageProvider = () => {
                       </Grid>
                       <StyledTextField
                         fullWidth
+                        id="organization"
                         label="Organization"
                         margin="dense"
                         size='small'
                         value={organization}
                         onChange={(e) => setOrganization(e.target.value)}
                         required />
+
                       <StyledTextField
+
 
                         fullWidth
                         label="Email"
@@ -287,6 +292,7 @@ const SignupPageProvider = () => {
                   <Typography variant="body2" align="center">
                     Already have a business Account? <Link href="signin">Sign in</Link>
                   </Typography>
+
                 </Box>
               </StyledPaperBottom></>
 

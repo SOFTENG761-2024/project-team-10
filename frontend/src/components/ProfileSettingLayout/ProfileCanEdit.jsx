@@ -19,8 +19,11 @@ const ProfileCanEdit = ({ profile, onSave }) => {
         <div className="detail-item full-width">
           <label>Bio</label>
           <textarea
+
+            id="bio"
             value={editedProfile.bio}
-            onChange={(e) => handleInputChange("bio", e.target.value)}
+            onChange={(e) => handleInputChange('bio', e.target.value)}
+
           />
         </div>
       </div>
@@ -28,19 +31,23 @@ const ProfileCanEdit = ({ profile, onSave }) => {
         <div className="detail-item">
           <label>Research area</label>
           <input
+            id="detail"
             type="text"
             value={editedProfile.researchArea}
             className="input-field"
             onChange={(e) => handleInputChange("researchArea", e.target.value)}
+
           />
         </div>
         <div className="detail-item">
           <label>Skills:</label>
           <input
+            id="skills_input"
             type="text"
             className="input-field"
             value={editedProfile.skills}
-            onChange={(e) => handleInputChange("skills", e.target.value)}
+            onChange={(e) => handleInputChange('skills', e.target.value)}
+
           />
         </div>
       </div>
@@ -55,7 +62,9 @@ const ProfileCanEdit = ({ profile, onSave }) => {
           <label>Publications</label>
           <textarea
             value={editedProfile.publications}
-            onChange={(e) => handleInputChange("publications", e.target.value)}
+
+            onChange={(e) => handleInputChange('publications', e.target.value)}
+
           />
         </div>
       </div>
@@ -67,6 +76,7 @@ const ProfileCanEdit = ({ profile, onSave }) => {
   return (
     <div className="profile-container">
       <div className="tab-bar">
+
         {["About", "Publications", "Professional", "Teaching /Research"].map(
           (tab) => (
             <button
@@ -78,6 +88,7 @@ const ProfileCanEdit = ({ profile, onSave }) => {
             </button>
           ),
         )}
+
       </div>
 
       <div className="profile-details">

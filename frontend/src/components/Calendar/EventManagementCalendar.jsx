@@ -208,10 +208,10 @@ const EventManagementCalendar = () => {
               {monthNames[currentMonth]} {currentYear}
             </Typography>
             <Box sx={styles.iconContainer}>
-              <IconButton sx={styles.iconButton} onClick={handlePreviousMonth}>
+              <IconButton id="previous" sx={styles.iconButton} onClick={handlePreviousMonth}>
                 <ArrowBackIosIcon sx={styles.arrowIcon} />
               </IconButton>
-              <IconButton sx={styles.iconButton} onClick={handleNextMonth}>
+              <IconButton id="next" sx={styles.iconButton} onClick={handleNextMonth}>
                 <ArrowForwardIosIcon sx={styles.arrowIcon} />
               </IconButton>
             </Box>

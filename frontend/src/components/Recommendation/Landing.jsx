@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+
 import { Box, Container, Typography, CircularProgress } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
@@ -16,6 +17,7 @@ export const Landing = () => {
   const [positions, setPositions] = useState({ networkTop: 0, memberTop: 0 });
   const { toggleLightDarkTheme, theme } = useMuiTheme();
   const [navTop, setNavTop] = useState('33vh');
+
   const isTablet = useMediaQuery('(max-width:1024px)');
   const { institutionGroups, loading, error, searchProfiles } = useSearchProfiles();
   const [keyword, setKeyword] = useState('');
@@ -23,6 +25,7 @@ export const Landing = () => {
   const [selectedInstitution, setSelectedInstitution] = useState(null);
   const [selectedFaculty, setSelectedFaculty] = useState(null);
   const [hasSearched, setHasSearched] = useState(false);
+
 
   const handleThemeSwitchClick = () => {
     toggleLightDarkTheme();
@@ -64,6 +67,7 @@ export const Landing = () => {
       } else {
         setNavTop('16vh');
       }
+
     }
     const networkSection = document.getElementById('network');
     const memberSection = document.getElementById('member');
@@ -115,10 +119,10 @@ export const Landing = () => {
 
   const renderSearchCircles = (institutionGroups, loading) => {
     if (loading || institutionGroups.length === 0) return null;
+
     const baseSize = 100;
     const sizeIncrement = 15;
     const maxSize = 200;
-
     switch (activeTab) {
       case "Institution":
         return institutionGroups.map((group, index) => {
@@ -127,6 +131,7 @@ export const Landing = () => {
             <div
               key={index}
               className={`${style.circle}`}
+
               style={{
                 width: size,
                 height: size,
@@ -153,6 +158,7 @@ export const Landing = () => {
             <div
               key={`${facultyIndex}`}
               className={`${style.circle}`}
+
               style={{
                 width: size,
                 height: size,
@@ -177,10 +183,12 @@ export const Landing = () => {
 
         return selectedFaculty.members.map((member, memberIndex) => {
           const size = 120; //TODO: fix later
+
           return (
             <div
               key={`${memberIndex}`}
               className={`${style.circle}`}
+
               style={{
                 width: size,
                 height: size,
@@ -189,6 +197,7 @@ export const Landing = () => {
                 justifyContent: 'center',
                 margin: '8%'
               }}
+
               onClick={() => {
                 setSelectedFaculty(null);
                 setSelectedInstitution(null);
@@ -206,6 +215,7 @@ export const Landing = () => {
     }
 
   };
+
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -343,7 +353,7 @@ export const Landing = () => {
           <img src='./landing/theme.png' className={style.themeStyle} alt="themeicon" />
         </button>
         <button className={style.menuIcon} onClick={handleMenuClick}>
-          <img src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
+          <img id="outline" src='./landing/outline-1.png' className={style.menuIconStyle} alt="menuicon" />
         </button>
       </Box>
       <Box sx={{ display: 'flex' }}>
@@ -371,38 +381,47 @@ export const Landing = () => {
             </section>
           </Box>
 
+
           {/* Default Message Before Search */}
           {!hasSearched && !loading && !error && (
-            <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh', marginRight:'17%'}}>
+            <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh', marginRight: '17%' }}>
               Please enter a value for search.
             </Typography>
           )}
 
+
           {/* Loading Indicator */}
-          {loading && (
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
-              <CircularProgress />
-            </Box>
-          )}
+          {
+            loading && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+                <CircularProgress />
+              </Box>
+            )
+          }
 
 
           {/* Error Message */}
-          {!loading && error && (
-            <Typography color="error" sx={{ textAlign: 'center', marginTop: '16px' }}>
-              {error.message}
-            </Typography>
-          )}
+          {
+            !loading && error && (
+              <Typography color="error" sx={{ textAlign: 'center', marginTop: '16px' }}>
+                {error.message}
+              </Typography>
+            )
+          }
 
 
           {/* No Data Available Message */}
-          {!loading && !error && institutionGroups.length === 0 && activeTab && activeTab.trim() !== '' && (
-            <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh' }}>
-              No data found. Please enter some term for search.
-            </Typography>
-          )}
+          {
+            !loading && !error && institutionGroups.length === 0 && activeTab && activeTab.trim() !== '' && (
+              <Typography sx={{ textAlign: 'center', color: '#888', fontSize: '16px', marginTop: '50vh' }}>
+                No data found. Please enter some term for search.
+              </Typography>
+            )
+          }
 
           {/* Network Section with Dynamic Circles */}
           <Box sx={{ display: 'flex', width: isTablet ? '61vw' : '' }}>
+
             <section id="network">
               <div className={style.flexContainer}>
                 <div className={style.circleContainer}>
@@ -411,8 +430,10 @@ export const Landing = () => {
                 </div>
               </div>
             </section>
-          </Box>
+          </Box >
+
           <Box sx={{ display: 'flex', width: isTablet ? '77%' : '85%' }}>
+
             <section id="member">
               <div className={style.contentSections}>
                 <div className={`${style.sectId} ${style.search}`}>
@@ -481,6 +502,8 @@ export const Landing = () => {
               </div>
             </section>
           </Box>
+
+
           <Box sx={{ width: '100%', maxWidth: '100%', display: 'flex', flexDirection: 'column' }}>
             <div className={style.borderLine}></div>
             <footer className={style.foot}>
@@ -507,9 +530,9 @@ export const Landing = () => {
             </footer>
           </Box>
         </Container>
-      </Box>
+      </Box >
       {/* Right Sidebar with Navigation */}
-      <Box sx={{ position: 'fixed', right: '7%', top: '50%', transform: 'translateY(-50%)', width: '10%' }}>
+      < Box sx={{ position: 'fixed', right: '7%', top: '50%', transform: 'translateY(-50%)', width: '10%' }}>
         <nav style={styles.navContainer}>
           <div style={{ ...styles.nav, top: navTop }}>
             <a
@@ -542,8 +565,8 @@ export const Landing = () => {
             </a>
           </div>
         </nav>
-      </Box>
-    </Box>
+      </Box >
+    </Box >
   );
 };
 export default Landing;

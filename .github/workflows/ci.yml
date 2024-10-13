@@ -148,7 +148,7 @@ jobs:
           chmod +x start-ci.sh
           (./start-ci.sh)&
           npm install -g wait-on
-          npx wait-on http://localhost:5000/ --timeout 120000
+          npx wait-on http://localhost:5000 --timeout 120000
           npx wait-on http://localhost:3000/api/api-docs --timeout 120000
       - name: Build and Run Playwright E2E tests
         working-directory: "./e2eTests"
@@ -159,3 +159,9 @@ jobs:
           npm run test:e2e
         env:
           REACT_APP_URL: http://localhost:5000
+          
+        
+
+
+
+          

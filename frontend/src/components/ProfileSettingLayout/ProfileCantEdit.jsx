@@ -58,6 +58,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
                   Full Name:
                 </Typography>
                 <TextField
+                  id="fname"
                   value={profile.fullName}
                   onChange={(e) =>
                     handleInputChange("fullName", e.target.value)
@@ -73,6 +74,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
                   Last Name:
                 </Typography>
                 <TextField
+                  id="lname"
                   value={profile.lastName}
                   onChange={(e) =>
                     handleInputChange("lastName", e.target.value)
@@ -103,10 +105,11 @@ const ProfileCantEdit = ({ profile, onSave }) => {
                   E-mail Address:
                 </Typography>
                 <TextField
+                  id="email"
                   value={profile.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
                   disabled
-                  // fullWidth
+                // fullWidth
                 />
               </div>
             </Grid>
@@ -116,6 +119,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
                   ORCID ID:
                 </Typography>
                 <TextField
+                  id="orcid"
                   value={profile.orcid}
                   disabled
                   onChange={(e) => handleInputChange("orcid", e.target.value)}
@@ -129,6 +133,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
                   Linkedin:
                 </Typography>
                 <TextField
+                  id='linkedin'
                   value={profile.linkedin}
                   onChange={(e) =>
                     handleInputChange("linkedin", e.target.value)
@@ -173,6 +178,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
             </Grid>
           </Grid>
           <div className={styles.buttonRow}>
+
             <Box
               sx={{
                 display: "flex",
@@ -211,6 +217,7 @@ const ProfileCantEdit = ({ profile, onSave }) => {
 
           <Box sx={{ display: "flex", marginTop: "20px", gap: "20px" }}>
             <Button
+              id="edit-save-button"
               variant="contained"
               color="primary"
               onClick={isEditing ? handleSaveClick : handleEditClick}
@@ -225,15 +232,19 @@ const ProfileCantEdit = ({ profile, onSave }) => {
               }}
             >
               {isEditing ? "Save" : "Edit"}
+
             </Button>
             <Typography variant="body2" className={styles.note}>
               Please note! Most of the details are populated via Tuakiri and
               cannot be changed here.
             </Typography>
           </Box>
-        </CardContent>
-      </Card>
-    </div>
+
+
+        </CardContent >
+      </Card >
+    </div >
+
   );
 };
 

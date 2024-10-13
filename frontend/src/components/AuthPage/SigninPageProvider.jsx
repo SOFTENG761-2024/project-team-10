@@ -149,6 +149,8 @@ const SigninPageProvider = () => {
   }, []);
 
 
+  console.log('linkedInLogin function:', linkedInLogin);
+
   return (
     <SigninPageContext.Provider value={{}}>
       <GlobalStyles styles={styles.global} />
@@ -218,7 +220,7 @@ const SigninPageProvider = () => {
                         required />
 
                       <Box display="flex" justifyContent="center">
-                        <SubmitButton type="submit" variant="contained">
+                        <SubmitButton id="signin" type="submit" variant="contained">
                           Sign in
                         </SubmitButton>
                       </Box>

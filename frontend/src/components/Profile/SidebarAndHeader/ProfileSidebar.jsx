@@ -11,12 +11,14 @@ import {
   MessageIcon,
 } from "./SidebarIcons";
 import { useOwnProfileAPI } from "./api";
+import ProfileSettingLayout from "@frontend-ui/components/ProfileSettingLayout";
 
 const ProfileSidebar = () => {
   const [activeIcon, setActiveIcon] = useState();
   const { getOwnProfileData, error } = useOwnProfileAPI();
   const [ownProfileData, setOwnProfileData] = useState(null);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -33,10 +35,12 @@ const ProfileSidebar = () => {
 
   const handleIconClick = (iconName, route) => {
     setActiveIcon(iconName);
+
     if (route) {
       navigate(route); // Navigate only if the route is provided
     } else {
       console.log(`${iconName} page is not yet implemented.`);
+
     }
   };
 
@@ -67,6 +71,7 @@ const ProfileSidebar = () => {
             <Button
               key={item.name}
               component="li"
+              data-icon-name={item.name}
               sx={{
                 ...styles.sidebarItem,
                 backgroundColor:

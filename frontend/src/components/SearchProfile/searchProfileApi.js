@@ -54,7 +54,7 @@ export const useSearchProfiles = () => {
                             });
                         }
                         acc[institutionId].totalMembers += 1;
-                    }   
+                    }
                     return acc;
                 }, {});
 

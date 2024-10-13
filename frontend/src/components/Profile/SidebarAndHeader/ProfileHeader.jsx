@@ -1,12 +1,15 @@
+
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useOwnProfileAPI } from "./api";
 
+
 const ProfileHeader = () => {
   const navigate = useNavigate();
   const { getOwnProfileData, error } = useOwnProfileAPI();
   const [ownProfileData, setOwnProfileData] = useState(null);
+
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -44,14 +47,14 @@ const ProfileHeader = () => {
   return (
     <Box sx={styles.header}>
       <Box sx={styles.nameAndDate}>
-        <Typography variant="h5" component="h2" sx={styles.headerTitle}>
+        <Typography id="welcomeText" variant="h5" component="h2" sx={styles.headerTitle}>
           Welcome,{" "}
           {ownProfileData?.first_name && ownProfileData?.last_name
             ? `${ownProfileData.first_name} ${ownProfileData.last_name}`
             : "Guest"}
         </Typography>
 
-        <Typography variant="body2" sx={styles.headerDate}>
+        <Typography id="headerdate" variant="body2" sx={styles.headerDate}>
           {getCurrentDate()}
         </Typography>
       </Box>
