@@ -1,5 +1,5 @@
 const { test, expect, afterEach, beforeEach } = require("@playwright/test");
-require('dotenv').config({ path: './e2eTests/.env' });
+require('dotenv').config();
 
 test.beforeEach(async ({ page }) => {
   // Navigate to the landing page before each test

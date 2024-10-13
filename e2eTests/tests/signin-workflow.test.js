@@ -1,6 +1,6 @@
 
 const { test, expect } = require("@playwright/test");
-require('dotenv').config({ path: './e2eTests/.env' });
+require('dotenv').config();
 
 test.beforeEach(async ({ page }) => {
   // 1. Navigate to the home page
