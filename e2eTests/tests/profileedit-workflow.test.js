@@ -52,11 +52,13 @@ test('can jump to the correct page', async ({ page }) => {
 });
 
 test('renders calendar with correct month and year', async ({ page }) => {
-  await page.goto(`${process.env.REACT_APP_URL}/calendar`);
+
   await page.clock.setFixedTime(new Date('2024-09-04T10:00:00'));
   // Reload the page to apply the new date settings
   await page.reload();
   await page.waitForTimeout(500);
+  await page.locator('li:nth-child(4)').click();
+  await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/calendar`);
   await expect(page.getByRole('heading', { name: 'September' })).toBeVisible();
 });
 
