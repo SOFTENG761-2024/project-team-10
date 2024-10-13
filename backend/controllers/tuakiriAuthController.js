@@ -1,14 +1,13 @@
 //SignIn
 // get token and profile - email address
 // use email address to query database to get userid, return to front-end
-const userProfileService = require("../services/userProfileService.js");
 const express = require("express");
 const passport = require("passport");
 const path = require("path");
 const router = express.Router();
 const env = require("dotenv");
-const createAccountEmailService = require("../services/createAccountEmailService.js");
-const passwordService = require("../services/passwordService.js");
+
+
 
 env.config({ path: path.resolve(__dirname, "../.env") });
 
