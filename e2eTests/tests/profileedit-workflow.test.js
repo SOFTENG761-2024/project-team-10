@@ -28,6 +28,29 @@ test.beforeEach(async ({ page }) => {
       body: JSON.stringify(true), // 模拟成功登录
     });
   });
+  // 模拟获取当前用户信息
+  await page.route('**/api/auth/current-user', async route => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        id: 1,
+        usertypeid: 3,
+        institution_id: null,
+        faculty_id: null,
+        organization_id: null,
+        first_name: "John",
+        last_name: "Doe",
+        preferred_name: null,
+        title: "Ms.",
+        primary_email: "test@example.com",
+        password: "12345rf",
+        is_verified: true,
+        signup_datetime: "2006-02-26T10:13:02.000Z",
+
+      })
+    });
+  });
   await page.getByRole('button', { name: 'Sign in', exact: true }).click();
 
   // After confirming the form submission, jump to the correct page
@@ -92,6 +115,8 @@ test('Test can edit name', async ({ page }) => {
   const isEditableAfterSave = await page.isEditable('#fname');
   expect(isEditableAfterSave).toBe(false);
 
+
+
 });
 
 
@@ -113,9 +138,48 @@ test('Test that read-only fields are not editable in edit mode', async ({ page }
 
 test('Test can logout', async ({ page }) => {
 
+  // 模拟获取当前用户信息
+  await page.route('**/api/auth/current-user', async route => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        id: 1,
+        usertypeid: 3,
+        institution_id: null,
+        faculty_id: null,
+        organization_id: null,
+        first_name: "",
+        last_name: "",
+        preferred_name: null,
+        title: "",
+        primary_email: "",
+        password: "",
+        is_verified: true,
+        signup_datetime: "",
+
+      })
+    });
+  });
   await page.getByRole('button', { name: 'Menu Icon' }).click();
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}`);
-
+  await page.getByPlaceholder('Search').click();
+  await page.getByPlaceholder('Search').fill('University');
+  await page.getByPlaceholder('Search').press('Enter');
+  await page.waitForTimeout(500);
+  const institutionText = await page.getByText('University of Canterbury');
+  await expect(institutionText).toBeVisible();
+  const institutionText2 = await page.getByText('Lincoln University');
+  await expect(institutionText2).toBeVisible();
+  await page.getByText('Lincoln University').click();
+  await page.getByText('Lincoln Business School').click();
+  await page.getByText('Gloria Hao').click();
+  await page.waitForTimeout(500);
+  //未登陆不可以看到outputs
+  await expect(page.locator(`text="Welcome, Guest"`)).toBeVisible();
+  await page.getByRole('button', { name: 'Outputs' }).click();
+  await page.waitForTimeout(500);
+  await expect(page.getByText('No publications available.')).toBeVisible();
 });
 
 test('Test can navigate between profile and career pages and can edit skill', async ({ page }) => {
@@ -127,11 +191,10 @@ test('Test can navigate between profile and career pages and can edit skill', as
   await page.waitForTimeout(500);
 
   // Click the input box and fill in the value 'sing'
-  await page.fill('input[type="text"], input[id="skills-input"]', 'sing');
+  await page.fill('input[type="text"]', 'science');
 
   // Click the "Save" button
   await page.getByRole('button', { name: 'Save' }).click();
-
 
 });
 

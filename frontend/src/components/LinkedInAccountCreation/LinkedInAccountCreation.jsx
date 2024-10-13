@@ -76,7 +76,10 @@ const AccountCreation = () => {
   return (
     <>
       <GlobalStyles styles={styles.global} />
-      <Container component="main" minWidth="xs" sx={styles.container}>
+      <Container
+        component="main"
+        sx={{ ...styles.container, minWidth: '300px' }}
+      >
         <Box sx={styles.welcomeBoxContainer}>
           <Typography variant="body2" sx={{ ...styles.typographyBody, mb: 1 }}>
             Welcome! Since this is your first time accessing the platform,

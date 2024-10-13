@@ -31,8 +31,8 @@ const ProfileCanEdit = ({ profile, onSave }) => {
         <div className="detail-item">
           <label>Research area</label>
           <input
+            id="detail"
             type="text"
-
             value={editedProfile.researchArea}
             className="input-field"
             onChange={(e) => handleInputChange("researchArea", e.target.value)}
@@ -42,8 +42,9 @@ const ProfileCanEdit = ({ profile, onSave }) => {
         <div className="detail-item">
           <label>Skills:</label>
           <input
-
-            type="text" className='input-field' id="skills-input"
+            id="skills_input"
+            type="text"
+            className="input-field"
             value={editedProfile.skills}
             onChange={(e) => handleInputChange('skills', e.target.value)}
 

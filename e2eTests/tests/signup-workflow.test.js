@@ -38,9 +38,24 @@ test('test can sign up with email', async ({ page }) => {
   });
   // Submit the form
   await page.getByRole('button', { name: 'Create account', exact: true }).click();
-  await page.waitForTimeout(2000);
 
   await expect(page).toHaveURL(`${process.env.REACT_APP_URL}/create-account`);
+  await page.getByLabel('First Name').fill('John');
+  await page.getByLabel('Last Name').fill('Doe');
+  await page.getByLabel('Organization *').fill('Test Corp');
+  await page.getByLabel('Email Address *').fill('john.doe@example.com');
+
+  await page.route('**/api/auth/account-screen', route => {
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify(true),
+    });
+  });
+  await page.getByRole('button', { name: 'Submit' }).click();
+  await page.waitForSelector('text="Your account is in the verification process. You can now navigate to the landing page."');
+  await page.getByRole('button', { name: 'Close' }).click();
+  await expect(page).toHaveURL(`${process.env.REACT_APP_URL}`);
 
 });
 
