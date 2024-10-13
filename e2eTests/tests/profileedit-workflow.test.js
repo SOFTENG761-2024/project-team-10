@@ -34,7 +34,7 @@ test.beforeEach(async ({ page }) => {
       })
     });
   });
-
+  await page.clock.setFixedTime(new Date('2024-09-04T10:00:00'));
   // Navigate to the correct page after confirming form submission
   await page.goto(`${process.env.REACT_APP_URL}/search-profile`);
   await page.waitForTimeout(500);
@@ -52,9 +52,6 @@ test('can jump to the correct page', async ({ page }) => {
 });
 
 test('renders calendar with correct month and year', async ({ page }) => {
-
-  await page.clock.setFixedTime(new Date('2024-09-04T10:00:00'));
-  // Reload the page to apply the new date settings
   await page.reload();
   await page.waitForTimeout(500);
   await page.locator('li:nth-child(4)').click();
@@ -115,13 +112,11 @@ test('displays the correct welcome message', async ({ page }) => {
 });
 
 test('displays the date', async ({ page }) => {
-  await page.clock.setFixedTime(new Date('2024-10-04T10:00:00'));
-  // Reload the page to apply the new date settings
   await page.reload();
   await page.waitForTimeout(500);
   const displayedDate = await page.locator('#headerdate').innerText();
   console.log('Displayed:', displayedDate);
-  await expect(page.locator('#headerdate')).toHaveText('Fri 04 October 2024');
+  await expect(page.locator('#headerdate')).toHaveText('Wed 04 September 2024');
 });
 
 test('Test can edit name', async ({ page }) => {
