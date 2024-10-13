@@ -1,5 +1,6 @@
 # Give it a good name app
 
+# domain name: https://academicfellows.com
 # Solution Architecture
 
 ![SOLUTION-DIAGRAM](https://github.com/user-attachments/assets/5a9388fd-e356-4e75-9e6d-35c45c643360)
