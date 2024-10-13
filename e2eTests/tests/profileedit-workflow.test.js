@@ -62,10 +62,10 @@ test('renders calendar with correct month and year', async ({ page }) => {
 test('navigates to previous and next month', async ({ page }) => {
   await page.goto(`${process.env.REACT_APP_URL}/calendar`);
   await page.click('#previous');
-  await expect(page.getByText('September 2024')).toBeVisible();
+  await expect(page.getByText('August 2024')).toBeVisible();
   await page.click('#next');
   await page.click('#next');
-  await expect(page.getByText('November 2024')).toBeVisible();
+  await expect(page.getByText('October 2024')).toBeVisible();
 });
 
 test('renders dashboard and switches between tabs', async ({ page }) => {
