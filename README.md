@@ -1,5 +1,6 @@
 # Give it a good name app
 
+# domain name: https://academicfellows.com
 # Solution Architecture
 
 ![SOLUTION-DIAGRAM](https://github.com/user-attachments/assets/5a9388fd-e356-4e75-9e6d-35c45c643360)
@@ -182,3 +183,9 @@ If you raise a pr, Github Actions will trigger the `./github/workflow/ci.yml` wo
 ### 4. How do I access latest deployed website
 
 ##### A: We provision new EC2 instances if we have infrastructure change. Need to go to github actions to grab the latest working frontend url. Get it from the latest successful `CD` build from Github Actions
+
+# Limitation claim
+
+### 1. Tuakiri SSO integration
+
+##### Currently, Tuakiri SSO integration cannot be tested on the local server due to a mismatch between the localhost redirect URL and the existing Express API structure and server ports. However, you can still test it on the app’s public domain: https://www.academicfellows.com/

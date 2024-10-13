@@ -3,10 +3,10 @@ const { getUserProfileByPrimaryEmail, createUserProfile } = require("../daos/use
 const { Strategy: PassportStrategy } = require('passport-strategy');
 
 class tuakiriOpenIdStrategy extends PassportStrategy {
-    constructor(options, verify) {
+    constructor(verify) {
         super(); // Call the constructor of PassportStrategy
         this.name = 'tuakiriOpenId'; // Name of the strategy
-        this.verify = verify; // `verify` is a callback function to handle authentication
+        this.verify = verify; 
     }
 
     async authenticate(req) {

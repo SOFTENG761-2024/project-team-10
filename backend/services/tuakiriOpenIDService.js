@@ -1,6 +1,10 @@
 const axios = require('axios');
 const qs = require('qs');
-// const jwt = require ('jsonwebtoken');
+const path = require('path');
+const env = require('dotenv');
+
+env.config({ path: path.resolve(__dirname, '../.env') });
+
 
 async function getTuakiriProfile(grant_type, code, client_id, client_secret, redirect_uri){
 
@@ -16,7 +20,7 @@ async function getTuakiriProfile(grant_type, code, client_id, client_secret, red
 
     try{
 
-        const response = await axios.post('https://openidconnect.test.tuakiri.ac.nz/OIDC/token', qs.stringify(data), {
+        const response = await axios.post(process.env.TUAKIRI_TOKEN_URL, qs.stringify(data), {
             headers: {
                 'Authorization': authHeaderForToken,
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -28,7 +32,7 @@ async function getTuakiriProfile(grant_type, code, client_id, client_secret, red
 
         try {
 
-            const response = await axios.post('https://openidconnect.test.tuakiri.ac.nz/OIDC/userinfo', qs.stringify(data), {
+            const response = await axios.post(process.env.TUAKIRI_USERINFO_URL, qs.stringify(data), {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/x-www-form-urlencoded'
