@@ -97,6 +97,8 @@ jobs:
           echo "TUAKIRI_CLIENT_SECRET=$TUAKIRI_CLIENT_SECRET" >> .env
           echo "TUAKIRI_REDIRECT_URI=$TUAKIRI_REDIRECT_URI" >> .env
           echo "TUAKIRI_TOKEN_URL=$TUAKIRI_TOKEN_URL" >> .env
+          echo "TUAKIRI_USERINFO_URL=$TUAKIRI_USERINFO_URL" >> .env
+
         env:
           # node creds
           DATABASE_URL: postgresql://postgres:postgres@postgres:5432/test?schema=public
@@ -115,6 +117,8 @@ jobs:
           TUAKIRI_CLIENT_SECRET: LLR3FRT7WqifPzC+u0h9dUqg
           TUAKIRI_REDIRECT_URI: https://api.academicfellows.com/api/auth/tuakiri/redirect
           TUAKIRI_TOKEN_URL: https://openidconnect.test.tuakiri.ac.nz/OIDC/token
+          TUAKIRI_USERINFO_URL: https://openidconnect.test.tuakiri.ac.nz/OIDC/userinfo
+          
       - name: Set docker-compose configs
         working-directory: "./"
         run: |
