@@ -218,32 +218,32 @@ test('should navigate career pages', async ({ page }) => {
 
 });
 
-/*test('test can switch theme', async ({ page }) => {
+test('test can switch theme', async ({ page }) => {
 
-// Get the initial style
-const initialTextcolor = await page.evaluate(() => {
-  const element = document.querySelector('#welcomeText'); // The selector is ID
-  return window.getComputedStyle(element).color; // Get color attributes
+  // Get the initial style
+  const initialTextcolor = await page.evaluate(() => {
+    const element = document.querySelector('#welcomeText'); // The selector is ID
+    return window.getComputedStyle(element).color; // Get color attributes
+  });
+
+  console.log(`Text Color: ${initialTextcolor}`);
+
+  // Click the theme switch button
+  const themeButton = page.locator('button:has(img[alt="Theme Icon"])');
+  await themeButton.click();
+
+  // Wait for the theme to change (may require a short delay)
+  await page.waitForTimeout(500);
+
+  // Verify the welcome text color change
+  const newTextcolor = await page.evaluate(() => {
+    const element = document.querySelector('#welcomeText'); // The selector is ID
+    return window.getComputedStyle(element).color; // Get color attributes
+  });
+
+  console.log(`Text Color: ${newTextcolor}`); console.log(`Theme changed from ${initialTextcolor} to ${newTextcolor}`); expect(newTextcolor).not.toBe(initialTextcolor); console.log('Theme successfully toggled');
+
 });
-
-console.log(`Text Color: ${initialTextcolor}`);
-
-// Click the theme switch button
-const themeButton = page.locator('button:has(img[alt="Theme Icon"])');
-await themeButton.click();
-
-// Wait for the theme to change (may require a short delay)
-await page.waitForTimeout(500);
-
-// Verify the welcome text color change
-const newTextcolor = await page.evaluate(() => {
-  const element = document.querySelector('#welcomeText'); // The selector is ID
-  return window.getComputedStyle(element).color; // Get color attributes
-});
-
-console.log(`Text Color: ${newTextcolor}`); console.log(`Theme changed from ${initialTextcolor} to ${newTextcolor}`); expect(newTextcolor).not.toBe(initialTextcolor); console.log('Theme successfully toggled');
-
-});*/
 
 
 
